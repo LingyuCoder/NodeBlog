@@ -1,0 +1,21 @@
+body {
+  padding: 50px;
+  font-size: 14px;
+  font-family: ff-tisa-web-pro-1, ff-tisa-web-pro-2, 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei UI', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.footer p{
+  text-align : center;
+  font-style : italic;
+}
+
+.u-avatar img {
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  box-shadow: 0 0 6px #707070
+}

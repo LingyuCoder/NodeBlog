@@ -1,0 +1,91 @@
+extends layout
+
+block style
+  link(rel='stylesheet', href='/stylesheets/github.css')
+  link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
+block content
+  div(class="container")
+    div(class="panel panel-default", style="margin-top: 20px")
+      div(class="panel-body") 
+        div(class="u-flag")
+          div(class="u-avatar")
+            img(src="#{writer.avatar}")
+          div(class="u-flag-left")
+            h3
+              !=article.title
+        section
+          !=article.content
+        div(class="g-art-footer")
+          div(class="u-wriTime") #{article.writeTime}
+          div(class=user?(article.booked?"u-bookmark booked":"u-bookmark book"):"u-bookmark") 
+            span #{article.bookCount}
+            span(class="glyphicon glyphicon-star")
+          div(class="clearfix")
+        hr
+        div(id="comments", aid="#{article.id}")
+          each comment in comments
+            div(class="g-comment", id="cmt_#{comment.id}")
+              div(class="u-avatar")
+                img(src="#{comment.user.avatar}")
+              div(class="g-info")
+                span(class="u-nick")
+                  a(href = "/user_otherDetail?username=#{comment.username}") #{comment.user.nickname}
+                span(class="u-time") #{comment.time}
+              div(class="u-content")
+                if !comment.reply
+                  != comment.comment
+                else
+                  div(class="g-comment b-reply")
+                    if comment.reply !== "deleted"
+                      div(class="u-avatar")
+                        img(src="#{comment.reply.user.avatar}")
+                      div(class="g-info")
+                        span(class="u-nick")
+                          a(href = "/user_otherDetail?username=#{comment.reply.username}") #{comment.reply.user.nickname}
+                        span(class="u-time") #{comment.reply.time}
+                      div(class="u-content")
+                        != comment.reply.comment
+                    else 
+                      != "评论已被删除"
+                  hr
+                  != comment.comment
+              if user
+                div(class="g-operate", cid="#{comment.id}")
+                  span(class=comment.admired?"u-opt admired":"u-opt admire") 
+                    span #{comment.admire}
+                    span(class="glyphicon glyphicon-thumbs-up")
+                  span(class="u-opt reply", nick="#{comment.user.nickname}") 回复
+                    span(class="glyphicon glyphicon-comment")
+                  if comment.username === user.username
+                    span(class="u-opt delete") 删除
+                      span(class="glyphicon glyphicon-remove")
+              div(class="clearfix")
+              hr
+            
+
+        div(id="replyComment", style="display:none;margin-left:100px")
+          form(action="/nor/comment_addComment", method="post")
+            input(type="hidden", name="articleId", value="#{article.id}")
+            input(type="hidden", name="replyId")
+            div(class="form-group")
+                textarea(class="form-control", name="comment", id="inputComment", style="resize: none", rows=2)
+            div(class="form-group")
+                button(class="btn btn-success", type="submit", style="float:right") 发送
+          div(class="clearfix")
+
+        div(id="newComments") 
+          if user
+            h3 新评论:
+            form(action="/nor/comment_addComment", method="post")
+              input(type="hidden", name="articleId", value="#{article.id}")
+              div(class="form-group")
+                textarea(class="form-control", name="comment", id="inputComment", style="resize: none", rows=4)
+              div(class="form-group")
+                button(class="btn btn-success", id="sendComment", type="submit", style="float:left") 发送
+                button(class="btn btn-danger", type="button" ,id="clearComment", style="float:right") 清空
+          else
+            h3(style="text-align:center") 请登录后评论
+
+block javascript
+  script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
+  script(type='text/javascript', src='/javascripts/page/articleDetail.js')

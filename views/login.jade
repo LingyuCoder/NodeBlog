@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  div(class='container')
+    h1
+      strong 登录
+    hr
+    if message
+      div(class='alert alert-danger') #{message}
+
+    div(class="panel panel-default")
+      div(class="panel-body")
+        form(class="form-horizontal", method="post", action="/user_login")
+          div(class="form-group")
+            label(for="inputUsername", class="col-sm-2 col-sm-offset-2 control-label") 用户名
+            div(class="col-sm-5")
+              input(type="text", name="username", class="form-control", id="inputUsername", placeholder="用户名")
+          div(class="form-group")
+            label(for="inputPassword", class="col-sm-2 col-sm-offset-2 control-label") 密码
+            div(class="col-sm-5")
+              input(type="password", name="password", class="form-control", id="inputPassword", placeholder="填写密码")
+          hr
+          div(class="form-group")
+            button(type='submit', id='loginBtn', class='btn btn-success col-sm-1 col-sm-offset-4') 登录
+            a(href="user_registPage", class="btn btn-primary col-sm-1 col-sm-offset-2") 注册
+    

@@ -1,0 +1,112 @@
+extends layout
+
+block style
+  link(rel='stylesheet', href='/stylesheets/page/userCenter.css')
+
+block content
+  div(class='container')
+    h1
+      div(style="float:left")
+        strong 用户中心
+      div(class="u-avatar", style="float:right")
+        img(src="#{user.avatar}")
+      div(class="clearfix")
+    hr
+    div(class="list-group g-chose", id="chosePanel")
+        if user.owner
+          a(href="#", class="list-group-item active", ref="articles") 我的文章
+            span(class="badge pull-right") #{articles.length}
+        a(href="#", class=user.owner?"list-group-item" : "list-group-item active", ref="bookmarks") 我的收藏
+          span(class="badge pull-right") #{bookmarks.length}
+        a(href="#", class="list-group-item", ref="comments") 我的评论
+          span(class="badge pull-right") #{comments.length}
+        a(href="#", class="list-group-item", ref="admires") 赞过的评论
+          span(class="badge pull-right") #{admires.length}
+    div(class="panel panel-default g-content")
+      if user.owner
+        div(class="panel-body", id="articles")
+          if articles.length === 0
+            div(class="u-noitem") 您目前没有写过文章
+          else 
+            for article in articles
+              div(class="g-item")
+                div(class="u-avatar")
+                  a(href="/user_center?username=#{user.username}")
+                    img(src="#{user.avatar}")
+                div(class="g-info") 
+                  div(class="u-time") 最后修改于：#{article.lastModifyTime}
+                  a(class="u-opt u-del-art", aid="#{article.id}") 删除
+                    span(class="glyphicon glyphicon-remove")
+                  a(class="u-opt", href="/article_load?articleId=#{article.id}") 详细
+                    span(class="glyphicon glyphicon-eye-open")
+                  div(style="clear:both")
+                div(class="u-title") 
+                  a(href="/article_load?articleId=#{article.id}") #{article.title}
+                div(class="u-time") 作于:#{article.writeTime}
+                hr
+      div(class=user.owner?"panel-body g-hide" : "panel-body", id="bookmarks")
+        if bookmarks.length === 0
+          div(class="u-noitem") 您目前没有收藏文章
+        else 
+          for bookmark in bookmarks
+            div(class="g-item")
+              if bookmark.article
+                div(class="u-avatar")
+                  a(href="/user_center?username=#{bookmark.article.writer.username}")
+                    img(src="#{bookmark.article.writer.avatar}")
+                div(class="g-info") 
+                  div(class="u-time") #{bookmark.article.writeTime}
+                  a(class="u-opt u-del-book", aid="#{bookmark.article.id}") 删除
+                    span(class="glyphicon glyphicon-remove")
+                  a(class="u-opt", href="/article_load?articleId=#{bookmark.article.id}") 详细
+                    span(class="glyphicon glyphicon-eye-open")
+                  div(style="clear:both")
+                div(class="u-title") 
+                  a(href="/article_load?articleId=#{bookmark.article.id}") #{bookmark.article.title}
+                div(class="u-time") 收藏于:#{bookmark.time}
+              else
+                div(style="text-align:center") 文章已被删除
+              hr
+      div(class="panel-body g-hide", id="comments")
+        if comments.length === 0
+          div(class="u-noitem") 您目前没有评论
+        else 
+          for comment in comments
+            div(class="g-item")
+              div(class="u-avatar")
+                a(href="/user_center?username=#{user.username}")
+                  img(src="#{user.avatar}")
+              div(class="g-info") 
+                div(class="u-time") #{comment.time}
+                a(class="u-opt u-del-com", cid="#{comment.id}") 删除
+                  span(class="glyphicon glyphicon-remove")
+                a(class="u-opt", href="/article_load?articleId=#{comment.articleId}#cmt_#{comment.id}") 详细
+                  span(class="glyphicon glyphicon-eye-open")
+                div(style="clear:both")
+              div(class="u-content") #{comment.comment}
+              div(class="u-time") 评论于:#{comment.time}
+              hr
+      div(class="panel-body g-hide", id="admires")
+        if admires.length === 0
+          div(class="u-noitem") 您目前没有赞过评论
+        else 
+          for admire in admires
+            div(class="g-item")
+              if admire.comment
+                div(class="u-avatar")
+                  a(href="/user_center?username=#{admire.comment.user.username}")
+                    img(src="#{admire.comment.user.avatar}")
+                div(class="g-info") 
+                  div(class="u-time") #{admire.comment.time}
+                  a(class="u-opt u-del-adm", cid="#{admire.comment.id}", aid="#{admire.comment.articleId}") 删除
+                    span(class="glyphicon glyphicon-remove")
+                  a(class="u-opt", href="/article_load?articleId=#{admire.comment.articleId}#cmt_#{admire.comment.id}") 详细
+                    span(class="glyphicon glyphicon-eye-open")
+                  div(style="clear:both")
+                div(class="u-content") #{admire.comment.comment}
+                div(class="u-time") 赞于:#{admire.time}
+              else 
+                div(style="text-align:center") 评论已被删除
+              hr
+block javascript
+  script(type='text/javascript', src='/javascripts/page/userCenter.js')

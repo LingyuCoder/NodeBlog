@@ -1,0 +1,44 @@
+extends layout
+
+block style
+	link(rel='stylesheet', href='/stylesheets/page/global.css');
+	link(rel='stylesheet', href='/stylesheets/github.css')
+	link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
+	link(rel='stylesheet', href='/stylesheets/page/index.css')
+block content
+	div(class='container')
+		each article in articles
+			div(class="panel panel-default", style="margin-top: 20px")
+				div(class="panel-body") 
+					div(class="u-flag")
+						div(class="u-avatar")
+							img(src="#{article.writer.avatar}")
+						div(class="u-flag-left")
+							a(href="/article_load?articleId=#{article.id}")
+								h3
+									!=article.title
+					section
+						!=article.content
+					hr
+					div(class="g-art-footer")
+						div(class="u-wriTime") #{article.writeTime}
+						div(class=user?"u-item u-book":"u-item", aid="#{article.id}") 
+							span #{article.bookCount}
+							span(class="glyphicon glyphicon-star")
+						div(class="u-item u-comment", aid="#{article.id}")
+							!= article.comment
+								span(class="glyphicon glyphicon-comment")
+						div(class="clearfix")
+		ul(class="pager")
+			li(class=curPage===1?"previous disabled" : "previous") 
+				a(href=curPage===1?"javascript:void(0)":"/index?page=#{curPage-1}")
+					&larr;上一页
+			li(class=curPage===totalPage?"next disabled" : "next") 
+				a(href=curPage===totalPage?"javascript:void(0)":"/index?page=#{curPage+1}")
+					&rarr;下一页
+
+
+
+block javascript
+	script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
+	script(type='text/javascript', src='/javascripts/page/index.js')

@@ -1,0 +1,68 @@
+.g-chose {
+	width: 200px;
+	float: left;
+
+}
+
+.panel-body:after {
+	display: none
+}
+
+.g-content {
+	margin-left : 200px;
+}
+
+.g-hide {
+	display: none
+}
+
+.g-item {
+	padding: 5px 10px
+}
+
+.g-item .u-avatar {
+	float: left;
+}
+.g-item .g-info {
+	margin-left : 100px;
+	height: 30px
+}
+.g-item .g-info .u-time{
+	float:left;
+}
+
+.g-item .g-info .u-opt{
+	float:right;
+	padding : 5px 10px;
+	border-radius: 10px;
+	color: black;
+	cursor: pointer;
+	text-decoration: none
+}
+
+.g-item .g-info .u-opt:hover{
+	background-color: #f0f0f0
+}
+
+.g-item .u-title {
+	margin-left : 60px;
+	text-align: center
+}
+
+.g-item .u-title a{
+	text-decoration: none;
+	font-size: 150%
+}
+
+.g-item .u-time {
+	text-align: right
+}
+
+.g-item .u-content {
+	margin-left : 100px;
+	text-align: left;
+}
+
+.u-noitem {
+	text-align: center
+}

@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  div(class='container')
+    h1
+      strong 个人信息
+    hr
+    if message
+      if success
+        div(class="alert alert-success") #{message}
+      else 
+        div(class="alert alert-danger") #{message}
+    form(class="form-horizontal", method="post", action="/nor/user_modify")
+      div(class="form-group")
+        label(for="inputUsername", class="col-sm-2 col-sm-offset-2 control-label") 用户名
+        div(class="col-sm-4")
+          input(type="text", name="username", readonly="readonly", class="form-control", id="inputUsername", value="#{user.username}")
+      div(class="form-group")
+        label(for="inputNickname", class="col-sm-2 col-sm-offset-2 control-label") 昵称
+        div(class="col-sm-4")
+          input(type="text", name="nickname", class="form-control", id="inputNickname", value="#{user.nickname}")
+      div(class="form-group")
+        label(for="inputAvatar", class="col-sm-2 col-sm-offset-2 control-label") 头像地址
+        div(class="col-sm-4")
+          input(type="text", name="avatar", class="form-control", id="inputAvatar", value="#{user.avatar}")
+      div(class="form-group")
+        label(class="col-sm-2 col-sm-offset-2 control-label") 头像预览
+        div(class="col-sm-4")
+          div(class="u-avatar")
+            img(src="#{user.avatar}",id="avatarPreview")
+      div(class="form-group")
+        label(for="inputPassword", class="col-sm-2 col-sm-offset-2 control-label") 密码
+        div(class="col-sm-4")
+          input(type="password", name="password", class="form-control", id="inputPassword", placeholder="填写密码")
+      div(class="form-group")
+        label(for="inputPassAgain", class="col-sm-2 col-sm-offset-2 control-label") 密码重复
+        div(class="col-sm-4")
+          input(type="password", name="passwordAgain", class="form-control", id="inputPassAgain", placeholder="再次填写密码")
+      hr
+      div(class="form-group")
+        button(type="submit" class="col-sm-offset-3 col-sm-2 btn btn-primary") 提交修改
+        a(class="btn btn-default col-sm-offset-2 col-sm-2", href="user_detail") 恢复
+  
+block javascript
+  script(type='text/javascript', src='/javascripts/page/userDetail.js')
+

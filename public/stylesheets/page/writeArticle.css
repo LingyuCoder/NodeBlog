@@ -1,0 +1,36 @@
+.u-panel {
+	margin: 0;
+	padding: 0;
+	position: relative;
+	width: 47.5%;
+	overflow: auto;
+	height: 100%;
+}
+
+#leftPanel {
+	float: left;
+	left : 1.5%;
+}
+
+#rightPanel {
+	float: right;
+	right : 1.5%;
+	padding: 2px;
+}
+
+#outputArticle {
+	overflow: auto;
+}
+
+.u-pane {
+	margin: 0;
+	padding: 0;
+	padding-left: 4px;
+	width: 100%;
+	border: none;
+	display: block;
+	border: 1px solid #888;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	height: 100%;
+}

@@ -1,0 +1,28 @@
+extends layout
+
+block style
+  link(rel='stylesheet', href='/stylesheets/github.css')
+  link(rel='stylesheet', href='/stylesheets/page/writeArticle.css')
+
+block content
+  form(action="/nor/conf/article_save", method="post")
+    h2
+      strong 写新文章
+      button(class="btn btn-primary", style="float:right", id="saveArtBtn", type="submit") 保存文章
+    hr
+  
+    div(class="form-group")
+      label(for="inputTitle") 
+        h3 标题：
+      input(class="form-control", type="text", name="title",id="inputTitle", placeholder="文章标题")
+    div(class="panel panel-default", style="padding:10px;height:80%")
+      div(class="u-panel" id="leftPanel")
+        textarea(class="u-pane", id="inputArticle", name="content",style="resize: none;")
+      div(class="u-panel" id="rightPanel")
+        div(class="well u-pane", id="outputArticle")
+      div(style="clear:both")
+
+block javascript
+  script(type='text/javascript', src='/javascripts/tools/showdown.js')
+  script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
+  script(type='text/javascript', src='/javascripts/page/writeArticle.js')

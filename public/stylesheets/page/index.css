@@ -1,0 +1,31 @@
+.u-flag .u-flag-left a{
+	color : white;
+	text-decoration: none;
+}
+
+.u-flag .u-flag-left a:hover{
+	color : #f0f0f0;
+}
+
+.u-flag .u-flag-left a:active{
+	color : gray;
+}
+
+.g-art-footer .u-item {
+	float:right;
+	padding : 5px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.g-art-footer .u-item span{
+	margin-left: 5px;
+}
+
+.g-art-footer .u-item:hover{
+	background-color: #f0f0f0
+}
+
+.g-art-footer .u-booked {
+	background-color: #f0f0f0
+}

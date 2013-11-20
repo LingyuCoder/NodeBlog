@@ -1,0 +1,49 @@
+extends layout
+
+block style
+  link(rel='stylesheet', href='/stylesheets/github.css')
+  link(rel='stylesheet', href='/stylesheets/page/listArticle.css')
+block content
+  div(class="container")
+    h3
+      strong 所有文章
+    hr
+    table(class="table table-hover table-striped table-condensed", id="articles")
+      thead
+        tr
+          th 标题
+          th 作者
+          th 时间
+          if user && user.owner
+            th(style="width:140px") 操作
+      tbody
+        each article in articles
+          tr(aid="#{article.id}")
+            td #{article.title}
+            td(class="u-writer") #{article.writer.nickname}
+            td(class="u-wriTime") #{article.writeTime}
+            if user && user.owner
+              td
+                a(class="btn btn-primary", href="/nor/conf/article_edit?articleId=#{article.id}") 修改
+                a(class="btn btn-danger u-delete", style="margin-left:10px", aid="#{article.id}") 删除
+    hr
+    ul(class="pagination", style="float:right")
+      li(class=curPage===1?"disabled":"")
+        a(href=curPage===1?"javascript:void(0)":"/article_list") &laquo;
+      li(class=curPage===1?"disabled":"")
+        a(href=curPage===1?"javascript:void(0)":"/article_list?page=#{curPage-1}") &lt;
+      - for(var i = startPage; i <= endPage; i++)
+        li(class=i===curPage?"active":"")
+          a(href="/article_list?page=#{i}") 
+            !=i
+      li(class=curPage===totalPage?"disabled":"")
+        a(href=curPage===totalPage?"javascript:void(0)":"/article_list?page=#{curPage+1}") &gt;
+      li(class=curPage===totalPage?"disabled":"")
+        a(href=curPage===totalPage?"javascript:void(0)":"/article_list?page=#{totalPage}") &raquo;
+
+
+block javascript
+  script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
+  script(type='text/javascript', src='/javascripts/page/listArticle.js')
+  if user && user.owner
+    script(type='text/javascript', src='/javascripts/page/listArticle_owner.js')
