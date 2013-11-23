@@ -1,0 +1,152 @@
+.u-pic {
+	position: relative;
+	border: 1px solid #f0f0f0;
+	box-shadow: 0 0 6px #f0f0f0;
+	display: block;
+}
+
+.u-pic img {
+	width: 100%;
+}
+
+.u-pic:hover {
+	position: relative;
+	z-index: 100;
+	animation : 'bigger' 1s ease 0s 1 normal;
+	transform: scale(1.25);
+	-webkit-animation : 'bigger' 1s ease 0s 1 normal;
+	-webkit-transform: scale(1.25);
+	-moz-animation : 'bigger' 1s ease 0s 1 normal;
+	-moz-transform: scale(1.25);
+}
+
+@keyframes bigger {
+	from {
+		transform: scale(1);
+	}
+	to {
+		transform: scale(1.25);
+	}
+}
+
+@-moz-keyframes bigger {
+	from {
+		-moz-transform: scale(1);
+	}
+	to {
+		-moz-transform: scale(1.25);
+	}
+}
+
+@-webkit-keyframes bigger {
+	from {
+		-webkit-transform: scale(1);
+	}
+	to {
+		-webkit-transform: scale(1.25);
+	}
+}
+
+
+
+.scrollFooter {
+	width: 100%;
+	border-radius: 10px;
+	height: 40px;
+	line-height: 35px;
+	text-align: center;
+	background-color: #f0f0f0;
+	display: none
+}
+
+.g-gal-col {
+	padding: 0
+}
+
+.u-block {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left : 0;
+	top : 0;
+	background-color: rgba(240, 240, 240, 0.7);
+	z-index: 101;
+	display: none;
+	overflow: auto;
+}
+
+.u-fillPic {
+	position: absolute;
+	margin-left: 50%;
+	border: 1px solid #818181;
+	box-shadow: 3px 3px 8px #818181;
+	z-index: 200;
+	display: none;
+	max-width: 70%;
+	margin-top : 50px;
+}
+
+.u-fillPic .u-opt {
+	position : absolute;
+	right : -16px;
+	width: 36px;
+	height: 36px;
+	font-size: 20px;
+	line-height: 36px;
+	text-align: center;
+	background-color: #f5f5f5;
+	color : #818181;
+	border: 1px solid #818181;
+	border-radius: 18px;
+	box-shadow: 3px 3px 8px #818181;
+}
+
+.u-fillPic .u-opt:hover {
+	background-color: #818181;
+	color : white;
+}
+
+.u-close {
+	top : -16px;
+}
+
+.u-delete {
+	top : 30px;
+}
+
+.u-fillPic img{
+}
+
+.u-conf-opt {
+	position: fixed;
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	line-height: 85px;
+	font-size: 60px;
+	border: 4px dotted #333;
+	border-radius: 20px;
+}
+
+.u-trash {
+	right: 10px;
+	top : 100px;
+}
+
+.u-upload {
+	left: 10px;
+	top : 100px;
+}
+
+.b-removing {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: rgba(0,0,0,0.7);
+	left: 0;
+	top: 0;
+	text-align: center;
+	font-size: 50px;
+	color: #f0f0f0;
+	font-weight: bolder;
+}

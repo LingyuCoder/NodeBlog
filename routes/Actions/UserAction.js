@@ -12,7 +12,6 @@ exports.registPage = function(req, res) {
   res.render('regist');
 };
 exports.login = function(req, res) {
-  var lastPage = req.session.lastPage || "/index";
   User.get(req.body.username, function(err, user) {
     if (err) {
       return req.render("error", {
@@ -21,8 +20,7 @@ exports.login = function(req, res) {
     }
     if (user.password === req.body.password) {
       req.session.user = user;
-      res.redirect(lastPage);
-      delete req.session.lastPage;
+      res.redirect("/index");
     } else {
       res.render("login", {
         message: "用户名或密码错误..."
@@ -60,8 +58,10 @@ exports.modify = function(req, res) {
     });
     if (user) {
       user.nickname = req.body.nickname;
-      user.password = req.body.password;
-      user.avatar = req.body.avatar;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      user.avatar = req.body.avatar || "/images/default_avatar.jpg";
       user.update(function(err) {
         req.session.user = user;
         res.render("userDetail", {

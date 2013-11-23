@@ -9,8 +9,11 @@ var express = require('express'),
 	comment = require('./routes/Actions/CommentAction.js'),
 	admire = require('./routes/Actions/AdmireAction.js'),
 	bookmark = require('./routes/Actions/BookmarkAction.js'),
+	gallary = require('./routes/Actions/GallaryAction.js'),
+	picture = require('./routes/Actions/PictureAction.js'),
 	http = require('http'),
-	path = require('path');
+	path = require('path'),
+	setting = require('./routes/setting.js');
 
 var app = express();
 
@@ -20,7 +23,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(express.bodyParser({
+	keepExtensions : true,
+	uploadDir : setting.uploadDir
+}));
 app.use(express.methodOverride());
 app.use(express.cookieParser('wly'));
 app.use(express.session({
@@ -28,19 +34,9 @@ app.use(express.session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next) {
-	if (req.path !== "/user_logout") {
-		if (req.session.user) {
-			res.locals({
-				user: req.session.user
-			});
-		} else {
-			if (req.path !== "/user_loginPage" && req.path !== "/user_login" && req.path !== "/error") {
-				req.session.lastPage = req.originalUrl;
-			}
-		}
-	} else {
+	if (req.session.user) {
 		res.locals({
-			user: null
+			user: req.session.user
 		});
 	}
 	next();
@@ -57,7 +53,6 @@ app.use('/nor/', function(req, res, next) {
 });
 
 app.use('/nor/conf/', function(req, res, next) {
-	console.log(req.session.user);
 	if (req.session.user && req.session.user.owner) {
 		next();
 	} else {
@@ -100,6 +95,17 @@ app.get('/nor/admire_addAdmire', admire.addAdmire);
 app.get('/nor/admire_removeAdmire', admire.removeAdmire);
 app.get('/nor/bookmark_addBookmark', bookmark.save);
 app.get('/nor/bookmark_removeBookmark', bookmark.remove);
+app.get('/gallary', gallary.gallaryPage);
+app.get('/gallary_list', gallary.listByPage);
+
+app.get('/nor/conf/picture_uploadPage', picture.uploadPage);
+app.post('/nor/conf/picture_upload', picture.upload);
+//上传时进行图片压缩，需要imageMagick
+//app.post('/nor/conf/picture_uploadDirect', picture.uploadDirect);
+app.post('/nor/conf/picture_uploadDirect', picture.uploadDirectNoCompress);
+app.post('/nor/conf/picture_uploadCancel', picture.uploadCancel);
+app.post('/nor/conf/picture_confirm', picture.confirm);
+app.post('/nor/conf/picture_delete', picture.remove);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));

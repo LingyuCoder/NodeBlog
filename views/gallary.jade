@@ -1,0 +1,23 @@
+extends layout
+
+block style
+	link(rel='stylesheet', href='/stylesheets/page/gallary.css')
+block content
+	div(class="u-block", id="blocker")
+	div(class="u-fillPic", id="filler")
+		div(class="u-opt u-close")
+			span(class="glyphicon glyphicon-remove")
+		img
+	div(class="container")
+		div(id="gallary", class="row")
+			div(class="col-md-3 g-gal-col", index=0, id="col-0")
+			div(class="col-md-3 g-gal-col", index=1, id="col-1")
+			div(class="col-md-3 g-gal-col", index=2, id="col-2")
+			div(class="col-md-3 g-gal-col", index=3, id="col-3")
+		div(class="clearfix")
+		div(class="scrollFooter" ) 加载中，请稍后
+	if user&&user.owner
+		div(class="glyphicon glyphicon-trash u-conf-opt u-trash", id="trash")
+		div(class="glyphicon glyphicon-upload u-conf-opt u-upload", id="upload")
+block javascript
+	script(type='text/javascript', src='/javascripts/page/gallary.js')

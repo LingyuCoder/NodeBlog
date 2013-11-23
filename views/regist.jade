@@ -7,10 +7,10 @@ block content
     hr
     if message
       div(class="alert alert-danger") #{message}
-
+    div(class="alert alert-danger", id="formValidate", style="display:none")
     div(class="panel panel-default")
       div(class="panel-body")
-        form(class="form-horizontal", method="post", action="/user_regist")
+        form(class="form-horizontal", method="post", action="/user_regist", id="registForm")
           div(class="form-group")
             label(for="inputUsername", class="col-sm-2 col-sm-offset-2 control-label") 用户名
             div(class="col-sm-5")
@@ -31,5 +31,8 @@ block content
           div(class="form-group")
             button(type="submit" class="col-sm-1 col-sm-offset-4 btn btn-success") 注册
             a(class="col-sm-offset-2 col-sm-1 btn btn-primary", href="user_loginPage") 登录
+
+block javascript
+  script(type='text/javascript', src='/javascripts/page/regist.js')
             
             

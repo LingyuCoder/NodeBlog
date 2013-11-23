@@ -1,8 +1,12 @@
-var db = require("./db.js"),
+var MongoClient = require('mongodb').MongoClient,
+	setting = require("../setting.js"),
 	client;
-db.open(function(err, cli) {
-	client = cli;
+console.log("MongoDB connecting...");
+MongoClient.connect(setting.host, function(err, db) {
+	console.log("MongoDB connected...");
+	client = db;
 });
+
 
 exports.save = function(collectionName, obj, callback) {
 	client.collection(collectionName, function(err, collection) {

@@ -10,7 +10,8 @@ block content
         div(class="alert alert-success") #{message}
       else 
         div(class="alert alert-danger") #{message}
-    form(class="form-horizontal", method="post", action="/nor/user_modify")
+    div(class="alert alert-danger", id="formValidate", style="display:none")
+    form(class="form-horizontal", method="post", action="/nor/user_modify", id="detail")
       div(class="form-group")
         label(for="inputUsername", class="col-sm-2 col-sm-offset-2 control-label") 用户名
         div(class="col-sm-4")
@@ -31,7 +32,7 @@ block content
       div(class="form-group")
         label(for="inputPassword", class="col-sm-2 col-sm-offset-2 control-label") 密码
         div(class="col-sm-4")
-          input(type="password", name="password", class="form-control", id="inputPassword", placeholder="填写密码")
+          input(type="password", name="password", class="form-control", id="inputPassword", placeholder="填写密码,为空则不修改")
       div(class="form-group")
         label(for="inputPassAgain", class="col-sm-2 col-sm-offset-2 control-label") 密码重复
         div(class="col-sm-4")

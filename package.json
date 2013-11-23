@@ -1,6 +1,6 @@
 {
   "name": "myblog",
-  "version": "0.0.1",
+  "version": "0.0.1-9",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -8,10 +8,15 @@
   "dependencies": {
     "express": "3.4.2",
     "jade": "*",
-    "node-uuid" : "1.4.1",
-    "mongodb" : "1.3.19",
-    "markdown" : "0.5.0",
-    "async" : "0.2.9",
-    "moment" : "2.4.0"
+    "node-uuid": "1.4.1",
+    "mongodb": "1.3.19",
+    "markdown": "0.5.0",
+    "async": "0.2.9",
+    "moment": "2.4.0",
+    "gm": "1.13.3"
+  },
+  "subdomain": "skyinlayer",
+  "engines": {
+    "node": "0.10.x"
   }
 }

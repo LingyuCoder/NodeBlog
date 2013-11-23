@@ -1,0 +1,15 @@
+extends layout
+
+block style
+	link(rel='stylesheet', href='/stylesheets/page/uploadPic.css')
+block content
+	div(class="container")
+		div(id="uploadResult", class="alert", style="text-align:center")
+		div(id="uploadZone", class="u-upload") 将需要上传的文件拖拽到框中
+		div(id="uploadOutput", class="u-output")
+			div(class="clearfix")
+		hr
+		div(id="uploadBtn", class="btn btn-primary") 上传
+		
+block javascript
+	script(type='text/javascript', src='/javascripts/page/uploadPic.js')
