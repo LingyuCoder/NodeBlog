@@ -1,4 +1,4 @@
-var commonDao = require("../DAO/CommonDAO.js"),
+var commonDao = require("./CommonDAO.js"),
 	collectionName = "tag",
 	uuid = require("node-uuid"),
 	__resultToListFn = function(callback) {

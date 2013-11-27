@@ -97,20 +97,13 @@
 		});
 	});
 
-	$(".u-avatar").each(function(){
-		$(document).trigger("user.drawUserInfo", [$(this).attr("uid"), {
-			container: $(this)
-		}]);
+	$(".u-avatar").each(function() {
+		$(document).trigger("user.draw", [$(this).attr("uid"), $(this)]);
 	});
 
-	$(".u-nopop-avatar").each(function(){
-		$(document).trigger("user.drawUserInfo", [$(this).attr("uid"), {
-			container: $(this),
-			popover : false
-		}]);
+	$(".u-nopop-avatar").each(function() {
+		$(document).trigger("user.draw", [$(this).attr("uid"), $(this)]);
 	});
 
-	$(document).trigger("tag.drawUserTags", [$("#tags").attr("uid"), {
-		container: $("#tags")
-	}]);
+	$(document).trigger("tag.drawUserTags", [$("#tags").attr("uid"), $("#tags")]);
 }(jQuery, window));

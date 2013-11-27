@@ -54,6 +54,14 @@
 
 	$(".u-avatar").each(function() {
 		var that = $(this);
-		$(document).trigger("user.drawUserInfo", [that.attr("uid"), that]);
+		$(document).trigger("user.draw", [that.attr("uid"), that]);
+	});
+
+	$(".u-comment").each(function() {
+		$(document).trigger("comment.drawCount", [$(this).attr("aid"), $(this)]);
+	});
+
+	$(".u-book").each(function() {
+		$(document).trigger("bookmark.draw", [$(this).attr("aid"), $(this), $(this).attr("cur")]);
 	});
 }(jQuery, window));

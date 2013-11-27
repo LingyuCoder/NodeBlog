@@ -1,4 +1,4 @@
-var commonDao = require("../DAO/CommonDAO.js"),
+var commonDao = require("./CommonDAO.js"),
 	collectionName = "user",
 	__resultToListFn = function(callback) {
 		return function(err, results) {

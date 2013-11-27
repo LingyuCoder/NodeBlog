@@ -1,5 +1,6 @@
-var commonDao = require("../DAO/CommonDAO.js"),
+var commonDao = require("./CommonDAO.js"),
 	collectionName = "bookmark",
+	uuid = require("node-uuid"),
 	__resultToListFn = function(callback) {
 		return function(err, results) {
 			var i;
@@ -16,6 +17,7 @@ function Bookmark(bookmark) {
 	this.username = bookmark.username;
 	this.articleId = bookmark.articleId;
 	this.time = bookmark.time;
+	this.id = bookmark.id;
 }
 
 module.exports = Bookmark;
@@ -24,7 +26,8 @@ Bookmark.prototype.save = function(callback) {
 	commonDao.save(collectionName, {
 		username: this.username,
 		articleId: this.articleId,
-		time: new Date().getTime()
+		time: new Date().getTime(),
+		id: uuid.v4()
 	}, function(err, result) {
 		if (err) return callback(err);
 		if (!result[0]) return callback(new Error("保存失败"));

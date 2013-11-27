@@ -1,4 +1,4 @@
-var commonDao = require("../DAO/CommonDAO.js"),
+var commonDao = require("./CommonDAO.js"),
 	collectionName = "comment",
 	uuid = require("node-uuid"),
 	Admire = require("./Admire.js"),
@@ -52,9 +52,6 @@ Comment.get = function(commentId, callback) {
 };
 
 Comment.getByArticle = function(articleId, callback) {
-	/*commonDao.find(collectionName, {
-		articleId: articleId
-	}, __resultToListFn(callback));*/
 	commonDao.find(collectionName, {
 		condition: {
 			articleId: articleId

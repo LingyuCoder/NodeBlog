@@ -23,37 +23,6 @@ var setting = require("../setting.js"),
 		});
 	};
 
-exports.uploadPage = function(req, res) {
-	res.render("uploadPic");
-};
-
-exports.upload = function(req, res) {
-	var reg = new RegExp('^' + setting.uploadDir + '\\\\([\\w-\\.]+)$'),
-		result = reg.exec(req.files.image.path),
-		fileName = result[1];
-	res.json({
-		success: true,
-		fileName: fileName,
-		gallary: setting.gallary.name,
-		gallary_small: setting.gallary.small
-	});
-};
-
-exports.uploadCancel = function(req, res) {
-	var path = setting.uploadDir + "/" + req.body.fileName;
-	console.log(path);
-	if (fs.existsSync(path)) {
-		fs.unlinkSync(path);
-		return res.json({
-			success: true
-		});
-	} else {
-		return res.json(500, {
-			message: "文件未找到"
-		});
-	}
-};
-
 exports.remove = function(req, res) {
 	var fileName = req.body.fileName,
 		smallFile = "public/" + setting.gallary.small + "/" + fileName,
@@ -116,7 +85,7 @@ exports.uploadDirect = function(req, res) {
 
 exports.uploadDirectNoCompress = function(req, res) {
 	var inputFile = req.files.image.path,
-		fileName = (/^upload_tmp\/([\w\-\.]+)$/.exec(inputFile) || /^upload_tmp\\([\w\-\.]+)$/.exec(inputFile)) [1],
+		fileName = (/^upload_tmp\/([\w\-\.]+)$/.exec(inputFile) || /^upload_tmp\\([\w\-\.]+)$/.exec(inputFile))[1],
 		resizeFile = "public/" + setting.gallary.small + "/" + fileName,
 		outputFile = "public/" + setting.gallary.name + "/" + fileName;
 	async.waterfall([
@@ -146,47 +115,6 @@ exports.uploadDirectNoCompress = function(req, res) {
 			fileName: fileName,
 			gallary: setting.gallary.name,
 			gallary_small: setting.gallary.small
-		});
-	});
-};
-
-exports.confirm = function(req, res) {
-	var images = req.body.images;
-	async.each(images, function(file, callback) {
-		var inputFile = setting.uploadDir + "/" + file,
-			resizeFile = "public/" + setting.gallary.small + "/" + file,
-			outputFile = "public/" + setting.gallary.name + "/" + file;
-		async.waterfall([
-
-			function(callback) {
-				imageMagick(inputFile).write(outputFile, function(err) {
-					if (err) return callback(err);
-					callback(null);
-				});
-			},
-			function(callback) {
-				imageMagick(inputFile).resize(400).write(resizeFile, function(err) {
-					if (err) return callback(err);
-					callback(null);
-				});
-			},
-			function(callback) {
-				if (fs.existsSync(inputFile)) {
-					fs.unlink(inputFile, function(err) {
-						if (err) return callback(err);
-						callback(null);
-					});
-				} else {
-					callback(new Error("未找到文件"));
-				}
-			}
-		], callback);
-	}, function(err) {
-		if (err) return res.json(500, {
-			message: err.message
-		});
-		res.json({
-			success: true
 		});
 	});
 };

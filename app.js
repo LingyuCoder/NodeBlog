@@ -1,7 +1,3 @@
-/**
- * Module dependencies.
- */
-
 var express = require('express'),
 	routes = require('./routes'),
 	user = require('./routes/Actions/UserAction.js'),
@@ -12,6 +8,7 @@ var express = require('express'),
 	tag = require('./routes/Actions/TagAction.js'),
 	gallary = require('./routes/Actions/GallaryAction.js'),
 	picture = require('./routes/Actions/PictureAction.js'),
+	remind = require('./routes/Actions/RemindAction.js'),
 	http = require('http'),
 	path = require('path'),
 	setting = require('./routes/setting.js'),
@@ -75,7 +72,7 @@ app.get('/', routes.index);
 app.get('/index', routes.index);
 app.get('/advicePage', routes.advicePage);
 app.get('/userCenter', routes.userCenter);
-
+//用户
 app.get('/user_loginPage', user.loginPage);
 app.get('/user_registPage', user.registPage);
 app.get('/nor/user_detail', user.loadDetail);
@@ -84,6 +81,7 @@ app.post('/user_regist', user.regist);
 app.post('/user_login', user.login);
 app.post('/nor/user_modify', user.modify);
 app.get('/user_logout', user.logout);
+//文章
 app.get('/nor/conf/article_write', article.writePage);
 app.get('/nor/conf/article_edit', article.editPage);
 app.get('/nor/conf/article_delete', article.deleteArticle);
@@ -91,20 +89,14 @@ app.get('/article_load', article.loadArticle);
 app.post('/nor/conf/article_save', article.saveArticle);
 app.post('/nor/conf/article_update', article.updateArticle);
 app.get('/article_list', article.listArticlesByPage);
-
-app.get('/nor/admire_addAdmire', admire.addAdmire);
-app.get('/nor/admire_removeAdmire', admire.removeAdmire);
-
+//图片墙
 app.get('/gallary', gallary.gallaryPage);
 app.get('/gallary_list', gallary.listByPage);
-
-app.get('/nor/conf/picture_uploadPage', picture.uploadPage);
-app.post('/nor/conf/picture_upload', picture.upload);
+//图片墙图片上传
 //上传时进行图片压缩，需要imageMagick
 //app.post('/nor/conf/picture_uploadDirect', picture.uploadDirect);
+//不经过有损压缩的版本
 app.post('/nor/conf/picture_uploadDirect', picture.uploadDirectNoCompress);
-app.post('/nor/conf/picture_uploadCancel', picture.uploadCancel);
-app.post('/nor/conf/picture_confirm', picture.confirm);
 app.post('/nor/conf/picture_delete', picture.remove);
 //标签
 app.post('/nor/tag_create', tag.create);
@@ -116,15 +108,22 @@ app.post('/tag_listArticleTags', tag.listArticleTags);
 app.post('/comment_getByArticle', comment.getByArticle);
 app.post('/nor/comment_addComment', comment.save);
 app.post('/nor/comment_delete', comment.remove);
+app.post('/comment_countByArticle', comment.countByArticle);
 //点赞
 app.post('/nor/admire_checkAdmire', admire.checkAdmire);
 app.post('/nor/admire_countByComment', admire.countByComment);
+app.get('/nor/admire_addAdmire', admire.addAdmire);
+app.get('/nor/admire_removeAdmire', admire.removeAdmire);
 //收藏
 app.post('/nor/bookmark_addBookmark', bookmark.save);
 app.post('/nor/bookmark_removeBookmark', bookmark.remove);
 app.post('/bookmark_countByArticle', bookmark.countByArticle);
 app.post('/nor/bookmark_checkBooked', bookmark.checkBooked);
-
+//提醒
+app.post('/nor/remind_getAll', remind.getAll);
+app.post('/nor/remind_getByType', remind.getByType);
+app.post('/nor/remind_countAll', remind.countAll);
+app.post('/nor/remind_countByType', remind.countByType);
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
 });

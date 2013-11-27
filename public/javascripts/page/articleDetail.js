@@ -13,11 +13,11 @@
 	$(document).trigger("tag.drawArticleTags", [$("#tags").attr("aid"), $("#tags")]);
 
 	$(".u-avatar").each(function() {
-		$(document).trigger("user.drawUserInfo", [$(this).attr("uid"), $(this)]);
+		$(document).trigger("user.draw", [$(this).attr("uid"), $(this)]);
 	});
 
-	$(document).trigger("comment.draw", [$comments.attr("aid"), $comments.attr("cur"), $comments,{
-		replyClick: function(event){
+	$(document).trigger("comment.draw", [$comments.attr("aid"), $comments.attr("cur"), $comments, {
+		replyClick: function(event) {
 			var that = $(this),
 				commentId = that.parent().attr("cid");
 			$("textarea", $replyComment).val("");
@@ -44,5 +44,5 @@
 		}
 	}]);
 
-	$(document).trigger("bookmark.draw", [$bookmark.attr("aid"), $bookmark]);
+	$(document).trigger("bookmark.draw", [$bookmark.attr("aid"), $bookmark, $bookmark.attr("cur")]);
 }(jQuery, window));

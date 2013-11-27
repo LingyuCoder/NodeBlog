@@ -5,6 +5,8 @@ block style
 	link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
 	link(rel='stylesheet', href='/stylesheets/page/tag.css')
 	link(rel='stylesheet', href='/stylesheets/page/user.css')
+	link(rel='stylesheet', href='/stylesheets/page/comment.css')
+	link(rel='stylesheet', href='/stylesheets/page/bookmark.css')
 	link(rel='stylesheet', href='/stylesheets/page/index.css')
 block content
 	div(class='container')
@@ -24,12 +26,8 @@ block content
 					hr
 					div(class="g-art-footer")
 						div(class="u-wriTime") #{article.writeTime}
-						div(class=user?"u-item u-book":"u-item", aid="#{article.id}") 
-							span #{article.bookCount}
-							span(class="glyphicon glyphicon-star")
+						div(class="u-item u-book", aid="#{article.id}", cur=user?"#{user.username}":"") 
 						div(class="u-item u-comment", aid="#{article.id}")
-							!= article.comment
-								span(class="glyphicon glyphicon-comment")
 						div(class="clearfix")
 		ul(class="pager")
 			li(class=curPage===1?"previous disabled" : "previous") 
@@ -43,4 +41,6 @@ block javascript
 	script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
 	script(type='text/javascript', src='/javascripts/pageTools/Tag.js')
 	script(type='text/javascript', src='/javascripts/pageTools/User.js')
+	script(type='text/javascript', src='/javascripts/pageTools/Comment.js')
+	script(type='text/javascript', src='/javascripts/pageTools/Bookmark.js')
 	script(type='text/javascript', src='/javascripts/page/index.js')

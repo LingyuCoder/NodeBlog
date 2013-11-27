@@ -1,4 +1,4 @@
-var commonDao = require("../DAO/CommonDAO.js"),
+var commonDao = require("./CommonDAO.js"),
 	collectionName = "article",
 	uuid = require("node-uuid"),
 	async = require("async"),
@@ -14,8 +14,7 @@ var commonDao = require("../DAO/CommonDAO.js"),
 			callback(err, results);
 
 		};
-	},
-	async = require("async");
+	};
 
 function Article(article) {
 	this.content = article.content;
@@ -59,7 +58,7 @@ Article.getDetail = function(id, callback) {};
 
 Article.getAll = function(callback) {
 	commonDao.find(collectionName, {
-		condition: {
+		sort: {
 			writeTime: -1
 		}
 	}, __resultToListFn(callback));

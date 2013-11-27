@@ -20,96 +20,108 @@
 				}
 			]);
 		};
-	emitter.bind("bookmark.add", function(event, articleId, fnCallback) {
-		$.ajax({
-			url: "/nor/bookmark_addBookmark",
-			type: "post",
-			data: {
-				articleId: articleId
-			},
-			dataType: "json"
-		}).done(function(data) {
-			if (typeof fnCallback === "function") {
-				fnCallback();
-			}
-		}).fail(function(err) {
-			console.log(err.message);
-		});
-	}).bind("bookmark.remove", function(event, articleId, fnCallback) {
-		$.ajax({
-			url: "/nor/bookmark_removeBookmark",
-			type: "post",
-			data: {
-				articleId: articleId
-			},
-			dataType: "json"
-		}).done(function(data) {
-			if (typeof fnCallback === "function") {
-				fnCallback();
-			}
-		}).fail(function(err) {
-			console.log(err.message);
-		});
-	}).bind("bookmark.countByArticle", function(event, articleId, fnCallback) {
-		$.ajax({
-			url: "/bookmark_countByArticle",
-			type: "post",
-			data: {
-				articleId: articleId
-			},
-			dataType: "json"
-		}).done(function(data) {
-			if (typeof fnCallback === "function") {
-				fnCallback(data.total);
-			}
-		}).fail(function(err) {
-			console.log(err.message);
-		});
-	}).bind("bookmark.countByUser", function(event, username, fnCallback) {
-		$.ajax({
-			url: "/bookmark_countByUser",
-			type: "post",
-			data: {
-				username: username
-			},
-			dataType: "json"
-		}).done(function(data) {
-			if (typeof fnCallback === "function") {
-				fnCallback(data.total);
-			}
-		}).fail(function(err) {
-			console.log(err.message);
-		});
-	}).bind("bookmark.checkBooked", function(event, articleId, fnCallback) {
-		$.ajax({
-			url: "/nor/bookmark_checkBooked",
-			type: "post",
-			data: {
-				articleId: articleId
-			},
-			dataType: "json"
-		}).done(function(data) {
-			if (typeof fnCallback === "function") {
-				fnCallback(data.booked);
-			}
-		}).fail(function(err) {
-			console.log(err.message);
-		});
-	}).bind("bookmark.draw", function(event, articleId, container, fnCallback) {
-		container.attr("aid", articleId).addClass("u-bookmark").append("<span class='u-total'></span>").append("<span class='glyphicon glyphicon-star'></span>");
-		emitter.trigger("bookmark.countByArticle", [articleId,
-			function(total) {
-				container.find(".u-total").text(total);
-			}
-		]);
-		emitter.trigger("bookmark.checkBooked", [articleId,
-			function(booked) {
-				if (booked) {
-					container.addClass("b-bookmark-booked").click(__bookedFn);
-				} else {
-					container.addClass("b-bookmark-book").click(__bookFn);
+	emitter.bind({
+		"bookmark.add": function(event, articleId, fnCallback) {
+			$.ajax({
+				url: "/nor/bookmark_addBookmark",
+				type: "post",
+				data: {
+					articleId: articleId
+				},
+				dataType: "json"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") {
+					fnCallback();
 				}
+			}).fail(function(err) {
+				console.log(err.message);
+			});
+		},
+		"bookmark.remove": function(event, articleId, fnCallback) {
+			$.ajax({
+				url: "/nor/bookmark_removeBookmark",
+				type: "post",
+				data: {
+					articleId: articleId
+				},
+				dataType: "json"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") {
+					fnCallback();
+				}
+			}).fail(function(err) {
+				console.log(err.message);
+			});
+		},
+		"bookmark.countByArticle": function(event, articleId, fnCallback) {
+			$.ajax({
+				url: "/bookmark_countByArticle",
+				type: "post",
+				data: {
+					articleId: articleId
+				},
+				dataType: "json"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") {
+					fnCallback(data.total);
+				}
+			}).fail(function(err) {
+				console.log(err.message);
+			});
+		},
+		"bookmark.countByUser": function(event, username, fnCallback) {
+			$.ajax({
+				url: "/bookmark_countByUser",
+				type: "post",
+				data: {
+					username: username
+				},
+				dataType: "json"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") {
+					fnCallback(data.total);
+				}
+			}).fail(function(err) {
+				console.log(err.message);
+			});
+		},
+		"bookmark.checkBooked": function(event, articleId, fnCallback) {
+			$.ajax({
+				url: "/nor/bookmark_checkBooked",
+				type: "post",
+				data: {
+					articleId: articleId
+				},
+				dataType: "json"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") {
+					fnCallback(data.booked);
+				}
+			}).fail(function(err) {
+				console.log(err.message);
+			});
+		},
+		"bookmark.draw": function(event, articleId, container, curUser, fnCallback) {
+			container.attr("aid", articleId).addClass("u-bookmark").append("<span class='u-total'></span>").append("<span class='glyphicon glyphicon-star'></span>");
+			emitter.trigger("bookmark.countByArticle", [articleId,
+				function(total) {
+					container.find(".u-total").text(total);
+				}
+			]);
+			if (curUser) {
+				emitter.trigger("bookmark.checkBooked", [articleId,
+					function(booked) {
+						if (booked) {
+							container.addClass("b-bookmark-booked").click(__bookedFn);
+						} else {
+							container.addClass("b-bookmark-book").click(__bookFn);
+						}
+						if (fnCallback) fnCallback();
+					}
+				]);
+			} else {
+				if (fnCallback) fnCallback();
 			}
-		]);
+		}
 	});
 }(jQuery, window));

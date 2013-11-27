@@ -21,7 +21,7 @@ block content
           !=article.content
         div(class="g-art-footer")
           div(class="u-wriTime") #{article.writeTime}
-          div(id="bookmark", aid="#{article.id}")
+          div(id="bookmark", aid="#{article.id}", cur=user?"#{user.username}":"")
           div(class="clearfix")
         hr
         div(id="tags", aid="#{article.id}")

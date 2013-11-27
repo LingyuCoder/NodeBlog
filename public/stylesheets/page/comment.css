@@ -64,12 +64,6 @@
 	background-color: #f0f0f0;
 }
 
-.b-reply {
-	background: #f0f0f0;
-	padding : 10px 20px;
-	border-radius: 20px;
-}
-
 .g-comment-row .u-opt span{
 	margin-left : 5px;
 }
@@ -82,3 +76,75 @@
 	border: 2px dashed #8F8F8F;
 }
 
+.u-comment-count {
+	cursor: pointer;
+}
+
+.u-comment-count a:hover {
+	color:#333;
+}
+
+.u-comment-count a {
+	color:#333;
+	text-decoration: none
+}
+
+.a-comment-reply:hover {
+	-webkit-animation: borderchange 1s infinite;
+	-moz-animation: borderchange 1s infinite;
+	animation: borderchange 1s infinite;
+}
+
+@-webkit-keyframes borderchange{
+	0% {
+		border: 2px dashed #8F8F8F;
+	}
+	25% {
+		border: 2px dashed orange;
+	}
+	50% {
+		border: 2px dashed red;
+	}
+	75% {
+		border: 2px dashed blue;
+	}
+	100%{
+		border: 2px dashed #8F8F8F;
+	}
+}
+
+@-moz-keyframes borderchange{
+	0% {
+		border: 2px dashed #8F8F8F;
+	}
+	25% {
+		border: 2px dashed orange;
+	}
+	50% {
+		border: 2px dashed red;
+	}
+	75% {
+		border: 2px dashed blue;
+	}
+	100%{
+		border: 2px dashed #8F8F8F;
+	}
+}
+
+@keyframes borderchange{
+	0% {
+		border: 2px dashed #8F8F8F;
+	}
+	25% {
+		border: 2px dashed orange;
+	}
+	50% {
+		border: 2px dashed red;
+	}
+	75% {
+		border: 2px dashed blue;
+	}
+	100%{
+		border: 2px dashed #8F8F8F;
+	}
+}

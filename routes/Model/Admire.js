@@ -1,4 +1,4 @@
-var commonDao = require("../DAO/CommonDAO.js"),
+var commonDao = require("./CommonDAO.js"),
 	collectionName = "admire",
 	uuid = require("node-uuid"),
 	__resultToListFn = function(callback) {
@@ -18,6 +18,7 @@ function Admire(admire) {
 	this.commentId = admire.commentId;
 	this.articleId = admire.articleId;
 	this.time = admire.time;
+	this.id = admire.id;
 }
 
 module.exports = Admire;
@@ -27,12 +28,12 @@ Admire.prototype.save = function(callback) {
 		username: this.username,
 		commentId: this.commentId,
 		articleId: this.articleId,
-		time: new Date().getTime()
+		time: new Date().getTime(),
+		id: uuid.v4()
 	}, function(err, result) {
 		if (err) return callback(err);
-		if (!result) return callback(new Error("保存失败"));
-		console.log(result);
-		callback(err);
+		if (!result[0]) return callback(new Error("保存失败"));
+		callback(err, new Admire(result[0]));
 	});
 };
 
@@ -49,11 +50,6 @@ Admire.removeByComment = function(commentId, callback) {
 };
 
 Admire.getByUser = function(username, callback) {
-	/*commonDao.find(collectionName, {
-		username: username
-	}, {
-		time: -1
-	}, __resultToListFn(callback));*/
 	commonDao.find(collectionName, {
 		condition: {
 			username: username

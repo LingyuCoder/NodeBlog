@@ -1,17 +1,34 @@
-var Admire = require("../Model/Admire.js");
+var Admire = require("../Model/Admire.js"),
+	Comment = require("../Model/Comment.js"),
+	Remind = require("../Model/Remind.js");
 
 exports.addAdmire = function(req, res) {
 	var admire = new Admire({
 		username: req.session.user.username,
 		commentId: req.query.commentId
 	});
-	admire.save(function(err) {
+	admire.save(function(err, admire) {
 		if (err) return res.json(500, {
 			message: err.message
 		});
-		res.json({
-			success: true
+		Comment.get(admire.commentId, function(err, comment) {
+			if (err) return res.json(500, {
+				message: err.message
+			});
+			new Remind({
+				type: "admire",
+				ref: admire.id,
+				user: comment.username
+			}).save(function(err) {
+				if (err) return res.json(500, {
+					message: err.message
+				});
+				res.json({
+					success: true
+				});
+			});
 		});
+
 	});
 };
 

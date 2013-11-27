@@ -3,6 +3,7 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/page/remind.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
       
     block style
@@ -16,7 +17,7 @@ html
             span(class='icon-bar')
             span(class='icon-bar')
           a(class='navbar-brand', href='/index') 天镶的博客
-            
+        
         div(class='collapse navbar-collapse')
           ul(class='nav navbar-nav')
             li
@@ -37,6 +38,8 @@ html
           ul(class='nav navbar-nav navbar-right')
             if user
               li(class="dropdown")
+                a(href="#", class="dropdown-toggle", data-toggle="dropdown", id="hasRemind") 
+              li(class="dropdown")
                 a(href="#", class="dropdown-toggle", data-toggle="dropdown") #{user.nickname} 
                   b(class="caret")
                 ul(class="dropdown-menu")
@@ -45,8 +48,6 @@ html
                       a(href="/nor/conf/article_write") 写新文章
                     li
                       a(href="/article_list") 管理文章
-                    //- li
-                    //-   a(href="/nor/conf/picture_uploadPage") 上传图片
                   li
                     a(href="/nor/user_detail") 修改个人信息
                   li
@@ -63,5 +64,7 @@ html
 
     script(type='text/javascript', src='/javascripts/tools/jquery-1.10.2.min.js')
     script(type='text/javascript', src='/javascripts/tools/bootstrap.min.js')
+    script(type='text/javascript', src='/javascripts/pageTools/Remind.js') 
+    script(type='text/javascript', src='/javascripts/page/global.js') 
 
     block javascript
