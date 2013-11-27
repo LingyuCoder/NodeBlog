@@ -12,10 +12,3 @@ a {
   text-align : center;
   font-style : italic;
 }
-
-.u-avatar img {
-  height: 60px;
-  width: 60px;
-  border-radius: 30px;
-  box-shadow: 0 0 6px #707070
-}

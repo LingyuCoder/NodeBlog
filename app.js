@@ -9,11 +9,13 @@ var express = require('express'),
 	comment = require('./routes/Actions/CommentAction.js'),
 	admire = require('./routes/Actions/AdmireAction.js'),
 	bookmark = require('./routes/Actions/BookmarkAction.js'),
+	tag = require('./routes/Actions/TagAction.js'),
 	gallary = require('./routes/Actions/GallaryAction.js'),
 	picture = require('./routes/Actions/PictureAction.js'),
 	http = require('http'),
 	path = require('path'),
-	setting = require('./routes/setting.js');
+	setting = require('./routes/setting.js'),
+	fs = require('fs');
 
 var app = express();
 
@@ -24,8 +26,8 @@ app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser({
-	keepExtensions : true,
-	uploadDir : setting.uploadDir
+	keepExtensions: true,
+	uploadDir: setting.uploadDir
 }));
 app.use(express.methodOverride());
 app.use(express.cookieParser('wly'));
@@ -71,12 +73,13 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/index', routes.index);
-app.get('/nor/userCenter', routes.userCenter);
+app.get('/advicePage', routes.advicePage);
+app.get('/userCenter', routes.userCenter);
 
 app.get('/user_loginPage', user.loginPage);
 app.get('/user_registPage', user.registPage);
 app.get('/nor/user_detail', user.loadDetail);
-app.get('/user_getDetail', user.getDetail);
+app.post('/user_getDetail', user.getDetail);
 app.post('/user_regist', user.regist);
 app.post('/user_login', user.login);
 app.post('/nor/user_modify', user.modify);
@@ -88,13 +91,10 @@ app.get('/article_load', article.loadArticle);
 app.post('/nor/conf/article_save', article.saveArticle);
 app.post('/nor/conf/article_update', article.updateArticle);
 app.get('/article_list', article.listArticlesByPage);
-app.get('/comment_listByArticle', comment.listByArticle);
-app.post('/nor/comment_addComment', comment.save);
-app.get('/nor/comment_delete', comment.remove);
+
 app.get('/nor/admire_addAdmire', admire.addAdmire);
 app.get('/nor/admire_removeAdmire', admire.removeAdmire);
-app.get('/nor/bookmark_addBookmark', bookmark.save);
-app.get('/nor/bookmark_removeBookmark', bookmark.remove);
+
 app.get('/gallary', gallary.gallaryPage);
 app.get('/gallary_list', gallary.listByPage);
 
@@ -106,6 +106,24 @@ app.post('/nor/conf/picture_uploadDirect', picture.uploadDirectNoCompress);
 app.post('/nor/conf/picture_uploadCancel', picture.uploadCancel);
 app.post('/nor/conf/picture_confirm', picture.confirm);
 app.post('/nor/conf/picture_delete', picture.remove);
+//标签
+app.post('/nor/tag_create', tag.create);
+app.post('/tag_listAll', tag.listAll);
+app.post('/tag_listFuzzy', tag.listFuzzy);
+app.post('/tag_listUserTags', tag.listUserTags);
+app.post('/tag_listArticleTags', tag.listArticleTags);
+//评论
+app.post('/comment_getByArticle', comment.getByArticle);
+app.post('/nor/comment_addComment', comment.save);
+app.post('/nor/comment_delete', comment.remove);
+//点赞
+app.post('/nor/admire_checkAdmire', admire.checkAdmire);
+app.post('/nor/admire_countByComment', admire.countByComment);
+//收藏
+app.post('/nor/bookmark_addBookmark', bookmark.save);
+app.post('/nor/bookmark_removeBookmark', bookmark.remove);
+app.post('/bookmark_countByArticle', bookmark.countByArticle);
+app.post('/nor/bookmark_checkBooked', bookmark.checkBooked);
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));

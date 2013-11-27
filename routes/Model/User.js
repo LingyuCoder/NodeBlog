@@ -20,6 +20,7 @@ function User(user) {
 	this.password = user.password;
 	this.owner = user.owner;
 	this.avatar = user.avatar;
+	this.tags = user.tags;
 }
 
 module.exports = User;
@@ -30,7 +31,8 @@ User.prototype.save = function(callback) {
 		password: this.password,
 		nickname: this.nickname,
 		owner: this.owner,
-		avatar: this.avatar
+		avatar: this.avatar,
+		tags: this.tags
 	}, function(err, result) {
 		if (err) return callback(err);
 		if (!result[0]) return new Error("保存评论失败");
@@ -62,6 +64,7 @@ User.prototype.remove = function(callback) {
 };
 
 User.prototype.update = function(callback) {
+	console.log(this.tags);
 	commonDao.update(collectionName, {
 		username: this.username
 	}, {
@@ -69,6 +72,7 @@ User.prototype.update = function(callback) {
 		password: this.password,
 		nickname: this.nickname,
 		owner: this.owner,
-		avatar: this.avatar
+		avatar: this.avatar,
+		tags: this.tags
 	}, callback);
 };

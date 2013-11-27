@@ -3,6 +3,8 @@ extends layout
 block style
 	link(rel='stylesheet', href='/stylesheets/github.css')
 	link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
+	link(rel='stylesheet', href='/stylesheets/page/tag.css')
+	link(rel='stylesheet', href='/stylesheets/page/user.css')
 	link(rel='stylesheet', href='/stylesheets/page/index.css')
 block content
 	div(class='container')
@@ -10,14 +12,15 @@ block content
 			div(class="panel panel-default", style="margin-top: 20px")
 				div(class="panel-body") 
 					div(class="u-flag")
-						div(class="u-avatar")
-							img(src="#{article.writer.avatar}")
+						div(class="u-avatar", uid="#{article.writer}")
 						div(class="u-flag-left")
 							a(href="/article_load?articleId=#{article.id}")
 								h3
 									!=article.title
 					section
 						!=article.content
+					hr
+					div(class="m-tags", aid="#{article.id}")
 					hr
 					div(class="g-art-footer")
 						div(class="u-wriTime") #{article.writeTime}
@@ -36,8 +39,8 @@ block content
 				a(href=curPage===totalPage?"javascript:void(0)":"/index?page=#{curPage+1}")
 					&rarr;下一页
 
-
-
 block javascript
 	script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
+	script(type='text/javascript', src='/javascripts/pageTools/Tag.js')
+	script(type='text/javascript', src='/javascripts/pageTools/User.js')
 	script(type='text/javascript', src='/javascripts/page/index.js')

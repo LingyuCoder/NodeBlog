@@ -24,6 +24,7 @@ function Article(article) {
 	this.id = article.id;
 	this.writeTime = article.writeTime;
 	this.lastModifyTime = article.lastModifyTime;
+	this.tags = article.tags;
 }
 
 module.exports = Article;
@@ -35,7 +36,8 @@ Article.prototype.save = function(callback) {
 		id: uuid.v4(),
 		writer: this.writer,
 		writeTime: new Date().getTime(),
-		lastModifyTime: new Date().getTime()
+		lastModifyTime: new Date().getTime(),
+		tags: this.tags
 	};
 	commonDao.save(collectionName, article, function(err, result) {
 		if (err) return callback(err);
@@ -56,23 +58,34 @@ Article.get = function(id, callback) {
 Article.getDetail = function(id, callback) {};
 
 Article.getAll = function(callback) {
-	commonDao.find(collectionName, {}, {
-		writeTime: -1
+	commonDao.find(collectionName, {
+		condition: {
+			writeTime: -1
+		}
 	}, __resultToListFn(callback));
 };
 
 Article.getByUser = function(username, callback) {
 	commonDao.find(collectionName, {
-		writer: username
-	}, {
-		time: -1
+		condition: {
+			writer: username
+		},
+		sort: {
+			time: -1
+		}
 	}, __resultToListFn(callback));
 };
 
 
 Article.getByPage = function(curPage, perPage, callback) {
-	commonDao.findByPage(collectionName, {}, curPage, perPage, {
-		writeTime: -1
+	commonDao.find(collectionName, {
+		sort: {
+			writeTime: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
+		}
 	}, __resultToListFn(callback));
 };
 
@@ -86,7 +99,8 @@ Article.prototype.update = function(callback) {
 	}, {
 		content: this.content,
 		title: this.title,
-		lastModifyTime: new Date().getTime()
+		lastModifyTime: new Date().getTime(),
+		tags: this.tags
 	}, callback);
 };
 

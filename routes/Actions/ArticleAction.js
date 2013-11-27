@@ -3,6 +3,7 @@ var Article = require("../Model/Article.js"),
 	Comment = require("../Model/Comment.js"),
 	Admire = require("../Model/Admire.js"),
 	Bookmark = require("../Model/Bookmark.js"),
+	Tag = require("../Model/Tag.js"),
 	async = require("async"),
 	markdown = require("markdown").markdown,
 	moment = require("moment");
@@ -33,6 +34,7 @@ exports.updateArticle = function(req, res) {
 		});
 		article.title = req.body.title;
 		article.content = req.body.content;
+		article.tags = JSON.parse(req.body.tags);
 		article.update(function(err) {
 			if (err) return res.json(500, {
 				message: err.message
@@ -45,10 +47,12 @@ exports.updateArticle = function(req, res) {
 };
 
 exports.saveArticle = function(req, res) {
+	console.log(req.body.tags);
 	var article = new Article({
 		writer: req.session.user.username,
 		content: req.body.content,
-		title: req.body.title
+		title: req.body.title,
+		tags: JSON.parse(req.body.tags)
 	});
 	article.save(function(err, art) {
 		if (err) return res.render("err", {
@@ -75,117 +79,14 @@ exports.deleteArticle = function(req, res) {
 };
 
 exports.loadArticle = function(req, res) {
-	async.waterfall([
-
-		function(callback) {
-			Article.get(req.query.articleId, function(err, article) {
-				if (err) return callback(err);
-				callback(err, article);
-			});
-		},
-		function(article, callback) {
-			Bookmark.countByArticle(article.id, function(err, total) {
-				if (err) return callback(err);
-				article.bookCount = total;
-				callback(err, article);
-			});
-		},
-		function(article, callback) {
-			if (req.session.user) {
-				Bookmark.checkBooked(req.session.user.username, article.id, function(err, booked) {
-					if (err) return callback(err);
-					article.booked = booked;
-					callback(err, article);
-				});
-			} else {
-				article.booked = false;
-				callback(null, article);
-			}
-		},
-		function(article, callback) {
-			User.get(article.writer, function(err, user) {
-				if (err) return callback(err);
-				callback(err, article, user);
-			});
-		},
-		function(article, user, callback) {
-			Comment.getByArticle(article.id, function(err, comments) {
-				if (err) return callback(err);
-				callback(err, article, user, comments);
-			});
-		},
-		function(article, user, comments, callback) {
-			async.map(comments, function(comment, callback) {
-				User.get(comment.username, function(err, user) {
-					if (err) return callback(err);
-					comment.user = user;
-					callback(err, comment);
-				});
-			}, function(err, comments) {
-				if (err) return callback(err);
-				callback(err, article, user, comments);
-			});
-		},
-		function(article, user, comments, callback) {
-			async.map(comments, function(comment, callback) {
-				Admire.countByComment(comment.id, function(err, total) {
-					if (err) return callback(err);
-					comment.admire = total;
-					callback(err, comment);
-				});
-			}, function(err, comments) {
-				if (err) return callback(err);
-				callback(err, article, user, comments);
-			});
-		},
-		function(article, user, comments, callback) {
-			async.map(comments, function(comment, callback) {
-				if (req.session.user) {
-					Admire.checkAdmired(req.session.user.username, comment.id, function(err, admired) {
-						if (err) return callback(err);
-						comment.admired = admired;
-						callback(err, comment);
-					});
-				} else {
-					comment.admired = false;
-					callback(null, comment);
-				}
-
-			}, function(err, comments) {
-				if (err) return callback(err);
-				callback(err, article, user, comments);
-			});
-		}
-	], function(err, article, writer, comments) {
-		var i,
-			j,
-			exists;
+	Article.get(req.query.articleId, function(err, article) {
 		if (err) return res.render("error", {
 			message: err.message
 		});
 		article.content = markdown.toHTML(article.content);
 		article.writeTime = moment(article.writeTime).format("YYYY年MM月DD日");
-
-		for (i = comments.length; i--;) {
-			comments[i].time = moment(comments[i].time).format("HH:mm MM月DD日 YYYY年");
-			if (comments[i].reply) {
-				exists = false;
-				for (j = comments.length; j--;) {
-					if (comments[j].id === comments[i].reply) {
-						comments[i].reply = comments[j];
-						exists = true;
-					}
-				}
-				if (!exists) {
-					comments[i].reply = "deleted";
-				}
-			}
-		}
-
 		res.render("articleDetail", {
-			article: article,
-			writer: writer,
-			comments: comments
+			article: article
 		});
 	});
 };

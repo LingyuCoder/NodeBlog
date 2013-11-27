@@ -52,17 +52,23 @@ Bookmark.checkBooked = function(username, articleId, callback) {
 
 Bookmark.getByUser = function(username, callback) {
 	commonDao.find(collectionName, {
-		username: username
-	}, {
-		time: -1
+		condition: {
+			username: username
+		},
+		sort: {
+			time: -1
+		}
 	}, __resultToListFn(callback));
 };
 
 Bookmark.getByArticle = function(articleId, callback) {
 	commonDao.find(collectionName, {
-		articleId: articleId
-	}, {
-		time: -1
+		condition: {
+			articleId: articleId
+		},
+		sort: {
+			time: -1
+		}
 	}, __resultToListFn(callback));
 };
 

@@ -1,5 +1,9 @@
 extends layout
 
+block style
+  link(rel='stylesheet', href='/stylesheets/page/tag.css')
+  link(rel='stylesheet', href='/stylesheets/page/user.css')
+
 block content
   div(class='container')
     h1
@@ -27,7 +31,7 @@ block content
       div(class="form-group")
         label(class="col-sm-2 col-sm-offset-2 control-label") 头像预览
         div(class="col-sm-4")
-          div(class="u-avatar")
+          div(class="u-user-avatar")
             img(src="#{user.avatar}",id="avatarPreview")
       div(class="form-group")
         label(for="inputPassword", class="col-sm-2 col-sm-offset-2 control-label") 密码
@@ -37,11 +41,31 @@ block content
         label(for="inputPassAgain", class="col-sm-2 col-sm-offset-2 control-label") 密码重复
         div(class="col-sm-4")
           input(type="password", name="passwordAgain", class="form-control", id="inputPassAgain", placeholder="再次填写密码")
+      div(class="form-group")
+        input(type="hidden", name="tags")
+        div(class="col-sm-6") 
+          h3 您的标签
+          hr
+          div(id="myTags", class="m-myTags")
+        div(class="col-sm-6")
+          h3 所有标签
+          hr
+          div(id="allTags", class="m-allTags")
+          hr
+          span(class="label b-label-1", style="padding:8px 5px", id="newTag")
+            input(id="newTagInput", type="text", placeholder="标签名", color="#428bca")
+            span(class="glyphicon glyphicon-plus u-tag-create", style="margin-left:5px;cursor:pointer", id="createTag")
+          span(class="label b-label-1 u-label-picker", value=1, color="#428bca") 深蓝
+          span(class="label b-label-2 u-label-picker", value=2, color="#5cb85c") 绿色
+          span(class="label b-label-3 u-label-picker", value=3, color="#5cb0de") 淡蓝
+          span(class="label b-label-4 u-label-picker", value=4, color="#f0ad4e") 黄色
+          span(class="label b-label-5 u-label-picker", value=5, color="#d9543f") 红色
       hr
       div(class="form-group")
         button(type="submit" class="col-sm-offset-3 col-sm-2 btn btn-primary") 提交修改
         a(class="btn btn-default col-sm-offset-2 col-sm-2", href="user_detail") 恢复
   
 block javascript
+  script(type='text/javascript', src='/javascripts/pageTools/Tag.js')
   script(type='text/javascript', src='/javascripts/page/userDetail.js')
 

@@ -1,0 +1,117 @@
+.b-label-1 {
+	background-color: #428bca
+}
+
+.b-label-2 {
+	background-color: #5cb85c
+}
+
+.b-label-3 {
+	background-color: #5cb0de
+}
+
+.b-label-4 {
+	background-color: #f0ad4e
+}
+
+.b-label-5 {
+	background-color: #d9543f
+}
+
+.u-label-picker {
+	cursor: pointer;
+	margin: 5px;
+	font-size: 14px
+}
+
+.u-label {
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.a-label-rotateX{
+	margin: 5px;
+	display: inline-block;
+}
+
+.a-label-rotateX:hover{
+	-webkit-animation: labelrotatex 1s linear infinite;
+		 -moz-animation: labelrotatex 1s linear infinite;
+					animation: labelrotatex 1s linear infinite;
+}
+
+@-webkit-keyframes labelrotatex{
+	from {
+		-webkit-transform : rotateX(0deg);
+	}
+	to {
+		-webkit-transform : rotateX(360deg);
+	}
+}
+
+@-moz-keyframes labelrotatex{
+	from {
+		-moz-transform : rotateX(0deg);
+	}
+	to {
+		-moz-transform : rotateX(360deg);
+	}
+}
+
+@keyframes labelrotatex{
+	from {
+		transform : rotateX(0deg);
+	}
+	to {
+		transform : rotateX(360deg);
+	}
+}
+
+.a-label-strike {
+	-webkit-animation: labelstrike 1s linear 3;
+		 -moz-animation: labelstrike 1s linear 3;
+					animation: labelstrike 1s linear 3;
+}
+
+@-webkit-keyframes labelstrike{
+	0% {
+		-webkit-transform : scale(1);
+	}
+	50%{
+		-webkit-transform : scale(1.25);
+	}
+	100% {
+		-webkit-transform : scale(1);
+	}
+}
+
+@-moz-keyframes labelstrike{
+	0% {
+		-moz-transform : scale(1);
+	}
+	50%{
+		-moz-transform : scale(1.25);
+	}
+	100% {
+		-moz-transform : scale(1);
+	}
+}
+
+@keyframes labelstrike{
+	0% {
+		transform : scale(1);
+	}
+	50%{
+		transform : scale(1.25);
+	}
+	100% {
+		transform : scale(1);
+	}
+}
+
+.b-label-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px;
+}

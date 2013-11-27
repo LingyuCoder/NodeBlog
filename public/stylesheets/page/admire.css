@@ -1,0 +1,10 @@
+.admired{
+	background-color: #f0f0f0
+}
+
+.b-admire-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px
+}

@@ -52,20 +52,29 @@ Comment.get = function(commentId, callback) {
 };
 
 Comment.getByArticle = function(articleId, callback) {
-	commonDao.find(collectionName, {
+	/*commonDao.find(collectionName, {
 		articleId: articleId
+	}, __resultToListFn(callback));*/
+	commonDao.find(collectionName, {
+		condition: {
+			articleId: articleId
+		}
 	}, __resultToListFn(callback));
 };
 
 Comment.getByUser = function(username, callback) {
 	commonDao.find(collectionName, {
-		username: username
+		condition: {
+			username: username
+		}
 	}, __resultToListFn(callback));
 };
 
 Comment.removeByArticle = function(articleId, callback) {
 	commonDao.find(collectionName, {
-		articleId: articleId
+		condition: {
+			articleId: articleId
+		}
 	}, __resultToListFn(function(err, comments) {
 		async.eachLimit(comments, 10, function(comment, callback) {
 			comment.remove(callback);
@@ -81,7 +90,9 @@ Comment.countByArticle = function(articleId, callback) {
 
 Comment.prototype.getReply = function(callback) {
 	commonDao.find(collectionName, {
-		reply: this.id
+		condition: {
+			reply: this.id
+		}
 	}, __resultToListFn(callback));
 };
 

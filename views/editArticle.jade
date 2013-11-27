@@ -2,26 +2,47 @@ extends layout
 
 block style
   link(rel='stylesheet', href='/stylesheets/github.css')
+  link(rel='stylesheet', href='/stylesheets/page/tag.css')
   link(rel='stylesheet', href='/stylesheets/page/writeArticle.css')
 block content
-  div(class="container")
-    h2
-      strong 修改文章
-      button(class="btn btn-primary", style="float:right", id="saveArtBtn", aid="#{article.id}") 保存文章
-    hr
-    div(class="form-group")
-      label(for="inputTitle") 
-        h3 标题：
-      input(class="form-control", type="text", id="inputTitle", placeholder="文章标题", value="#{article.title}")
-    div(class="panel panel-default", style="padding:10px;height:80%")
-      div(class="u-panel" id="leftPanel")
-        textarea(class="u-pane", id="inputArticle", style="resize: none;")
-          =article.content
-      div(class="u-panel" id="rightPanel")
-        div(class="well u-pane", id="outputArticle")
-      div(style="clear:both")
+  h2
+    strong 修改文章
+    button(class="btn btn-primary", style="float:right", id="saveArtBtn", aid="#{article.id}") 保存文章
+  hr
+  div(class="alert alert-danger", id="formValidate", style="display:none")
+  div(class="form-group")
+    label(for="inputTitle") 
+      h3 标题：
+    input(class="form-control", type="text", id="inputTitle", placeholder="文章标题", value="#{article.title}")
+  div(class="panel panel-default", style="padding:10px;height:80%")
+    div(class="u-panel" id="leftPanel")
+      textarea(class="u-pane", id="inputArticle", style="resize: none;")
+        =article.content
+    div(class="u-panel" id="rightPanel")
+      div(class="well u-pane", id="outputArticle")
+    div(style="clear:both")
+  div(class="row")
+      input(type="hidden", name="tags")
+      div(class="col-md-6")
+        h2 本文标签
+        hr
+        div(id="articleTags", aid="#{article.id}")
+      div(class="col-md-6")
+        h2 所有标签
+        hr
+        div(id="allTags")
+        hr
+        span(class="label b-label-1", style="padding:8px 5px", id="newTag")
+          input(id="newTagInput",type="text", placeholder="标签名", color="#428bca")
+          span(class="glyphicon glyphicon-plus u-tag-create", style="margin-left:5px;cursor:pointer", id="createTag")
+        span(class="label b-label-1 u-label-picker", value=1, color="#428bca") 深蓝
+        span(class="label b-label-2 u-label-picker", value=2, color="#5cb85c") 绿色
+        span(class="label b-label-3 u-label-picker", value=3, color="#5cb0de") 淡蓝
+        span(class="label b-label-4 u-label-picker", value=4, color="#f0ad4e") 黄色
+        span(class="label b-label-5 u-label-picker", value=5, color="#d9543f") 红色
 
 block javascript
   script(type='text/javascript', src='/javascripts/tools/showdown.js')
   script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
+  script(type='text/javascript', src='/javascripts/pageTools/Tag.js')
   script(type='text/javascript', src='/javascripts/page/editArticle.js')

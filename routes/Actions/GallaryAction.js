@@ -8,7 +8,7 @@ exports.gallaryPage = function(req, res) {
 exports.listByPage = function(req, res) {
 	var curPage = req.query.curPage || 0,
 		perPage = Number(req.query.perPage) || 10;
-	path = "public/" + gallary.small;
+	path = "public/" + gallary.name;
 	fs.readdir(path, function(err, files) {
 		var i,
 			start = curPage * perPage,
@@ -21,6 +21,7 @@ exports.listByPage = function(req, res) {
 			res.json({
 				files: [],
 				total: files.length,
+				gallary: gallary.name,
 				gallary_small: gallary.small
 			});
 		} else {

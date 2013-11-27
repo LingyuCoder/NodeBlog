@@ -1,4 +1,5 @@
-var Comment = require("../Model/Comment.js");
+var Comment = require("../Model/Comment.js"),
+	moment = require("moment");
 
 exports.save = function(req, res) {
 	var comment = new Comment({
@@ -16,7 +17,7 @@ exports.save = function(req, res) {
 };
 
 exports.remove = function(req, res) {
-	Comment.get(req.query.commentId, function(err, comment) {
+	Comment.get(req.body.commentId, function(err, comment) {
 		if (err) return res.json(500, {
 			message: err.message
 		});
@@ -37,21 +38,15 @@ exports.remove = function(req, res) {
 	});
 };
 
-exports.listByArticle = function(req, res) {
-	Comment.getByArticle(req.query.articleId, function(err, comments) {
+exports.getByArticle = function(req, res) {
+	Comment.getByArticle(req.body.articleId, function(err, comments) {
+		var i;
 		if (err) return res.json(500, {
 			message: err.message
 		});
-		res.json({
-			comments: comments
-		});
-	});
-	var articleId = req.query.articleId;
-	connection.findCommentsByArticle(articleId, function(err, comments) {
-		var i;
-		if (err) res.json(500, {
-			message: err.message
-		});
+		for (i = comments.length; i--;) {
+			comments[i].time = moment(comments[i].time).format("HH:mm MM月DD日 YYYY年");
+		}
 		res.json({
 			comments: comments
 		});

@@ -96,4 +96,21 @@
 			console.log(error);
 		});
 	});
+
+	$(".u-avatar").each(function(){
+		$(document).trigger("user.drawUserInfo", [$(this).attr("uid"), {
+			container: $(this)
+		}]);
+	});
+
+	$(".u-nopop-avatar").each(function(){
+		$(document).trigger("user.drawUserInfo", [$(this).attr("uid"), {
+			container: $(this),
+			popover : false
+		}]);
+	});
+
+	$(document).trigger("tag.drawUserTags", [$("#tags").attr("uid"), {
+		container: $("#tags")
+	}]);
 }(jQuery, window));

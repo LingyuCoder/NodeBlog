@@ -115,10 +115,8 @@ exports.uploadDirect = function(req, res) {
 };
 
 exports.uploadDirectNoCompress = function(req, res) {
-	console.log(req.files.image.path);
-	console.log(/^upload_tmp\/([\w\-\.]+)$/.exec(req.files.image.path));
 	var inputFile = req.files.image.path,
-		fileName = /^upload_tmp\/([\w\-\.]+)$/.exec(inputFile)[1],
+		fileName = (/^upload_tmp\/([\w\-\.]+)$/.exec(inputFile) || /^upload_tmp\\([\w\-\.]+)$/.exec(inputFile)) [1],
 		resizeFile = "public/" + setting.gallary.small + "/" + fileName,
 		outputFile = "public/" + setting.gallary.name + "/" + fileName;
 	async.waterfall([

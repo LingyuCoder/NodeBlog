@@ -1,0 +1,20 @@
+.b-bookmark-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px
+}
+
+.u-bookmark {
+	padding : 5px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.b-bookmark-booked {
+	background-color: #f0f0f0;
+}
+
+.b-bookmark-book:hover{
+	background-color: #f0f0f0;
+}

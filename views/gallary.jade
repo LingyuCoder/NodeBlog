@@ -4,10 +4,12 @@ block style
 	link(rel='stylesheet', href='/stylesheets/page/gallary.css')
 block content
 	div(class="u-block", id="blocker")
+		div(class="u-loading") 加载中，请等待
 	div(class="u-fillPic", id="filler")
 		div(class="u-opt u-close")
 			span(class="glyphicon glyphicon-remove")
-		img
+		center
+			img
 	div(class="container")
 		div(id="gallary", class="row")
 			div(class="col-md-3 g-gal-col", index=0, id="col-0")
@@ -20,4 +22,5 @@ block content
 		div(class="glyphicon glyphicon-trash u-conf-opt u-trash", id="trash")
 		div(class="glyphicon glyphicon-upload u-conf-opt u-upload", id="upload")
 block javascript
+	script(type='text/javascript', src='/javascripts/tools/jquery-mousewheel.js')
 	script(type='text/javascript', src='/javascripts/page/gallary.js')

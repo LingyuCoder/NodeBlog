@@ -1,7 +1,19 @@
+var fs = require('fs');
+if(!fs.existsSync("upload_tmp")){
+	fs.mkdirSync("upload_tmp");
+}
+
+if(!fs.existsSync("public/gallary_sm")){
+	fs.mkdirSync("public/gallary_sm");
+}
+
+if(!fs.existsSync("public/gallary")){
+	fs.mkdirSync("public/gallary");
+}
+
 module.exports = {
 	//本地数据库测试
-	//host : "mongodb://127.0.0.1:27017/myblog",
-	host : "mongodb://nodejitsu:b1812007e0fb8943fccde6c5092ccc0a@paulo.mongohq.com:10025/nodejitsudb3302042237",
+	host : process.env.DB || "mongodb://127.0.0.1:27017/myblog",
 	gallary : {
 		small : "gallary_sm",
 		name : "gallary"

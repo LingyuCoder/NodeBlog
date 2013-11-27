@@ -49,10 +49,18 @@ Admire.removeByComment = function(commentId, callback) {
 };
 
 Admire.getByUser = function(username, callback) {
-	commonDao.find(collectionName, {
+	/*commonDao.find(collectionName, {
 		username: username
 	}, {
 		time: -1
+	}, __resultToListFn(callback));*/
+	commonDao.find(collectionName, {
+		condition: {
+			username: username
+		},
+		sort: {
+			time: -1
+		}
 	}, __resultToListFn(callback));
 };
 

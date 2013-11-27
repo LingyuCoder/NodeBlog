@@ -42,14 +42,10 @@
 		__imgClickFun = function(event) {
 			processing = true;
 			var scrollTop = $(window).scrollTop();
-			$("img", filler).attr("src", "/" + $("img", this).attr("gallary") + "/" + $("img", this).attr("fname")).css({
-				"max-width": blocker.width() * 0.7 + "px"
-			}).bind("load", function(event) {
-				filler.css({
-					left: "-" + filler.width() / 2 + "px",
-					top: (scrollTop + 100) + "px"
-				}).show();
-			});
+			$("img", filler).attr("src", "/" + $("img", this).attr("gallary") + "/" + $("img", this).attr("fname")).css("width", "auto");
+			filler.css({
+				top: (scrollTop + 100) + "px"
+			}).show();
 			blocker.show();
 		},
 		__deletePic = function(fileName, $div) {
@@ -116,7 +112,7 @@
 					dataType: "json",
 					type: "get"
 				}).done(__drawPics).fail(function(error) {
-					console.err(error.message);
+					console.log(error);
 				});
 			}
 		};
@@ -127,7 +123,24 @@
 		event.stopPropagation();
 		event.preventDefault();
 	});
-	$("#filler .u-close").click(function(event) {
+
+	filler.find("img").mousewheel(function(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		var that = $(this),
+			curWidth = that.width();
+		if (event.deltaY > 0) {
+			if (curWidth === filler.width())
+				return false;
+			that.width(curWidth + 20);
+		} else {
+			if (curWidth === 300)
+				return false;
+			that.width(curWidth - 20);
+		}
+	});
+
+	filler.find(".u-close").click(function(event) {
 		$("#filler").addClass("a-hide");
 		filler.hide();
 		blocker.hide();

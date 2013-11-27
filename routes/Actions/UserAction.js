@@ -19,6 +19,7 @@ exports.login = function(req, res) {
       });
     }
     if (user.password === req.body.password) {
+      console.log(user);
       req.session.user = user;
       res.redirect("/index");
     } else {
@@ -40,24 +41,29 @@ exports.loadDetail = function(req, res) {
   });
 };
 exports.getDetail = function(req, res) {
-  User.get(req.query.username, function(err, user) {
+  User.get(req.body.username, function(err, user) {
     if (err) return res.render("error", {
       message: err.message
     });
     res.json({
       username: user.username,
       nickname: user.nickname,
-      owner: user.owner
+      owner: user.owner,
+      tags: user.tags,
+      avatar: user.avatar
     });
   });
 };
 exports.modify = function(req, res) {
+  console.log(req.body.tags, typeof req.body.tags);
+  var tags = JSON.parse(req.body.tags);
   User.get(req.session.user.username, function(err, user) {
     if (err) return res.render("error", {
       message: err.message
     });
     if (user) {
       user.nickname = req.body.nickname;
+      user.tags = tags;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -94,7 +100,8 @@ exports.regist = function(req, res) {
         password: req.body.password,
         nickname: req.body.nickname,
         avatar: "/images/default_avatar.jpg",
-        owner: false
+        owner: false,
+        tags: []
       });
       user.save(function(err) {
         console.log("saved");

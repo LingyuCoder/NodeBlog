@@ -50,94 +50,12 @@
 	z-index: -1;
 }
 
-.g-comment {
-	width : 100%;
-}
-
-.g-comment .g-info {
-	display: block;
-	height: 30px;
-	margin-left : 100px;
-	line-height: 30px;
-
-}
-
-.g-comment .g-info .u-nick{
-	margin-right: 20px;
-	font-weight : bolder;
-	font-size: large
-}
-
-.g-comment .g-info .u-nick a:link{
-	color : #0f0f0f;
-	text-decoration: none
-}
-
-.g-comment .g-info .u-nick a:hover{
-	color : #a0a0a0;
-	text-decoration: none
-}
-
-.g-comment .g-info .u-nick a:active{
-	color : #f0f0f0;
-	text-decoration: none
-}
-
-.g-comment .g-info .u-time{
-	float:right;
-}
-
-.g-comment .u-content {
-	display: block;
-	margin-left : 100px;
-	margin-top : 10px;
-	font-size: large
-}
-
-.g-comment .u-avatar {
-	float: left;
-}
-
-.g-comment .g-operate {
-	margin-left: 100px;
-}
-
-.g-comment .u-opt {
-	float:right;
-	margin-left : 10px;
-	line-height: 14px;
-	padding : 4px 6px;
-	border-radius: 4px;
-	cursor : pointer;
-}
-
-.g-comment .u-opt:hover {
-	background-color: #f0f0f0;
-}
-
-.g-comment .admired {
-	background-color: #f0f0f0;
-}
-
-.b-reply {
-	background: #f0f0f0;
-	padding : 10px 20px;
-	border-radius: 20px;
-}
-
-.g-comment .u-opt span{
-	margin-left : 5px;
-}
-
 .g-art-footer .u-wriTime {
 	float:left;
 }
 
 .g-art-footer .u-bookmark {
 	float:right;
-	padding : 5px 10px;
-	border-radius: 10px;
-	cursor: pointer;
 }
 
 .g-art-footer .book:hover{

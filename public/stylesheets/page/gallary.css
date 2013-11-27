@@ -12,12 +12,30 @@
 .u-pic:hover {
 	position: relative;
 	z-index: 100;
-	animation : 'bigger' 1s ease 0s 1 normal;
-	transform: scale(1.25);
-	-webkit-animation : 'bigger' 1s ease 0s 1 normal;
+	-webkit-animation : bigger 1s 1;
 	-webkit-transform: scale(1.25);
-	-moz-animation : 'bigger' 1s ease 0s 1 normal;
+	-moz-animation : bigger 1s 1;
 	-moz-transform: scale(1.25);
+	animation : bigger 1s 1;
+	transform: scale(1.25);
+}
+
+@-moz-keyframes bigger { /* firefox */
+	from {
+		-moz-transform: scale(1);
+	}
+	to {
+		-moz-transform: scale(1.25);
+	}
+}
+
+@-webkit-keyframes bigger { /*chrome & safari*/
+	from {
+		-webkit-transform: scale(1);
+	}
+	to {
+		-webkit-transform: scale(1.25);
+	}
 }
 
 @keyframes bigger {
@@ -28,25 +46,6 @@
 		transform: scale(1.25);
 	}
 }
-
-@-moz-keyframes bigger {
-	from {
-		-moz-transform: scale(1);
-	}
-	to {
-		-moz-transform: scale(1.25);
-	}
-}
-
-@-webkit-keyframes bigger {
-	from {
-		-webkit-transform: scale(1);
-	}
-	to {
-		-webkit-transform: scale(1.25);
-	}
-}
-
 
 
 .scrollFooter {
@@ -82,13 +81,14 @@
 	box-shadow: 3px 3px 8px #818181;
 	z-index: 200;
 	display: none;
-	max-width: 70%;
+	width: 70%;
+	left: -35%;
+	background-color: #f0f0f0;
 	margin-top : 50px;
 }
 
 .u-fillPic .u-opt {
 	position : absolute;
-	right : -16px;
 	width: 36px;
 	height: 36px;
 	font-size: 20px;
@@ -108,13 +108,22 @@
 
 .u-close {
 	top : -16px;
+	right : -16px;
 }
 
-.u-delete {
-	top : 30px;
+.u-bigger{
+	top : 24px;
+	right : -16px;
+}
+
+.u-smaller{
+	top : 64px;
+	right : -16px;
 }
 
 .u-fillPic img{
+	max-width: 100%;
+	min-width: 300px;
 }
 
 .u-conf-opt {

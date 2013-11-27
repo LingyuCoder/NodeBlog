@@ -7,7 +7,6 @@
 				articleId: that.attr("aid")
 			}
 		}).done(function(data) {
-			console.log(data);
 			if (data.success) {
 				that.addClass("u-booked")
 					.removeClass("u-book")
@@ -43,7 +42,18 @@
 	});
 	$(".u-book").click(__addBookFun);
 	$(".u-booked").click(__removeBookFun);
-	$(".u-comment").click(function(event){
-		window.location.href = "/article_load?articleId=" + $(this).attr("aid") +"#comments";
+	$(".u-comment").click(function(event) {
+		window.location.href = "/article_load?articleId=" + $(this).attr("aid") + "#comments";
+	});
+
+	$(".m-tags").each(function() {
+		var that = $(this),
+			articleId = that.attr("aid");
+		$(document).trigger("tag.drawArticleTags", [articleId, that]);
+	});
+
+	$(".u-avatar").each(function() {
+		var that = $(this);
+		$(document).trigger("user.drawUserInfo", [that.attr("uid"), that]);
 	});
 }(jQuery, window));

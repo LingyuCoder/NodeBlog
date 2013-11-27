@@ -1,42 +1,60 @@
 extends layout
 
 block style
+  link(rel='stylesheet', href='/stylesheets/page/tag.css')
+  link(rel='stylesheet', href='/stylesheets/page/user.css')
   link(rel='stylesheet', href='/stylesheets/page/userCenter.css')
 
 block content
   div(class='container')
     h1
       div(style="float:left")
-        strong 用户中心
-      div(class="u-avatar", style="float:right")
-        img(src="#{user.avatar}")
+        strong #{curUser.nickname}的用户中心
+      div(class="u-nopop-avatar", style="float:right", uid="#{curUser.username}")
       div(class="clearfix")
     hr
+    div(id="tags", uid="#{curUser.username}")
+    hr
     div(class="list-group g-chose", id="chosePanel")
-        if user.owner
-          a(href="#", class="list-group-item active", ref="articles") 我的文章
+        if curUser.owner
+          a(href="#", class="list-group-item active", ref="articles") 
+            if user&&curUser.username === user.username
+              != "我的文章"
+            else
+              != "ta的文章"
             span(class="badge pull-right") #{articles.length}
-        a(href="#", class=user.owner?"list-group-item" : "list-group-item active", ref="bookmarks") 我的收藏
+        a(href="#", class=curUser.owner?"list-group-item" : "list-group-item active", ref="bookmarks")
+          if user&&curUser.username === user.username
+            != "我的收藏"
+          else
+            != "ta的收藏"
           span(class="badge pull-right") #{bookmarks.length}
-        a(href="#", class="list-group-item", ref="comments") 我的评论
+        a(href="#", class="list-group-item", ref="comments")
+          if user&&curUser.username === user.username
+            != "我的评论"
+          else
+            != "ta的评论"
           span(class="badge pull-right") #{comments.length}
-        a(href="#", class="list-group-item", ref="admires") 赞过的评论
+        a(href="#", class="list-group-item", ref="admires")
+          if user&&curUser.username === user.username
+            != "我赞过的评论"
+          else
+            != "ta赞过的评论"
           span(class="badge pull-right") #{admires.length}
     div(class="panel panel-default g-content")
-      if user.owner
+      if curUser.owner
         div(class="panel-body", id="articles")
           if articles.length === 0
             div(class="u-noitem") 您目前没有写过文章
           else 
             for article in articles
               div(class="g-item")
-                div(class="u-avatar")
-                  a(href="/user_center?username=#{user.username}")
-                    img(src="#{user.avatar}")
+                div(class="u-avatar", uid="#{curUser.username}")
                 div(class="g-info") 
                   div(class="u-time") 最后修改于：#{article.lastModifyTime}
-                  a(class="u-opt u-del-art", aid="#{article.id}") 删除
-                    span(class="glyphicon glyphicon-remove")
+                  if user&&user.username === curUser.username
+                    a(class="u-opt u-del-art", aid="#{article.id}") 删除
+                      span(class="glyphicon glyphicon-remove")
                   a(class="u-opt", href="/article_load?articleId=#{article.id}") 详细
                     span(class="glyphicon glyphicon-eye-open")
                   div(style="clear:both")
@@ -44,20 +62,19 @@ block content
                   a(href="/article_load?articleId=#{article.id}") #{article.title}
                 div(class="u-time") 作于:#{article.writeTime}
                 hr
-      div(class=user.owner?"panel-body g-hide" : "panel-body", id="bookmarks")
+      div(class=curUser.owner?"panel-body g-hide" : "panel-body", id="bookmarks")
         if bookmarks.length === 0
           div(class="u-noitem") 您目前没有收藏文章
         else 
           for bookmark in bookmarks
             div(class="g-item")
               if bookmark.article
-                div(class="u-avatar")
-                  a(href="/user_center?username=#{bookmark.article.writer.username}")
-                    img(src="#{bookmark.article.writer.avatar}")
+                div(class="u-avatar", uid="#{bookmark.article.writer.username}")
                 div(class="g-info") 
                   div(class="u-time") #{bookmark.article.writeTime}
-                  a(class="u-opt u-del-book", aid="#{bookmark.article.id}") 删除
-                    span(class="glyphicon glyphicon-remove")
+                  if user&&user.username === curUser.username
+                    a(class="u-opt u-del-book", aid="#{bookmark.article.id}") 删除
+                      span(class="glyphicon glyphicon-remove")
                   a(class="u-opt", href="/article_load?articleId=#{bookmark.article.id}") 详细
                     span(class="glyphicon glyphicon-eye-open")
                   div(style="clear:both")
@@ -73,13 +90,12 @@ block content
         else 
           for comment in comments
             div(class="g-item")
-              div(class="u-avatar")
-                a(href="/user_center?username=#{user.username}")
-                  img(src="#{user.avatar}")
+              div(class="u-avatar", uid="#{curUser.username}")
               div(class="g-info") 
                 div(class="u-time") #{comment.time}
-                a(class="u-opt u-del-com", cid="#{comment.id}") 删除
-                  span(class="glyphicon glyphicon-remove")
+                if user&&user.username === curUser.username
+                  a(class="u-opt u-del-com", cid="#{comment.id}") 删除
+                    span(class="glyphicon glyphicon-remove")
                 a(class="u-opt", href="/article_load?articleId=#{comment.articleId}#cmt_#{comment.id}") 详细
                   span(class="glyphicon glyphicon-eye-open")
                 div(style="clear:both")
@@ -93,13 +109,12 @@ block content
           for admire in admires
             div(class="g-item")
               if admire.comment
-                div(class="u-avatar")
-                  a(href="/user_center?username=#{admire.comment.user.username}")
-                    img(src="#{admire.comment.user.avatar}")
+                div(class="u-avatar", uid="#{admire.comment.user.username}")
                 div(class="g-info") 
                   div(class="u-time") #{admire.comment.time}
-                  a(class="u-opt u-del-adm", cid="#{admire.comment.id}", aid="#{admire.comment.articleId}") 删除
-                    span(class="glyphicon glyphicon-remove")
+                  if user&&user.username === curUser.username
+                    a(class="u-opt u-del-adm", cid="#{admire.comment.id}", aid="#{admire.comment.articleId}") 删除
+                      span(class="glyphicon glyphicon-remove")
                   a(class="u-opt", href="/article_load?articleId=#{admire.comment.articleId}#cmt_#{admire.comment.id}") 详细
                     span(class="glyphicon glyphicon-eye-open")
                   div(style="clear:both")
@@ -109,4 +124,6 @@ block content
                 div(style="text-align:center") 评论已被删除
               hr
 block javascript
+  script(type='text/javascript', src='/javascripts/pageTools/User.js')
+  script(type='text/javascript', src='/javascripts/pageTools/Tag.js')
   script(type='text/javascript', src='/javascripts/page/userCenter.js')

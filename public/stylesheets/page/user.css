@@ -1,0 +1,18 @@
+.b-user-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px
+}
+
+.u-user-avatar img {
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  box-shadow: 0 0 6px #707070
+}
+
+.u-user-tags {
+	width: 272px;
+	padding-right: 20px;
+}

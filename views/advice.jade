@@ -1,0 +1,25 @@
+extends layout
+
+block style
+
+block content
+	div(class="container")
+		div(class="jumbotron", style="margin-top:50px")
+			h1 感谢您提供宝贵的意见
+			p 如果您对这个博客有任何意见和建议，或者遇到了任何bug，均可在此进行提交
+		div(class = "ds-thread")
+
+block javascript
+	script(type = 'text/javascript')
+		var duoshuoQuery = {
+			short_name: "skyinlayer"
+		};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';
+			ds.async = true;
+			ds.src = 'http://static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+
