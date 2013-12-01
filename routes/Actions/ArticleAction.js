@@ -27,7 +27,7 @@ exports.editPage = function(req, res) {
 	});
 };
 
-exports.updateArticle = function(req, res) {
+exports.update = function(req, res) {
 	Article.get(req.body.articleId, function(err, article) {
 		if (err) return res.json(500, {
 			message: err.message
@@ -46,7 +46,7 @@ exports.updateArticle = function(req, res) {
 	});
 };
 
-exports.saveArticle = function(req, res) {
+exports.save = function(req, res) {
 	console.log(req.body.tags);
 	var article = new Article({
 		writer: req.session.user.username,
@@ -62,7 +62,7 @@ exports.saveArticle = function(req, res) {
 	});
 };
 
-exports.deleteArticle = function(req, res) {
+exports.remove = function(req, res) {
 	Article.get(req.query.articleId, function(err, article) {
 		if (err) return res.json(500, {
 			message: err.message
@@ -78,10 +78,25 @@ exports.deleteArticle = function(req, res) {
 	});
 };
 
-exports.loadArticle = function(req, res) {
+exports.getOne = function(req, res) {
+	Article.get(req.body.articleId, function(err, article) {
+		if (err) return res.json(500);
+		if (!article) return res.status(404).send("not fount");
+		article.writeTime = moment(article.writeTime).format("YYYY年MM月DD日");
+		return res.json({
+			article: article
+		});
+	});
+};
+
+
+exports.load = function(req, res) {
 	Article.get(req.query.articleId, function(err, article) {
 		if (err) return res.render("error", {
 			message: err.message
+		});
+		if (!article) return res.render("error", {
+			message: "没有找到该文章"
 		});
 		article.content = markdown.toHTML(article.content);
 		article.writeTime = moment(article.writeTime).format("YYYY年MM月DD日");
@@ -91,7 +106,7 @@ exports.loadArticle = function(req, res) {
 	});
 };
 
-exports.listArticlesByPage = function(req, res) {
+exports.listByPage = function(req, res) {
 	var page = (req.query.page || 1) - 1,
 		artPerPage = req.query.artPerPage || 10;
 	async.waterfall([
@@ -153,6 +168,27 @@ exports.listArticlesByPage = function(req, res) {
 			totalPage: totalPage,
 			startPage: startPage,
 			endPage: endPage
+		});
+	});
+};
+
+exports.getByUser = function(req, res) {
+	Article.getByUser(req.body.username, Number(req.body.curPage), Number(req.body.perPage), function(err, articles) {
+		if (err) return res.json(500);
+		for (var i = articles.length; i--;) {
+			articles[i].writeTime = moment(articles[i].writeTime).format("YYYY年MM月DD日");
+		}
+		res.json({
+			articles: articles
+		});
+	});
+};
+
+exports.countByUser = function(req, res) {
+	Article.countByUser(req.body.username, function(err, total) {
+		if (err) return res.json(500);
+		res.json({
+			total: total
 		});
 	});
 };

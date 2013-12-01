@@ -26,16 +26,25 @@ module.exports = Remind;
 
 Remind.prototype.save = function(callback) {
 	commonDao.save(collectionName, {
-		id: uuid.v4(),
 		time: new Date().getTime(),
 		type: this.type,
 		ref: this.ref,
 		user: this.user,
-		readed: false
+		readed: false,
+		id: uuid.v4()
 	}, function(err, result) {
 		if (err) return callback(err);
 		if (!result[0]) return callback(new Error("保存失败"));
 		callback(err, new Remind(result[0]));
+	});
+};
+
+Remind.getOne = function(remindId, callback) {
+	commonDao.findOne(collectionName, {
+		id: remindId
+	}, function(err, result) {
+		if (err) return callback(err);
+		callback(err, result ? new Remind(result) : null);
 	});
 };
 
@@ -46,37 +55,14 @@ Remind.prototype.remove = function(callback) {
 };
 
 Remind.prototype.update = function(callback) {
-	commonDao.find(collectionName, {
+	commonDao.update(collectionName, {
 		id: this.id
 	}, {
 		readed: this.readed
 	}, callback);
 };
 
-Remind.getByUser = function(username, callback) {
-	commonDao.find(collectionName, {
-		condition: {
-			user: username
-		},
-		sort: {
-			time: -1
-		}
-	}, __resultToListFn(callback));
-};
-
-Remind.getByUserAndType = function(username, type, callback) {
-	commonDao.find(collectionName, {
-		condition: {
-			user: username,
-			type: type
-		},
-		sort: {
-			time: -1
-		}
-	}, __resultToListFn(callback));
-};
-
-Remind.getByPage = function(username, curPage, perPage, callback) {
+Remind.getByUser = function(username, curPage, perPage, callback) {
 	commonDao.find(collectionName, {
 		condition: {
 			user: username
@@ -87,6 +73,22 @@ Remind.getByPage = function(username, curPage, perPage, callback) {
 		page: {
 			curPage: curPage,
 			perPage: perPage
+		},
+	}, __resultToListFn(callback));
+};
+
+Remind.getByUserAndType = function(username, type, curPage, perPage, callback) {
+	commonDao.find(collectionName, {
+		condition: {
+			user: username,
+			type: type
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
+		},
+		sort: {
+			time: -1
 		}
 	}, __resultToListFn(callback));
 };
@@ -101,5 +103,20 @@ Remind.countByUserAndType = function(username, type, callback) {
 	commonDao.count(collectionName, {
 		user: username,
 		type: type
+	}, callback);
+};
+
+Remind.countUnreadByUser = function(username, callback) {
+	commonDao.count(collectionName, {
+		user: username,
+		readed: false
+	}, callback);
+};
+
+Remind.countUnreadByUserAndType = function(username, type, callback) {
+	commonDao.count(collectionName, {
+		user: username,
+		type: type,
+		readed: false
 	}, callback);
 };

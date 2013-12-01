@@ -8,18 +8,17 @@ var User = require("../Model/User.js"),
 exports.loginPage = function(req, res) {
   res.render('login');
 };
+
 exports.registPage = function(req, res) {
   res.render('regist');
 };
+
 exports.login = function(req, res) {
   User.get(req.body.username, function(err, user) {
-    if (err) {
-      return req.render("error", {
-        message: "发生错误，请稍后重试..."
-      });
-    }
-    if (user.password === req.body.password) {
-      console.log(user);
+    if (err) return req.render("error", {
+      message: "发生错误，请稍后重试..."
+    });
+    if (user && user.password === req.body.password) {
       req.session.user = user;
       res.redirect("/index");
     } else {
@@ -29,17 +28,20 @@ exports.login = function(req, res) {
     }
   });
 };
+
 exports.logout = function(req, res) {
   if (typeof req.session.user !== "undefined") {
     delete req.session.user;
   }
   res.redirect("index");
 };
+
 exports.loadDetail = function(req, res) {
   res.render("userDetail", {
     user: req.session.user
   });
 };
+
 exports.getDetail = function(req, res) {
   User.get(req.body.username, function(err, user) {
     if (err) return res.render("error", {
@@ -54,6 +56,7 @@ exports.getDetail = function(req, res) {
     });
   });
 };
+
 exports.modify = function(req, res) {
   console.log(req.body.tags, typeof req.body.tags);
   var tags = JSON.parse(req.body.tags);
@@ -85,6 +88,7 @@ exports.modify = function(req, res) {
     }
   });
 };
+
 exports.regist = function(req, res) {
   User.get(req.body.username, function(err, user) {
     if (err) return res.render("error", {

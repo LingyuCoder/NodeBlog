@@ -1,125 +1,110 @@
 (function($, window) {
 	var emitter = $(document),
-		__appendComment = function(curUser, comment, container, reply, optCallbacks) {
-			var $comment,
-				$avatar = $("<div class='u-avatar' uid='" + comment.username + "'></div>"),
-				$commentInfo = $("<div class='g-info'><span class='u-nick'></span><span class='u-time'>" + comment.time + "</span></div>"),
-				$commentContent = $("<div class='u-content'></div>"),
-				$admireSpan = $("<span class='u-opt' cid='" + comment.id + "'><span>"),
-				$replySpan = $("<span class='u-opt reply'><span class='glyphicon glyphicon-comment'></span><span>"),
-				$deleteSpan = $("<span class='u-opt delete'><span class='glyphicon glyphicon-remove'></span><span>"),
-				$operate = $("<div class='g-operate', cid='" + comment.id + "'></div>");
-			$comment = $("<div class='g-comment-row' id='cmt_" + comment.id + "'></div>");
-
-			if (reply) {
-				if (reply === "deleted") {
-					$commentContent.append("<div class='g-comment-row'>该评论已被删除...</div>");
-				} else {
-					__appendComment("", reply, $commentContent, null, {});
-					$commentContent.find("hr").remove();
-				}
-				$commentContent.find(".g-comment-row").addClass("b-comment-reply a-comment-reply");
+		__drawReadOnlyComment = function(comment, container, opts, replying) {
+			var $comment = $("<div class='g-comment-row'></div>"),
+				$avatar = $("<div class='u-avatar'></div>"),
+				$info = $("<div class='g-info'></div>"),
+				$operate = $("<div class='g-operate'></div>"),
+				$time = $("<div class='u-time'>" + comment.time + "</div>"),
+				$content = $("<div class='u-content'><div>" + comment.comment + "</div></div>"),
+				i, opt, defaultClick = function() {};
+			$info.append($time);
+			for (i = opts.length; i--;) {
+				$("<span class='u-opt'>" + opts[i].html + "</span>").data("comment", comment).click(opts[i].click || defaultClick).appendTo($operate);
 			}
-			$commentContent.append(comment.comment);
-			$comment.append($avatar).append($commentInfo).append($commentContent);
-			if (curUser === comment.username) {
-				$operate.append($deleteSpan);
-				$deleteSpan.click(__fnDelete);
-				if (optCallbacks.fnDelete) {
-					$deleteSpan.click(optCallbacks.fnDelete);
+			$(document).trigger("user.draw", [comment.username, $avatar,
+				function(err, $user) {
+					if (err) {
+						return;
+					}
+					var user = $user.data("user");
+					$info.prepend("<span class='u-nick'>" + user.nickname + "</span>");
 				}
+			]);
+
+			if (comment.reply && !replying) {
+				$(document).trigger("comment.getOne", [comment.reply,
+					function(err, comment) {
+						if (err) {
+							if (err.status === 404) {
+								$content.removeClass("b-comment-loading").prepend("<div class='g-comment-row b-comment-reply'>评论已被删除</div>");
+							}
+							return;
+						}
+						var $comment;
+						$content.prepend("<div class='g-comment-row b-comment-reply'></div>");
+						$comment = __drawReadOnlyComment(comment, $content.find(".b-comment-reply"), [], true);
+						$content.find(".b-comment-reply").find("hr").remove();
+					}
+				]);
 			}
 
-			if (curUser) {
+			$comment.append($avatar).append($info).append($content);
+			if (!replying) {
 				$comment.append($operate);
-				emitter.trigger("admire.draw", [comment.id, $admireSpan]);
-				$operate.append($admireSpan).append($replySpan);
-
-				if (optCallbacks.fnReply) {
-					$replySpan.click(optCallbacks.fnReply);
-				}
-
-				if (optCallbacks.fnAdmire) {
-					$admireSpan.click(optCallbacks.fnAdmire);
-				}
 			}
-			$comment.append("<hr/>");
-			$(document).trigger("user.draw", [$avatar.attr("uid"), $avatar,
-				function(user) {
-					$commentInfo.find(".u-nick").text(user.nickname);
-				}
-			]);
-			container.append($comment);
-		},
-		__fnDelete = function(event) {
-			var that = $(this);
-			$(document).trigger("comment.delete", [that.parent().attr("cid"),
-				function() {
-					__fnCommentRemove(that.parent().parent());
-				}
-			]);
-		},
-		__fnCommentRemove = function($comment) {
-			$comment.fadeOut(function() {
-				$(this).remove();
-			});
+			container.append($comment).append("<hr/>");
+			return $comment;
 		};
 	emitter.bind({
-		"comment.draw": function(event, articleId, curUser, container, optCallbacks, fnCallback) {
-			if (container) {
-				container.addClass("b-comment-loading");
-			}
-			emitter.trigger("comment.getArticleComments", [articleId,
-				function(comments) {
-					var i, m,
-						reply,
-						j;
-					for (i = 0, m = comments.length; i < m; i++) {
-						if (comments[i].reply) {
-							reply = "deleted";
-							for (j = 0, m = comments.length; j < m; j++) {
-								if (comments[i].reply === comments[j].id) {
-									reply = comments[j];
-									break;
+		"comment.drawOne": function(event, com, container, opts, fnCallback) {
+			container.addClass("b-loading");
+			if (typeof com === "string") {
+				emitter.trigger("comment.getOne", [com,
+					function(err, comment) {
+						if (err) {
+							if (err.status === 404) {
+								var i, opt, defaultClick = function() {};
+								container.removeClass("b-loading").append("<div class='g-comment-row'>评论已被删除<div class='g-operate'></div><hr/></div>");
+								for (i = opts.length; i--;) {
+									$("<span class='u-opt'></span>").append(opts[i].html).click(opts[i].click || defaultClick).appendTo(container.find(".g-operate"));
 								}
 							}
+							if (typeof fnCallback === "function") fnCallback(err, container);
+							return;
 						}
-						__appendComment(curUser, comments[i], container, reply, {
-							fnReply: optCallbacks.replyClick,
-							fnAdmire: optCallbacks.admireClick,
-							fnDelete: optCallbacks.deleteClick
-						});
+						var $comment = __drawReadOnlyComment(comment, container, opts);
+						container.removeClass("b-loading").data("comment", comment);
+						if (typeof fnCallback === "function") fnCallback(null, container);
 					}
-					container.removeClass("b-comment-loading");
-					if (fnCallback) fnCallback(comments);
-				}
-			]);
+				]);
+			} else {
+				var $comment = __drawReadOnlyComment(com, container, opts);
+				container.removeClass("b-loading").data("comment", com);
+				if (typeof fnCallback === "function") fnCallback(null, container);
+			}
+
 		},
 		"comment.drawCount": function(event, articleId, container, fnCallback) {
 			container.addClass("u-comment-count").append("<a href='/article_load?articleId=" + articleId + "#comments'><span class='u-count'></span><span class='glyphicon glyphicon-comment'></span></a>");
-			emitter.trigger("comment.countArticleComments", [articleId,
-				function(total) {
-					container.find(".u-count").text(total);
+			emitter.trigger("comment.countByArticle", [articleId,
+				function(err, total) {
+					if (err) {
+						if (typeof fnCallback === "function") fnCallback(err, container);
+						return;
+					}
+					container.find(".u-count").text(total).data("total", total);
+					if (typeof fnCallback === "function") fnCallback(null, container);
 				}
 			]);
 		},
-		"comment.getArticleComments": function(event, articleId, fnCallback) {
+		"comment.getByArticle": function(event, articleId, curPage, perPage, fnCallback) {
 			$.ajax({
 				url: "/comment_getByArticle",
 				type: "post",
 				dataType: "json",
 				data: {
-					articleId: articleId
+					articleId: articleId,
+					curPage: curPage,
+					perPage: perPage
 				}
 			}).done(function(data) {
-				if (fnCallback) {
-					fnCallback(data.comments);
-				}
+				if (typeof fnCallback === "function") fnCallback(null, data.comments);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
-		"comment.countArticleComments": function(event, articleId, fnCallback) {
+		"comment.countByArticle": function(event, articleId, fnCallback) {
 			$.ajax({
 				url: "/comment_countByArticle",
 				type: "post",
@@ -128,12 +113,12 @@
 				},
 				dataType: "json"
 			}).done(function(data) {
-				if (fnCallback) fnCallback(data.total);
+				if (typeof fnCallback === "function") fnCallback(null, data.total);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
-		"comment.countUserComments": function(event, username, fnCallback) {
+		"comment.countByUser": function(event, username, fnCallback) {
 			$.ajax({
 				url: "/comment_countByUser",
 				type: "post",
@@ -142,27 +127,53 @@
 				},
 				dataType: "json"
 			}).done(function(data) {
-				if (fnCallback) {
-					fnCallback(data.total);
-				}
+				if (typeof fnCallback === "function") fnCallback(null, data.total);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
-		"comment.delete": function(event, commentId, fnCallback) {
+		"comment.getByUser": function(event, username, curPage, perPage, fnCallback) {
 			$.ajax({
-				url: "/nor/comment_delete",
+				url: "/comment_getByUser",
+				type: "post",
+				data: {
+					username: username,
+					curPage: curPage,
+					perPage: perPage
+				},
+				dataType: "json"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") fnCallback(null, data.comments);
+			}).fail(function(err) {
+				if (typeof fnCallback === "function") fnCallback(err);
+			});
+		},
+		"comment.remove": function(event, commentId, fnCallback) {
+			$.ajax({
+				url: "/nor/comment_remove",
 				type: "post",
 				data: {
 					commentId: commentId
 				},
 				dataType: "json"
 			}).done(function(data) {
-				if (fnCallback) {
-					fnCallback();
-				}
+				if (typeof fnCallback === "function") fnCallback(null);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
+			});
+		},
+		"comment.getOne": function(event, commentId, fnCallback) {
+			$.ajax({
+				url: "/comment_getOne",
+				type: "post",
+				data: {
+					commentId: commentId
+				},
+				dataType: "json",
+			}).done(function(data, status, xhr) {
+				if (typeof fnCallback === "function") fnCallback(null, data.comment);
+			}).fail(function(err) {
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		}
 	});

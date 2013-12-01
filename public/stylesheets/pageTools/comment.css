@@ -1,0 +1,157 @@
+.b-comment-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px;
+}
+
+.g-comment-row {
+	width : 100%;
+	font-size: 14px;
+}
+
+.g-comment-row .g-info {
+	display: block;
+	height: 30px;
+	margin-left : 100px;
+	line-height: 30px;
+}
+
+.g-comment-row .g-info .u-nick{
+	margin-right: 20px;
+	font-weight : bolder;
+	font-size: large
+}
+
+.g-comment-row .g-info .u-time{
+	float:right;
+}
+
+.g-comment-row .u-content {
+	display: block;
+	margin-left : 100px;
+	margin-top : 10px;
+	font-size: large
+}
+
+.g-comment-row .u-avatar {
+	float: left;
+}
+
+.g-comment-row .g-operate {
+	margin-left: 100px;
+	height: 25px;
+}
+
+.g-comment-row .g-operate:after {
+	display: table;
+	content: '';
+	clear: both;
+}
+
+.g-comment-row .u-opt {
+	float:right;
+	margin-left : 10px;
+	line-height: 14px;
+	padding : 4px 6px;
+	border-radius: 4px;
+	cursor : pointer;
+}
+
+.g-comment-row .u-opt:hover {
+	background-color: #f0f0f0;
+}
+
+.g-comment-row .u-opt{
+	text-decoration: none;
+	color:#333;
+}
+
+.g-comment-row .admired {
+	background-color: #f0f0f0;
+}
+
+.g-comment-row .u-opt span{
+	margin-left : 5px;
+}
+
+.b-comment-reply {
+	background: #f4f4f4;
+	padding: 10px 20px;
+	border-radius: 20px;
+	margin-bottom: 20px;
+	border: 2px dashed #8F8F8F;
+}
+
+.u-comment-count {
+	cursor: pointer;
+}
+
+.u-comment-count a:hover {
+	color:#333;
+}
+
+.u-comment-count a {
+	color:#333;
+	text-decoration: none
+}
+
+.a-comment-reply:hover {
+	-webkit-animation: borderchange 1s infinite;
+	-moz-animation: borderchange 1s infinite;
+	animation: borderchange 1s infinite;
+}
+
+@-webkit-keyframes borderchange{
+	0% {
+		border: 2px dashed #8F8F8F;
+	}
+	25% {
+		border: 2px dashed orange;
+	}
+	50% {
+		border: 2px dashed red;
+	}
+	75% {
+		border: 2px dashed blue;
+	}
+	100%{
+		border: 2px dashed #8F8F8F;
+	}
+}
+
+@-moz-keyframes borderchange{
+	0% {
+		border: 2px dashed #8F8F8F;
+	}
+	25% {
+		border: 2px dashed orange;
+	}
+	50% {
+		border: 2px dashed red;
+	}
+	75% {
+		border: 2px dashed blue;
+	}
+	100%{
+		border: 2px dashed #8F8F8F;
+	}
+}
+
+@keyframes borderchange{
+	0% {
+		border: 2px dashed #8F8F8F;
+	}
+	25% {
+		border: 2px dashed orange;
+	}
+	50% {
+		border: 2px dashed red;
+	}
+	75% {
+		border: 2px dashed blue;
+	}
+	100%{
+		border: 2px dashed #8F8F8F;
+	}
+}

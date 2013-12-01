@@ -12,7 +12,6 @@ var commonDao = require("./CommonDAO.js"),
 				results[i] = new Article(results[i]);
 			}
 			callback(err, results);
-
 		};
 	};
 
@@ -32,11 +31,11 @@ Article.prototype.save = function(callback) {
 	var article = {
 		content: this.content,
 		title: this.title,
-		id: uuid.v4(),
 		writer: this.writer,
 		writeTime: new Date().getTime(),
 		lastModifyTime: new Date().getTime(),
-		tags: this.tags
+		tags: this.tags,
+		id: uuid.v4()
 	};
 	commonDao.save(collectionName, article, function(err, result) {
 		if (err) return callback(err);
@@ -64,17 +63,9 @@ Article.getAll = function(callback) {
 	}, __resultToListFn(callback));
 };
 
-Article.getByUser = function(username, callback) {
-	commonDao.find(collectionName, {
-		condition: {
-			writer: username
-		},
-		sort: {
-			time: -1
-		}
-	}, __resultToListFn(callback));
+Article.countAll = function(callback) {
+	commonDao.count(collectionName, {}, callback);
 };
-
 
 Article.getByPage = function(curPage, perPage, callback) {
 	commonDao.find(collectionName, {
@@ -88,9 +79,27 @@ Article.getByPage = function(curPage, perPage, callback) {
 	}, __resultToListFn(callback));
 };
 
-Article.countAll = function(callback) {
-	commonDao.count(collectionName, {}, callback);
+Article.getByUser = function(username, curPage, perPage, callback) {
+	commonDao.find(collectionName, {
+		condition: {
+			writer: username
+		},
+		sort: {
+			time: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
+		}
+	}, __resultToListFn(callback));
 };
+
+Article.countByUser = function(username, callback) {
+	commonDao.count(collectionName, {
+		writer: username
+	}, callback);
+};
+
 
 Article.prototype.update = function(callback) {
 	commonDao.update(collectionName, {

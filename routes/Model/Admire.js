@@ -16,7 +16,6 @@ var commonDao = require("./CommonDAO.js"),
 function Admire(admire) {
 	this.username = admire.username;
 	this.commentId = admire.commentId;
-	this.articleId = admire.articleId;
 	this.time = admire.time;
 	this.id = admire.id;
 }
@@ -27,7 +26,6 @@ Admire.prototype.save = function(callback) {
 	commonDao.save(collectionName, {
 		username: this.username,
 		commentId: this.commentId,
-		articleId: this.articleId,
 		time: new Date().getTime(),
 		id: uuid.v4()
 	}, function(err, result) {
@@ -37,10 +35,13 @@ Admire.prototype.save = function(callback) {
 	});
 };
 
-Admire.removeByArticle = function(articleId, callback) {
-	commonDao.remove(collectionName, {
-		articleId: this.articleId
-	}, callback);
+Admire.get = function(admireId, callback) {
+	commonDao.findOne(collectionName, {
+		id: admireId
+	}, function(err, result) {
+		if (err) return callback(err);
+		callback(err, result ? new Admire(result) : result);
+	});
 };
 
 Admire.removeByComment = function(commentId, callback) {
@@ -49,22 +50,31 @@ Admire.removeByComment = function(commentId, callback) {
 	}, callback);
 };
 
-Admire.getByUser = function(username, callback) {
+Admire.getByUser = function(username, curPage, perPage, callback) {
 	commonDao.find(collectionName, {
 		condition: {
 			username: username
 		},
 		sort: {
 			time: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
 		}
 	}, __resultToListFn(callback));
+};
+
+Admire.countByUser = function(username, callback) {
+	commonDao.count(collectionName, {
+		username: username
+	}, callback);
 };
 
 Admire.prototype.remove = function(callback) {
 	commonDao.remove(collectionName, {
 		username: this.username,
-		commentId: this.commentId,
-		articleId: this.articleId
+		commentId: this.commentId
 	}, callback);
 };
 

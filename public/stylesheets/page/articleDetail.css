@@ -65,3 +65,24 @@
 .g-art-footer .booked {
 	background-color: #f0f0f0;
 }
+
+.u-more {
+	width: 100%;
+	background-color: #f0f0f0;
+	text-align: center;
+	padding: 10px;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	cursor: pointer;
+}
+
+.u-more:hover {
+	background-color: #8f8f8f;
+	color: #f0f0f0;
+}
+
+.g-reply-form {
+	display: none;
+	margin-left: 100px;
+	margin-top:30px;
+}

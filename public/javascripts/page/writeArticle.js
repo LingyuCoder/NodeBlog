@@ -44,7 +44,7 @@
 		$(".panel").height(getWindowHeight() - 350);
 	}).trigger("resize");
 
-	$(document).trigger("tag.drawAllTags",[$allTags, __addToArticleTags]);
+	$(document).trigger("tag.drawAllTags", [$allTags, __addToArticleTags]);
 
 	$("#createTag").click(function(event) {
 		var name = $("#newTagInput").val(),
@@ -54,9 +54,15 @@
 			return false;
 		}
 
-		$(document).trigger("tag.createTag", [name, color, $allTags,__addToArticleTags,function(event) {
+		$(document).trigger("tag.createTag", [name, color, $allTags, __addToArticleTags,
+			function(err, $tag) {
+				if (err) {
+					alert("创建标签失败");
+					return;
+				}
 				$("#newTagInput").val("");
-			}]);
+			}
+		]);
 	});
 
 	$(".u-label-picker").click(function(event) {

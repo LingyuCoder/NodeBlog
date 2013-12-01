@@ -3,6 +3,7 @@
 	border: 1px solid #f0f0f0;
 	box-shadow: 0 0 6px #f0f0f0;
 	display: block;
+	cursor: pointer;
 }
 
 .u-pic img {

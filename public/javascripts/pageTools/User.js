@@ -2,11 +2,13 @@
 	var emitter = $(document);
 	emitter.bind({
 		"user.draw": function(event, username, container, fnCallback) {
-			if (container) {
-				container.addClass("b-user-loading");
-			}
+			container.addClass("b-user-loading");
 			emitter.trigger("user.getInfo", [username,
-				function(user) {
+				function(err, user) {
+					if (err) {
+						if (typeof fnCallback === "function") fnCallback(err);
+						return;
+					}
 					var $a,
 						$img,
 						$tags;
@@ -29,8 +31,8 @@
 						$tags.html("");
 						$(document).trigger("tag.drawUserTags", [user.username, $tags]);
 					});
-					container.removeClass("b-user-loading");
-					if (fnCallback) fnCallback(user);
+					container.removeClass("b-user-loading").data("user", user);
+					if (typeof fnCallback === "function") fnCallback(null, container);
 				}
 			]);
 		},
@@ -43,11 +45,9 @@
 				type: "post",
 				dataType: "json"
 			}).done(function(data) {
-				if (fnCallback) {
-					fnCallback(data);
-				}
+				if (typeof fnCallback === "function") fnCallback(null, data);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		}
 	});

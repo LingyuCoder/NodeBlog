@@ -64,7 +64,6 @@ User.prototype.remove = function(callback) {
 };
 
 User.prototype.update = function(callback) {
-	console.log(this.tags);
 	commonDao.update(collectionName, {
 		username: this.username
 	}, {

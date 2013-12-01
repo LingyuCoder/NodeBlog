@@ -25,7 +25,7 @@ module.exports = Tag;
 Tag.prototype.save = function(callback) {
 	commonDao.save(collectionName, {
 		name: this.name,
-		color : this.color,
+		color: this.color,
 		createTime: new Date().getTime(),
 		id: uuid.v4()
 	}, function(err, result) {

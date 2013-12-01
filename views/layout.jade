@@ -1,9 +1,10 @@
 doctype 5
 html
   head
-    title= title
+    title 天镶的博客
+    link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/page/remind.css')
+    link(rel='stylesheet', href='/stylesheets/pageTools/remind.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
       
     block style
@@ -26,15 +27,11 @@ html
               a(href='/article_list') 文章列表
             li
               a(href='/gallary') 图片墙
-            //- li
-            //-   a(href='#') 小玩意
             li
               a(href="/advicePage") 建议
             if user
               li
                 a(href="/userCenter") 个人中心
-            //- li
-            //-   a(href='#') 关于我
           ul(class='nav navbar-nav navbar-right')
             if user
               li(class="dropdown")

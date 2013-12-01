@@ -1,0 +1,86 @@
+.b-bookmark-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px
+}
+
+.u-bookmark {
+	padding : 5px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.b-bookmark-booked {
+	background-color: #f0f0f0;
+}
+
+.b-bookmark-book:hover{
+	background-color: #f0f0f0;
+}
+
+.g-bookmark-row {
+	width: 100%;
+	font-size: 14px;
+}
+
+.g-bookmark-row .g-info {
+	display: block;
+	height: 30px;
+	margin-left : 100px;
+	line-height: 30px;
+}
+
+.g-bookmark-row .g-info .u-nick{
+	margin-right: 20px;
+	font-weight : bolder;
+	font-size: large
+}
+
+.g-bookmark-row .g-info .u-time{
+	float:right;
+}
+
+.g-bookmark-row .u-comment {
+	display: block;
+	margin-left : 100px;
+	margin-top : 10px;
+	font-size: large;
+	border: 2px dashed #8F8F8F;
+	border-radius: 20px;
+	padding: 10px;
+	margin-bottom: 10px
+}
+
+.g-bookmark-row .u-avatar {
+	float: left;
+}
+
+.g-bookmark-row .g-operate {
+	margin-left: 100px;
+	height: 25px;
+}
+
+.g-bookmark-row .g-operate:after {
+	display: table;
+	content: '';
+	clear: both;
+}
+
+.g-bookmark-row .u-opt {
+	float:right;
+	margin-left : 10px;
+	line-height: 14px;
+	padding : 4px 6px;
+	border-radius: 4px;
+	cursor : pointer;
+}
+
+.g-bookmark-row .u-opt:hover {
+	background-color: #f0f0f0;
+}
+
+.g-bookmark-row .u-opt{
+	text-decoration: none;
+	color:#333;
+}

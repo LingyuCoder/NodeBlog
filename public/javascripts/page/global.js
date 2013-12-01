@@ -3,7 +3,10 @@
 		var that = $(this);
 		$(document).trigger("remind.countAll", [
 
-			function(total) {
+			function(err, total) {
+				if (err) {
+					that.text("获取消息失败");
+				}
 				var $reminds;
 				if (total === 0) {
 					that.text("没有新消息");

@@ -9,7 +9,6 @@ var commonDao = require("./CommonDAO.js"),
 				results[i] = new Bookmark(results[i]);
 			}
 			callback(err, results);
-
 		};
 	};
 
@@ -42,6 +41,16 @@ Bookmark.prototype.remove = function(callback) {
 	}, callback);
 };
 
+
+Bookmark.get = function(bookmarkId, callback) {
+	commonDao.findOne(collectionName, {
+		id: bookmarkId
+	}, function(err, result) {
+		if (err) return callback(err);
+		callback(err, result ? new Bookmark(result) : result);
+	});
+};
+
 Bookmark.checkBooked = function(username, articleId, callback) {
 	commonDao.findOne(collectionName, {
 		username: username,
@@ -53,15 +62,25 @@ Bookmark.checkBooked = function(username, articleId, callback) {
 	});
 };
 
-Bookmark.getByUser = function(username, callback) {
+Bookmark.getByUser = function(username, curPage, perPage, callback) {
 	commonDao.find(collectionName, {
 		condition: {
 			username: username
 		},
 		sort: {
 			time: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
 		}
 	}, __resultToListFn(callback));
+};
+
+Bookmark.countByUser = function(username, callback) {
+	commonDao.count(collectionName, {
+		username: username
+	}, callback);
 };
 
 Bookmark.getByArticle = function(articleId, callback) {

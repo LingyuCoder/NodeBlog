@@ -1,0 +1,64 @@
+.g-article-row {
+	width: 100%;
+	font-size: 14px;
+}
+
+.g-article-row .g-info {
+	display: block;
+	height: 30px;
+	margin-left : 100px;
+	line-height: 30px;
+}
+
+.g-article-row .g-info .u-nick{
+	margin-right: 20px;
+	font-weight : bolder;
+	font-size: large
+}
+
+.g-article-row .g-info .u-time{
+	float:right;
+}
+
+.g-article-row .u-title {
+	display: block;
+	margin-left : 100px;
+	margin-top : 10px;
+	font-size: 150%;
+	font-weight: bolder;
+	text-align: center;
+	margin-bottom: 10px
+}
+
+.g-article-row .u-avatar {
+	float: left;
+}
+
+.g-article-row .g-operate {
+	margin-left: 100px;
+	height: 25px;
+}
+
+.g-article-row .g-operate:after {
+	display: table;
+	content: '';
+	clear: both;
+}
+
+.g-article-row .u-opt {
+	float:right;
+	margin-left : 10px;
+	line-height: 14px;
+	padding : 4px 6px;
+	border-radius: 4px;
+	cursor : pointer;
+}
+
+.g-article-row .u-opt:hover {
+	background-color: #f0f0f0;
+}
+
+.g-article-row .u-opt{
+	text-decoration: none;
+	color:#333;
+}

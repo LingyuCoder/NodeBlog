@@ -1,15 +1,29 @@
 (function($, window) {
 	var emitter = $(document);
 	emitter.bind({
+		"remind.remove": function(event, remindId, fnCallback) {
+			$.ajax({
+				url: "/nor/remind_remove",
+				type: "post",
+				dataType: "json",
+				data: {
+					remindId: remindId
+				}
+			}).done(function(data) {
+				if (typeof fnCallback === "function") fnCallback(null);
+			}).fail(function(err) {
+				if (typeof fnCallback === "function") fnCallback(err);
+			});
+		},
 		"remind.countAll": function(event, fnCallback) {
 			$.ajax({
 				url: "/nor/remind_countAll",
 				type: "post",
 				dataType: "json"
 			}).done(function(data) {
-				if (fnCallback) fnCallback(data.total);
+				if (typeof fnCallback === "function") fnCallback(null, data.total);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
 		"remind.countByType": function(event, type, fnCallback) {
@@ -21,37 +35,40 @@
 					type: type
 				}
 			}).done(function(data) {
-				if (fnCallback) fnCallback(data.total);
+				if (typeof fnCallback === "function") fnCallback(null, data.total);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
-		"remind.getAll": function(event, fnCallback) {
+		"remind.getAll": function(event, curPage, perPage, fnCallback) {
 			$.ajax({
 				url: "/nor/remind_getAll",
 				type: "post",
 				dataType: "json",
 				data: {
-					type: type
+					curPage: curPage,
+					perPage: perPage
 				}
 			}).done(function(data) {
-				if (fnCallback) fnCallback(data.reminds);
+				if (typeof fnCallback === "function") fnCallback(null, data.reminds);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
-		"remind.getByType": function(event, type, fnCallback) {
+		"remind.getByType": function(event, type, curPage, perPage, fnCallback) {
 			$.ajax({
 				url: "/nor/remind_getByType",
 				type: "post",
 				dataType: "json",
 				data: {
-					type: type
+					type: type,
+					curPage: curPage,
+					perPage: perPage
 				}
 			}).done(function(data) {
-				if (fnCallback) fnCallback(data.reminds);
+				if (typeof fnCallback === "function") fnCallback(null, data.reminds);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
 		"remind.setReaded": function(event, remindIds, fnCallback) {
@@ -63,37 +80,51 @@
 					remindIds: remindIds
 				}
 			}).done(function(data) {
-				if (fnCallback) fnCallback();
+				if (typeof fnCallback === "function") fnCallback(null);
 			}).fail(function(err) {
-				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
-		"remind.draw": function(event, $container, fnCallback) {
+		"remind.draw": function(event, container, fnCallback) {
 			var i,
-				__countComment = function(total) {
+				__countComment = function(err, total) {
+					if (err) {
+						if (typeof fnCallback === "function") fnCallback(err);
+						return;
+					}
 					var $li = $("<li></li>");
 					if (total) {
-						$li.append("<a href='#'>您收到 " + total + " 条新回复</a>");
-						$container.append($li);
+						$li.append("<a href='/userCenter#getComments'> " + total + " 条新回复</a>");
+						container.append($li);
 					}
+					container.data("commentTotal", total);
 					emitter.trigger("remind.countByType", ["bookmark", __countBookmark]);
-
 				},
-				__countBookmark = function(total) {
+				__countBookmark = function(err, total) {
+					if (err) {
+						if (typeof fnCallback === "function") fnCallback(err);
+						return;
+					}
 					var $li = $("<li></li>");
 					if (total) {
-						$li.append("<a href='#'>您收到 " + total + " 条新收藏消息</a>");
-						$container.append($li);
+						$li.append("<a href='/userCenter#getBookmarks'> " + total + " 条新收藏消息</a>");
+						container.append($li);
 					}
+					container.data("bookmarkTotal", total);
 					emitter.trigger("remind.countByType", ["admire", __countAdmire]);
 				},
-				__countAdmire = function(total) {
+				__countAdmire = function(err, total) {
+					if (err) {
+						if (typeof fnCallback === "function") fnCallback(err);
+						return;
+					}
 					var $li = $("<li></li>");
 					if (total) {
-						$li.append("<a href='#'>您收到 " + total + " 条赞</a>");
-						$container.append($li);
+						$li.append("<a href='/userCenter#getAdmires'> " + total + " 条赞</a>");
+						container.append($li);
 					}
-					if (fnCallback) fnCallback();
+					container.data("admireTotal", total);
+					if (typeof fnCallback === "function") fnCallback(null, container);
 				};
 			emitter.trigger("remind.countByType", ["comment", __countComment]);
 		}

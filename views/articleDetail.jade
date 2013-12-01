@@ -2,11 +2,11 @@ extends layout
 
 block style
   link(rel='stylesheet', href='/stylesheets/github.css')
-  link(rel='stylesheet', href='/stylesheets/page/tag.css')
-  link(rel='stylesheet', href='/stylesheets/page/admire.css')
-  link(rel='stylesheet', href='/stylesheets/page/comment.css')
-  link(rel='stylesheet', href='/stylesheets/page/user.css')
-  link(rel='stylesheet', href='/stylesheets/page/bookmark.css') 
+  link(rel='stylesheet', href='/stylesheets/pageTools/tag.css')
+  link(rel='stylesheet', href='/stylesheets/pageTools/admire.css')
+  link(rel='stylesheet', href='/stylesheets/pageTools/comment.css')
+  link(rel='stylesheet', href='/stylesheets/pageTools/user.css')
+  link(rel='stylesheet', href='/stylesheets/pageTools/bookmark.css') 
   link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
 block content
   div(class="container")
@@ -26,8 +26,10 @@ block content
         hr
         div(id="tags", aid="#{article.id}")
         hr
-        div(id="comments", aid="#{article.id}", cur=user?"#{user.username}":"")
-        div(id="replyComment", style="display:none;margin-left:100px")
+        div(id="comments", aid="#{article.id}", cur="0", curUser=user?"#{user.username}":"")
+          div(class="g-container")
+          div(class="u-more") 点击获取更多
+        div(id="replyComment", class="g-reply-form")
           form(action="/nor/comment_addComment", method="post")
             input(type="hidden", name="articleId", value="#{article.id}")
             input(type="hidden", name="replyId")

@@ -32,9 +32,9 @@ Comment.prototype.save = function(callback) {
 		comment: this.comment,
 		username: this.username,
 		articleId: this.articleId,
-		id: uuid.v4(),
 		time: new Date().getTime(),
-		reply: this.reply
+		reply: this.reply,
+		id: uuid.v4()
 	}, function(err, result) {
 		if (err) return callback(err);
 		if (!result[0]) return new Error("保存评论失败");
@@ -51,20 +51,40 @@ Comment.get = function(commentId, callback) {
 	});
 };
 
-Comment.getByArticle = function(articleId, callback) {
+Comment.getByArticle = function(articleId, curPage, perPage, callback) {
 	commonDao.find(collectionName, {
 		condition: {
 			articleId: articleId
+		},
+		sort: {
+			time: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
 		}
 	}, __resultToListFn(callback));
 };
 
-Comment.getByUser = function(username, callback) {
+Comment.getByUser = function(username, curPage, perPage, callback) {
 	commonDao.find(collectionName, {
 		condition: {
 			username: username
+		},
+		sort: {
+			time: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
 		}
 	}, __resultToListFn(callback));
+};
+
+Comment.countByUser = function(username, callback) {
+	commonDao.count(collectionName, {
+		username: username
+	}, callback);
 };
 
 Comment.removeByArticle = function(articleId, callback) {
