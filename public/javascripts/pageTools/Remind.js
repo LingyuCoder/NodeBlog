@@ -86,6 +86,7 @@
 			});
 		},
 		"remind.draw": function(event, container, fnCallback) {
+			container.addClass("b-remind-loading");
 			var i,
 				__countComment = function(err, total) {
 					if (err) {
@@ -124,6 +125,7 @@
 						container.append($li);
 					}
 					container.data("admireTotal", total);
+					container.removeClass("b-remind-loading");
 					if (typeof fnCallback === "function") fnCallback(null, container);
 				};
 			emitter.trigger("remind.countByType", ["comment", __countComment]);

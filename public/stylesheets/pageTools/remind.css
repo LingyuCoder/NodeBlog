@@ -1,0 +1,6 @@
+.b-remind-loading {
+	background: url("/images/loading.gif") no-repeat;
+	background-position: center;
+	min-height: 32px;
+	min-width: 32px
+}

@@ -66,14 +66,14 @@
 		};
 	emitter.bind({
 		"bookmark.drawDetail": function(event, boo, container, opts, fnCallback) {
-			container.addClass("b-loading");
+			container.addClass("b-bookmark-loading");
 			if (typeof boo === "string") {
 				emitter.trigger("bookmark.getOne", [boo,
 					function(err, bookmark) {
 						if (err) {
 							if (err.status === 404) {
 								var i, opt, defaultClick = function() {};
-								container.removeClass("b-loading").append("<div class='g-bookmark-row'>书签已被删除<div class='g-operate'></div><hr/></div>");
+								container.removeClass("b-bookmark-loading").append("<div class='g-bookmark-row'>书签已被删除<div class='g-operate'></div><hr/></div>");
 								for (i = opts.length; i--;) {
 									$("<span class='u-opt'></span>").append(opts[i].html).click(opts[i].click || defaultClick).appendTo(container.find(".g-operate"));
 								}
@@ -82,13 +82,13 @@
 							return;
 						}
 						var $bookmark = __drawDetail(bookmark, container, opts);
-						container.removeClass("b-loading").data("bookmark", bookmark);
+						container.removeClass("b-bookmark-loading").data("bookmark", bookmark);
 						if (typeof fnCallback === "function") fnCallback(null, container);
 					}
 				]);
 			} else {
 				var $bookmark = __drawDetail(boo, container, opts);
-				container.removeClass("b-loading").data("bookmark", boo);
+				container.removeClass("b-bookmark-loading").data("bookmark", boo);
 				if (typeof fnCallback === "function") fnCallback(null, container);
 			}
 

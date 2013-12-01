@@ -89,26 +89,26 @@
 			});
 		},
 		"article.drawSummary": function(event, art, container, opts, fnCallback) {
-			container.addClass("b-loading");
+			container.addClass("b-article-loading");
 			if (typeof art === "string") {
 				emitter.trigger("article.getOne", [art,
 					function(err, article) {
 						if (err) {
 							if (err.status === 404) {
-								container.removeClass("b-loading").prepend("<div class='g-article-row'>文章已被删除</div>");
+								container.removeClass("b-article-loading").prepend("<div class='g-article-row'>文章已被删除</div>");
 							}
 							if (typeof fnCallback === "function") fnCallback(err, container);
 							return;
 						}
 						var $article;
 						$article = __drawArticleSummary(article, container, opts);
-						container.removeClass("b-loading").data("article", article);
+						container.removeClass("b-article-loading").data("article", article);
 						if (typeof fnCallback === "function") fnCallback(null, container);
 					}
 				]);
 			} else {
 				$article = __drawArticleSummary(art, container, opts);
-				container.removeClass("b-loading").data("article", art);
+				container.removeClass("b-article-loading").data("article", art);
 				if (typeof fnCallback === "function") fnCallback(null, container);
 			}
 		}

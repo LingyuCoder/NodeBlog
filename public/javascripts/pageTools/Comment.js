@@ -48,14 +48,14 @@
 		};
 	emitter.bind({
 		"comment.drawOne": function(event, com, container, opts, fnCallback) {
-			container.addClass("b-loading");
+			container.addClass("b-comment-loading");
 			if (typeof com === "string") {
 				emitter.trigger("comment.getOne", [com,
 					function(err, comment) {
 						if (err) {
 							if (err.status === 404) {
 								var i, opt, defaultClick = function() {};
-								container.removeClass("b-loading").append("<div class='g-comment-row'>评论已被删除<div class='g-operate'></div><hr/></div>");
+								container.removeClass("b-comment-loading").append("<div class='g-comment-row'>评论已被删除<div class='g-operate'></div><hr/></div>");
 								for (i = opts.length; i--;) {
 									$("<span class='u-opt'></span>").append(opts[i].html).click(opts[i].click || defaultClick).appendTo(container.find(".g-operate"));
 								}
@@ -64,13 +64,13 @@
 							return;
 						}
 						var $comment = __drawReadOnlyComment(comment, container, opts);
-						container.removeClass("b-loading").data("comment", comment);
+						container.removeClass("b-comment-loading").data("comment", comment);
 						if (typeof fnCallback === "function") fnCallback(null, container);
 					}
 				]);
 			} else {
 				var $comment = __drawReadOnlyComment(com, container, opts);
-				container.removeClass("b-loading").data("comment", com);
+				container.removeClass("b-comment-loading").data("comment", com);
 				if (typeof fnCallback === "function") fnCallback(null, container);
 			}
 

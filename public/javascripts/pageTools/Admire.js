@@ -96,14 +96,14 @@
 			]);
 		},
 		"admire.drawDetail": function(event, adm, container, opts, fnCallback) {
-			container.addClass("b-loading");
+			container.addClass("b-admire-loading");
 			if (typeof adm === "string") {
 				emitter.trigger("admire.getOne", [adm,
 					function(err, admire) {
 						if (err) {
 							if (err.status === 404) {
 								var i, opt, defaultClick = function() {};
-								container.removeClass("b-loading").append("<div class='g-admire-row'>点赞已被取消<div class='g-operate'></div><hr/></div>");
+								container.removeClass("b-admire-loading").append("<div class='g-admire-row'>点赞已被取消<div class='g-operate'></div><hr/></div>");
 								for (i = opts.length; i--;) {
 									$("<span class='u-opt'></span>").append(opts[i].html).click(opts[i].click || defaultClick).appendTo(container.find(".g-operate"));
 								}
@@ -112,13 +112,13 @@
 							return;
 						}
 						var $admire = __drawAdmireDetail(admire, container, opts);
-						container.removeClass("b-loading").data("admire", admire);
+						container.removeClass("b-admire-loading").data("admire", admire);
 						if (typeof fnCallback === "function") fnCallback(null, container);
 					}
 				]);
 			} else {
 				var $admire = __drawAdmireDetail(adm, container, opts);
-				container.removeClass("b-loading").data("admire", adm);
+				container.removeClass("b-admire-loading").data("admire", adm);
 				if (typeof fnCallback === "function") fnCallback(null, container);
 			}
 
