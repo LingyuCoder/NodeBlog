@@ -13,39 +13,9 @@ exports.index = function(req, res) {
 	async.waterfall([
 
 		function(callback) {
-			Article.getByPage(page, artPerPage, function(err, articles) {
+			Article.getAll(page, artPerPage, function(err, articles) {
 				if (err) return callback(err);
 				callback(err, articles);
-			});
-		},
-		function(articles, callback) {
-			async.map(articles, function(article, callback) {
-				Comment.countByArticle(article.id, function(err, total) {
-					if (err) return callback(err);
-					article.comment = total;
-					callback(err, article);
-				});
-			}, function(err, articles) {
-				if (err) return callback(err);
-				callback(err, articles);
-			});
-		},
-		function(articles, callback) {
-			async.map(articles, function(article, callback) {
-				Bookmark.countByArticle(article.id, function(err, total) {
-					if (err) return callback(err);
-					article.bookCount = total;
-					callback(err, article);
-				});
-			}, function(err, articles) {
-				if (err) return callback(err);
-				callback(err, articles);
-			});
-		},
-		function(articles, callback) {
-			Article.countAll(function(err, total) {
-				if (err) return callback(err);
-				callback(err, articles, total);
 			});
 		}
 	], function(err, articles, total) {

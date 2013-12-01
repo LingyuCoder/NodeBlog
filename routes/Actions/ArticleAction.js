@@ -112,7 +112,7 @@ exports.listByPage = function(req, res) {
 	async.waterfall([
 
 		function(callback) {
-			Article.getByPage(page, artPerPage, function(err, articles) {
+			Article.getAll(page, artPerPage, function(err, articles) {
 				if (err) return callback(err);
 				callback(err, articles);
 			});

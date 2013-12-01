@@ -15,7 +15,7 @@
 						__deleteFn = function(container) {
 							return function(event) {
 								var comment = $(this).data("comment");
-								$(document).trigger("comment.delete", [comment.id,
+								$(document).trigger("comment.remove", [comment.id,
 									function(err) {
 										if (err) return;
 										container.fadeOut(function() {
@@ -23,7 +23,7 @@
 										});
 									}
 								]);
-							}
+							};
 						},
 						__replyFn = function(container) {
 							return function(event) {
@@ -46,7 +46,7 @@
 										$replyComment.slideUp();
 									}
 								}
-							}
+							};
 						};
 					if (err) {
 						$comments.find(".u-more").text("获取评论失败");

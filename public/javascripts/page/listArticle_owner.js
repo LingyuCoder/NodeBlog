@@ -2,7 +2,7 @@
 	$(".u-delete").click(function(event) {
 		var that = $(this);
 		$.ajax({
-			url: "/nor/conf/article_delete",
+			url: "/nor/conf/article_remove",
 			data: {
 				articleId: that.attr("aid")
 			},

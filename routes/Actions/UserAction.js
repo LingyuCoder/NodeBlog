@@ -58,7 +58,6 @@ exports.getDetail = function(req, res) {
 };
 
 exports.modify = function(req, res) {
-  console.log(req.body.tags, typeof req.body.tags);
   var tags = JSON.parse(req.body.tags);
   User.get(req.session.user.username, function(err, user) {
     if (err) return res.render("error", {
@@ -108,7 +107,6 @@ exports.regist = function(req, res) {
         tags: []
       });
       user.save(function(err) {
-        console.log("saved");
         if (err) {
           return res.render("regist", {
             message: "发生错误，请稍后重试..."

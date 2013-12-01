@@ -94,12 +94,6 @@ Bookmark.getByArticle = function(articleId, callback) {
 	}, __resultToListFn(callback));
 };
 
-Bookmark.removeByArticle = function(articleId, callback) {
-	commonDao.remove(collectionName, {
-		articleId: articleId
-	}, callback);
-};
-
 Bookmark.countByArticle = function(articleId, callback) {
 	commonDao.count(collectionName, {
 		articleId: articleId

@@ -32,7 +32,7 @@
 			return document.body.clientHeight;
 	};
 
-	$("#inputArticle").bind("change", function(event) {
+	$("#inputArticle").bind("keyup", function(event) {
 		$("#outputArticle").html(converter.makeHtml(this.value));
 		$('pre code').each(function(i, e) {
 			hljs.highlightBlock(e);

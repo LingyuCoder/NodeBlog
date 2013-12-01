@@ -58,11 +58,12 @@
 					}
 				}],
 				function(err, $comment) {
-					if (err) {
-						return;
-					}
 					var comment = $comment.data("comment");
 					$comment.find("hr").remove();
+					if (err) {
+						$comment.find(".g-operate").remove();
+						return;
+					}
 				}
 			]);
 			$admire.append($avatar).append($info).append($comment).append($operate);

@@ -44,6 +44,24 @@ Article.prototype.save = function(callback) {
 	});
 };
 
+Article.prototype.update = function(callback) {
+	commonDao.update(collectionName, {
+		id: this.id
+	}, {
+		content: this.content,
+		title: this.title,
+		lastModifyTime: new Date().getTime(),
+		tags: this.tags
+	}, callback);
+};
+
+Article.prototype.remove = function(callback) {
+	var articleId = this.id;
+	commonDao.remove(collectionName, {
+		id: articleId
+	}, callback);
+};
+
 Article.get = function(id, callback) {
 	commonDao.findOne(collectionName, {
 		id: id
@@ -53,21 +71,11 @@ Article.get = function(id, callback) {
 	});
 };
 
-Article.getDetail = function(id, callback) {};
-
-Article.getAll = function(callback) {
-	commonDao.find(collectionName, {
-		sort: {
-			writeTime: -1
-		}
-	}, __resultToListFn(callback));
-};
-
 Article.countAll = function(callback) {
 	commonDao.count(collectionName, {}, callback);
 };
 
-Article.getByPage = function(curPage, perPage, callback) {
+Article.getAll = function(curPage, perPage, callback) {
 	commonDao.find(collectionName, {
 		sort: {
 			writeTime: -1
@@ -98,34 +106,4 @@ Article.countByUser = function(username, callback) {
 	commonDao.count(collectionName, {
 		writer: username
 	}, callback);
-};
-
-
-Article.prototype.update = function(callback) {
-	commonDao.update(collectionName, {
-		id: this.id
-	}, {
-		content: this.content,
-		title: this.title,
-		lastModifyTime: new Date().getTime(),
-		tags: this.tags
-	}, callback);
-};
-
-Article.prototype.remove = function(callback) {
-	var articleId = this.id;
-	async.waterfall([
-
-		function(callback) {
-			Bookmark.removeByArticle(articleId, callback);
-		},
-		function(callback) {
-			Comment.removeByArticle(articleId, callback);
-		},
-		function(callback) {
-			commonDao.remove(collectionName, {
-				id: articleId
-			}, callback);
-		}
-	], callback);
 };

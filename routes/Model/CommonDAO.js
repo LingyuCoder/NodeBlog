@@ -22,23 +22,6 @@ exports.findOne = function(collectionName, oArgs, callback) {
 	});
 };
 
-
-exports.findByPage = function(collectionName, oArgs, curPage, perPage, sortFields, callback) {
-	if (typeof callback !== "function" && typeof sortFields === "function") {
-		callback = sortFields;
-		sortFields = null;
-	}
-	var skip = curPage * perPage;
-	MongoClient.connect(setting.host, function(err, client) {
-		client.collection(collectionName, function(err, collection) {
-			if (err) return callback(err);
-			tmp = collection.find(oArgs).limit(perPage).skip(skip);
-			if (sortFields) tmp = tmp.sort(sortFields);
-			tmp.toArray(callback);
-		});
-	});
-};
-
 exports.update = function(collectionName, oArgs, newObj, callback) {
 	if (newObj._id) delete newObj._id;
 	MongoClient.connect(setting.host, function(err, client) {

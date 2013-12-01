@@ -40,23 +40,6 @@ User.prototype.save = function(callback) {
 	});
 };
 
-User.get = function(username, callback) {
-	commonDao.findOne(collectionName, {
-		username: username
-	}, function(err, result) {
-		if (err) return callback(err);
-		callback(err, result ? new User(result) : result);
-	});
-};
-
-User.getAll = function(callback) {
-	commonDao.find(collectionName, {}, __resultToListFn(callback));
-};
-
-User.countAll = function(callback) {
-	commonDao.count(collectionName, {}, callback);
-};
-
 User.prototype.remove = function(callback) {
 	commonDao.remove(collectionName, {
 		username: this.username
@@ -74,4 +57,29 @@ User.prototype.update = function(callback) {
 		avatar: this.avatar,
 		tags: this.tags
 	}, callback);
+};
+
+User.get = function(username, callback) {
+	commonDao.findOne(collectionName, {
+		username: username
+	}, function(err, result) {
+		if (err) return callback(err);
+		callback(err, result ? new User(result) : result);
+	});
+};
+
+User.getAll = function(curPage, perPage, callback) {
+	commonDao.find(collectionName, {
+		page: {
+			curPage: curPage,
+			perPage: perPage
+		},
+		sort: {
+			username: 1
+		}
+	}, __resultToListFn(callback));
+};
+
+User.countAll = function(callback) {
+	commonDao.count(collectionName, {}, callback);
 };
