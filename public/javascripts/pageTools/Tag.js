@@ -1,7 +1,7 @@
 (function($, window) {
 	var emitter = $(document),
 		__prependTag = function(tag, $div, fnClick) {
-			var $tag = $("<div class='a-label-rotateX'><span class='label u-label' style='background-color:" + tag.color + "' tid='" + tag.id + "'>" + tag.name + "</span></div>");
+			var $tag = $("<div style='display:inline-block'><span class='label u-label a-label' style='background-color:" + tag.color + "' tid='" + tag.id + "'>" + tag.name + "</span></div>");
 			if (typeof fnClick !== "function") {
 				$tag.click(function(event) {
 					//TODO: 跳转根据Tag查找资源界面

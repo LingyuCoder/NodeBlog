@@ -47,6 +47,16 @@
 									}
 								}
 							};
+						},
+						__commentFn = function(err, $comment) {
+							var comment = $comment.data("comment");
+							if (comment.username !== curUser) {
+								$comment.find("span[type='remove']").parent().remove();
+							}
+							if (!curUser) {
+								$comment.find("span[type='reply']").parent().remove();
+							}
+							$(document).trigger("admire.draw", [$comment.data("comment").id, $comment.find(".u-admire").parent()]);
 						};
 					if (err) {
 						$comments.find(".u-more").text("获取评论失败");
@@ -63,16 +73,7 @@
 							}, {
 								html: "<span type='admire' class='u-admire'></span>"
 							}],
-							function(err, $comment) {
-								var comment = $comment.data("comment");
-								if (comment.username !== curUser) {
-									$comment.find("span[type='remove']").parent().remove();
-								}
-								if (!curUser) {
-									$comment.find("span[type='reply']").parent().remove();
-								}
-								$(document).trigger("admire.draw", [$comment.data("comment").id, $comment.find(".u-admire").parent()]);
-							}
+							__commentFn
 						]);
 					}
 					$comments.attr("cur", curPage + 1);
@@ -95,12 +96,24 @@
 
 	$(document).trigger("tag.drawArticleTags", [$("#tags").attr("aid"), $("#tags")]);
 
-	$(".u-avatar").each(function() {
-		$(document).trigger("user.draw", [$(this).attr("uid"), $(this)]);
+	$(".g-art-info .u-avatar").each(function() {
+		$(document).trigger("user.draw", [$(this).attr("uid"), $(this),
+			function(err, $user) {
+				if (err) return;
+				var user = $user.data("user");
+				$(".g-art-info .u-nick").text(user.nickname);
+			}
+		]);
 	});
-
 
 	$comments.find(".u-more").click(__readMoreComments).click();
 
 	$(document).trigger("bookmark.draw", [$bookmark.attr("aid"), $bookmark, $bookmark.attr("cur")]);
+
+	$("#deleteArticle").click(function(event) {
+		$(document).trigger("article.remove", [$(this).attr("aid"), function(err){
+			if(err) return;
+			window.location.href = "/article_list";
+		}]);
+	});
 }(jQuery, window));

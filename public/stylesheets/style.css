@@ -1,7 +1,12 @@
 body {
-  padding: 50px;
   font-size: 14px;
+  padding-top: 50px;
+  margin-top:-50px;
   font-family: ff-tisa-web-pro-1, ff-tisa-web-pro-2, 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei UI', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+h1,h2,h3 {
+	font-family: ff-tisa-web-pro-1, ff-tisa-web-pro-2, 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Microsoft YaHei UI', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
 }
 
 .b-loading {
@@ -11,7 +16,126 @@ body {
 	min-width: 32px;
 }
 
+
+.footer hr{
+	border-top: 1px solid #383838;
+}
+
 .footer p{
   text-align : center;
   font-style : italic;
+}
+
+.b-clouds {
+	z-index: -1;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-image: -webkit-linear-gradient(top, #5CC9FC, #FFFFFF);
+	background-image: -moz-linear-gradient(top, #5CC9FC, #FFFFFF);
+	background-image: -ms-linear-gradient(top, #5CC9FC, #FFFFFF);
+	overflow: hidden;
+}
+
+.b-clouds .block {
+	position: absolute;
+	background-image: -webkit-linear-gradient(left, #ffffff, transparent, #ffffff);
+	background-image: -moz-linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0), rgba(255,255,255,1));
+	background-image: linear-gradient(left, white, transparent, white);
+	background-image: -ms-linear-gradient(left, #ffffff00, transparent, #ffffff00);
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+}
+
+.b-clouds .clouds {
+	position: absolute;
+	width: 200%;
+	height: 400px;
+	/* -webkit-animation: cloud_move 60s linear infinite;
+	-moz-animation: cloud_move 60s linear infinite; */
+}
+
+.b-clouds .clouds .cloud {
+	position: absolute;
+	background-image: url("/images/cloud.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.b-clouds .clouds .cloud-sm{
+	width: 223px;
+	height: 98px;
+	background-size: 223px 78px;
+}
+
+.b-clouds .clouds .cloud-md{
+	width: 335px;
+	height: 147px;
+	background-size: 335px 147px;
+}
+
+.b-clouds .clouds .cloud-lg{
+	width: 670px;
+	height: 294px;
+	background-size: 670px 294px;
+}
+
+@-webkit-keyframes cloud_move {
+	from {
+		left: -100%;
+	}
+	to {
+		left: 0;
+	}
+}
+
+@-moz-keyframes cloud_move {
+	from {
+		left: -100%;
+	}
+	to {
+		left: 0;
+	}
+}
+
+@-ms-keyframes cloud_move {
+	from {
+		left: -100%;
+	}
+	to {
+		left: 0;
+	}
+}
+
+.scrollToTop {
+	width: 100px;
+	height: 100px;
+	border-radius: 20px;
+	font-size: 80px;
+	line-height: 100px;
+	background-color: #6D6D6D;
+	color: white;
+	opacity: 0.5;
+	text-align: center;
+	position: fixed;
+	right: 80px;
+	bottom: 80px;
+	padding-right: 5px;
+	cursor: pointer;
+}
+
+.scrollToTop:hover{
+	opacity: 1;
+}
+
+.g-main {
+	margin-top: 50px;
+}
+
+.u-panel {
+	padding: 20px;
+	border-radius: 20px;
+	box-shadow: 3px 3px 6px #8A8A8A;
+	background: rgba(255,255,255,0.8);
 }

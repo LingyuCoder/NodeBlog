@@ -8,6 +8,8 @@ var Article = require("../Model/Article.js"),
 	markdown = require("markdown").markdown,
 	moment = require("moment");
 
+moment.lang("zh-cn");
+
 exports.writePage = function(req, res) {
 	res.render("writeArticle");
 };
@@ -63,17 +65,11 @@ exports.save = function(req, res) {
 };
 
 exports.remove = function(req, res) {
-	Article.get(req.query.articleId, function(err, article) {
-		if (err) return res.json(500, {
-			message: err.message
-		});
+	Article.get(req.body.articleId, function(err, article) {
+		if (err) return res.json(500);
 		article.remove(function(err) {
-			if (err) return res.json(500, {
-				message: err.message
-			});
-			res.json({
-				success: true
-			});
+			if (err) return res.json(500);
+			res.json({});
 		});
 	});
 };
@@ -82,7 +78,7 @@ exports.getOne = function(req, res) {
 	Article.get(req.body.articleId, function(err, article) {
 		if (err) return res.json(500);
 		if (!article) return res.status(404).send("not fount");
-		article.writeTime = moment(article.writeTime).format("YYYY年MM月DD日");
+		article.writeTime = moment(article.writeTime).fromNow();
 		return res.json({
 			article: article
 		});
@@ -99,12 +95,27 @@ exports.load = function(req, res) {
 			message: "没有找到该文章"
 		});
 		article.content = markdown.toHTML(article.content);
-		article.writeTime = moment(article.writeTime).format("YYYY年MM月DD日");
+		article.writeTime = moment(article.writeTime).fromNow();
 		res.render("articleDetail", {
 			article: article
 		});
 	});
 };
+
+exports.listAll = function(req, res) {
+	Article.getAll(Number(req.body.curPage), Number(req.body.perPage), function(err, articles) {
+		var i;
+		if (err) return res.json(500);
+		for (i = articles.length; i--;) {
+			articles[i].content = markdown.toHTML(articles[i].content);
+			articles[i].writeTime = moment(articles[i].writeTime).fromNow();
+		}
+		return res.json({
+			articles: articles
+		});
+	});
+};
+
 
 exports.listByPage = function(req, res) {
 	var page = (req.query.page || 1) - 1,
@@ -146,7 +157,7 @@ exports.listByPage = function(req, res) {
 		});
 		for (i = articles.length; i--;) {
 			articles[i].content = markdown.toHTML(articles[i].content);
-			articles[i].writeTime = moment(articles[i].writeTime).format("YYYY年MM月DD日");
+			articles[i].writeTime = moment(articles[i].writeTime).fromNow();
 		}
 		totalPage = Math.ceil(total / artPerPage);
 		curPage = page + 1;
@@ -176,7 +187,7 @@ exports.getByUser = function(req, res) {
 	Article.getByUser(req.body.username, Number(req.body.curPage), Number(req.body.perPage), function(err, articles) {
 		if (err) return res.json(500);
 		for (var i = articles.length; i--;) {
-			articles[i].writeTime = moment(articles[i].writeTime).format("YYYY年MM月DD日");
+			articles[i].writeTime = moment(articles[i].writeTime).fromNow();
 		}
 		res.json({
 			articles: articles

@@ -194,7 +194,7 @@
 			});
 		},
 		"bookmark.draw": function(event, articleId, container, curUser, fnCallback) {
-			container.attr("aid", articleId).addClass("u-bookmark").append("<span class='u-total'></span>").append("<span class='glyphicon glyphicon-star'></span>");
+			container.attr("aid", articleId).addClass("u-bookmark").append("<span class='u-total'></span>").append("<span class='glyphicon glyphicon-bookmark'></span>");
 			emitter.trigger("bookmark.countByArticle", [articleId,
 				function(err, total) {
 					if (err) {

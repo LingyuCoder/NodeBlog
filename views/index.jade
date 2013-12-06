@@ -6,29 +6,29 @@ block style
 	link(rel='stylesheet', href='/stylesheets/pageTools/user.css')
 	link(rel='stylesheet', href='/stylesheets/pageTools/comment.css')
 	link(rel='stylesheet', href='/stylesheets/pageTools/bookmark.css')
-	link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
 	link(rel='stylesheet', href='/stylesheets/page/index.css')
 block content
-	div(class='container')
+	div(class='container', style="padding-top: 20px")
 		each article in articles
-			div(class="panel panel-default", style="margin-top: 20px")
-				div(class="panel-body") 
-					div(class="u-flag")
-						div(class="u-avatar", uid="#{article.writer}")
-						div(class="u-flag-left")
-							a(href="/article_load?articleId=#{article.id}")
-								h3
-									!=article.title
-					section
-						!=article.content
-					hr
-					div(class="m-tags", aid="#{article.id}")
-					hr
-					div(class="g-art-footer")
-						div(class="u-wriTime") #{article.writeTime}
-						div(class="u-item u-book", aid="#{article.id}", cur=user?"#{user.username}":"") 
-						div(class="u-item u-comment", aid="#{article.id}")
-						div(class="clearfix")
+			div(class="row" style="")
+				div(class='g-art-info')
+					div(class="u-avatar", uid="#{article.writer}")
+					div(class="u-time") #{article.writeTime}
+
+				div(class='g-art-body')
+					div(class="u-dot")
+					div(class="u-panel", aid="#{article.id}")
+						div(class="u-title")
+							h3 #{article.title}
+						hr
+						div
+							!=article.content
+						hr
+						div(class="g-art-footer")
+							div(class="m-tags", aid="#{article.id}")
+							div(class="u-item u-book", aid="#{article.id}", cur=user?"#{user.username}":"") 
+							div(class="u-item u-comment", aid="#{article.id}")
+							div(class="clearfix")
 		ul(class="pager")
 			li(class=curPage===1?"previous disabled" : "previous") 
 				a(href=curPage===1?"javascript:void(0)":"/index?page=#{curPage-1}")

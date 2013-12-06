@@ -8,59 +8,60 @@ block content
   div(class='container')
     h1
       strong 个人信息
-    hr
-    if message
-      if success
-        div(class="alert alert-success") #{message}
-      else 
-        div(class="alert alert-danger") #{message}
-    div(class="alert alert-danger", id="formValidate", style="display:none")
     form(class="form-horizontal", method="post", action="/nor/user_modify", id="detail")
-      div(class="form-group")
-        label(for="inputUsername", class="col-sm-2 col-sm-offset-2 control-label") 用户名
-        div(class="col-sm-4")
-          input(type="text", name="username", readonly="readonly", class="form-control", id="inputUsername", value="#{user.username}")
-      div(class="form-group")
-        label(for="inputNickname", class="col-sm-2 col-sm-offset-2 control-label") 昵称
-        div(class="col-sm-4")
-          input(type="text", name="nickname", class="form-control", id="inputNickname", value="#{user.nickname}")
-      div(class="form-group")
-        label(for="inputAvatar", class="col-sm-2 col-sm-offset-2 control-label") 头像地址
-        div(class="col-sm-4")
-          input(type="text", name="avatar", class="form-control", id="inputAvatar", value="#{user.avatar}")
-      div(class="form-group")
-        label(class="col-sm-2 col-sm-offset-2 control-label") 头像预览
-        div(class="col-sm-4")
-          div(class="u-user-avatar")
-            img(src="#{user.avatar}",id="avatarPreview")
-      div(class="form-group")
-        label(for="inputPassword", class="col-sm-2 col-sm-offset-2 control-label") 密码
-        div(class="col-sm-4")
-          input(type="password", name="password", class="form-control", id="inputPassword", placeholder="填写密码,为空则不修改")
-      div(class="form-group")
-        label(for="inputPassAgain", class="col-sm-2 col-sm-offset-2 control-label") 密码重复
-        div(class="col-sm-4")
-          input(type="password", name="passwordAgain", class="form-control", id="inputPassAgain", placeholder="再次填写密码")
-      div(class="form-group")
+      div(class="u-panel")
+        if message
+          if success
+            div(class="alert alert-success") #{message}
+          else 
+            div(class="alert alert-danger") #{message}
+          div(class="alert alert-danger", id="formValidate", style="display:none")
+        div(class="form-group")
+          label(for="inputUsername", class="col-sm-2 col-sm-offset-2 control-label") 用户名
+          div(class="col-sm-4")
+            input(type="text", name="username", readonly="readonly", class="form-control", id="inputUsername", value="#{user.username}")
+        div(class="form-group")
+          label(for="inputNickname", class="col-sm-2 col-sm-offset-2 control-label") 昵称
+          div(class="col-sm-4")
+            input(type="text", name="nickname", class="form-control", id="inputNickname", value="#{user.nickname}")
+        div(class="form-group")
+          label(for="inputAvatar", class="col-sm-2 col-sm-offset-2 control-label") 头像地址
+          div(class="col-sm-4")
+            input(type="text", name="avatar", class="form-control", id="inputAvatar", value="#{user.avatar}")
+        div(class="form-group")
+          label(class="col-sm-2 col-sm-offset-2 control-label") 头像预览
+          div(class="col-sm-4")
+            div(class="u-user-avatar")
+              img(src="#{user.avatar}",id="avatarPreview")
+        div(class="form-group")
+          label(for="inputPassword", class="col-sm-2 col-sm-offset-2 control-label") 密码
+          div(class="col-sm-4")
+            input(type="password", name="password", class="form-control", id="inputPassword", placeholder="填写密码,为空则不修改")
+        div(class="form-group")
+          label(for="inputPassAgain", class="col-sm-2 col-sm-offset-2 control-label") 密码重复
+          div(class="col-sm-4")
+            input(type="password", name="passwordAgain", class="form-control", id="inputPassAgain", placeholder="再次填写密码")
+      div(class="form-group", style="margin-top:20px")
         input(type="hidden", name="tags")
         div(class="col-sm-6") 
-          h3 您的标签
-          hr
-          div(id="myTags", class="m-myTags")
+          div(class="u-panel")
+            h3 您的标签
+            hr
+            div(id="myTags", class="m-myTags")
         div(class="col-sm-6")
-          h3 所有标签
-          hr
-          div(id="allTags", class="m-allTags")
-          hr
-          span(class="label b-label-1", style="padding:8px 5px", id="newTag")
-            input(id="newTagInput", type="text", placeholder="标签名", color="#428bca")
-            span(class="glyphicon glyphicon-plus u-tag-create", style="margin-left:5px;cursor:pointer", id="createTag")
-          span(class="label b-label-1 u-label-picker", value=1, color="#428bca") 深蓝
-          span(class="label b-label-2 u-label-picker", value=2, color="#5cb85c") 绿色
-          span(class="label b-label-3 u-label-picker", value=3, color="#5cb0de") 淡蓝
-          span(class="label b-label-4 u-label-picker", value=4, color="#f0ad4e") 黄色
-          span(class="label b-label-5 u-label-picker", value=5, color="#d9543f") 红色
-      hr
+          div(class="u-panel")
+            h3 所有标签
+            hr
+            div(id="allTags", class="m-allTags")
+            hr
+            span(class="label b-label-1", style="padding:8px 5px", id="newTag")
+              input(id="newTagInput", type="text", placeholder="标签名", color="#428bca")
+              span(class="glyphicon glyphicon-plus u-tag-create", style="margin-left:5px;cursor:pointer", id="createTag")
+            span(class="label b-label-1 u-label-picker", value=1, color="#428bca") 深蓝
+            span(class="label b-label-2 u-label-picker", value=2, color="#5cb85c") 绿色
+            span(class="label b-label-3 u-label-picker", value=3, color="#5cb0de") 淡蓝
+            span(class="label b-label-4 u-label-picker", value=4, color="#f0ad4e") 黄色
+            span(class="label b-label-5 u-label-picker", value=5, color="#d9543f") 红色
       div(class="form-group")
         button(type="submit" class="col-sm-offset-3 col-sm-2 btn btn-primary") 提交修改
         a(class="btn btn-default col-sm-offset-2 col-sm-2", href="user_detail") 恢复

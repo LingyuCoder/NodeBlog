@@ -17,6 +17,12 @@ exports.index = function(req, res) {
 				if (err) return callback(err);
 				callback(err, articles);
 			});
+		},
+		function(articles, callback) {
+			Article.countAll(function(err, total) {
+				if (err) return callback(err);
+				callback(err, articles, total);
+			});
 		}
 	], function(err, articles, total) {
 		var i,
@@ -29,7 +35,7 @@ exports.index = function(req, res) {
 		});
 		for (i = articles.length; i--;) {
 			articles[i].content = markdown.toHTML(articles[i].content);
-			articles[i].writeTime = moment(articles[i].writeTime).format("YYYY年MM月DD日 HH:mm");
+			articles[i].writeTime = moment(articles[i].writeTime).fromNow();
 		}
 		totalPage = Math.ceil(total / artPerPage);
 		curPage = page + 1;

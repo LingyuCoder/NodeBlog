@@ -21,4 +21,9 @@
 	$(".u-book").each(function() {
 		$(document).trigger("bookmark.draw", [$(this).attr("aid"), $(this), $(this).attr("cur")]);
 	});
+
+	$(".g-art-body .u-panel").click(function(event){
+		window.location.href = "/article_load?articleId=" + $(this).attr("aid");
+	});
+
 }(jQuery, window));

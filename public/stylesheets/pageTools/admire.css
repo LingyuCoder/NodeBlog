@@ -21,14 +21,23 @@
 	line-height: 30px;
 }
 
+.g-admire-row .g-info:after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
 .g-admire-row .g-info .u-nick{
-	margin-right: 20px;
+	float: left;
+	width: 50%;
 	font-weight : bolder;
 	font-size: large
 }
 
 .g-admire-row .g-info .u-time{
 	float:right;
+	width: 50%;
+	text-align: right
 }
 
 .g-admire-row .u-comment {

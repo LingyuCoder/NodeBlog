@@ -55,7 +55,7 @@
 		__genCallback = function(remind) {
 			return function(err, $row) {
 				if (!remind.readed) {
-					$row.find(".g-info").append("<span class='label label-danger a-fliker'>new</span>");
+					$row.find(".u-time").append("<span class='label label-danger a-fliker' style='margin-left:20px'>new</span>");
 				}
 			};
 		},

@@ -1,3 +1,9 @@
+@media (max-width: 992px) {
+	div.b-comment-reply {
+		padding: 5px 10px;
+	}
+}
+
 .b-comment-loading {
 	background: url("/images/loading.gif") no-repeat;
 	background-position: center;
@@ -17,14 +23,24 @@
 	line-height: 30px;
 }
 
+.g-comment-row .g-info:after{
+	display: table;
+	content: "";
+	clear: both;
+}
+
+
 .g-comment-row .g-info .u-nick{
-	margin-right: 20px;
+	float: left;
+	width: 50%;
 	font-weight : bolder;
 	font-size: large
 }
 
 .g-comment-row .g-info .u-time{
+	width: 50%;
 	float:right;
+	text-align: right;
 }
 
 .g-comment-row .u-content {
@@ -58,17 +74,14 @@
 	cursor : pointer;
 }
 
-.g-comment-row .u-opt:hover {
-	background-color: #f0f0f0;
+.g-comment-row .u-opt:hover, div.g-comment-row .admired{
+	background-color: rgba(66, 139, 202, 0.7);
+	color: white;
 }
 
 .g-comment-row .u-opt{
 	text-decoration: none;
 	color:#333;
-}
-
-.g-comment-row .admired {
-	background-color: #f0f0f0;
 }
 
 .g-comment-row .u-opt span{

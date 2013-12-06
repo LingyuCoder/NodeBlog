@@ -61,8 +61,9 @@ app.use('/nor/conf/', function(req, res, next) {
 	}
 });
 app.use(app.router);
-
-
+app.use(function(err, req, res, next) {
+	res.redirect("/404/404.html");
+});
 
 app.get('/', routes.index);
 app.get('/index', routes.index);
@@ -80,7 +81,7 @@ app.get('/user_logout', user.logout);
 //文章
 app.get('/nor/conf/article_write', article.writePage);
 app.get('/nor/conf/article_edit', article.editPage);
-app.get('/nor/conf/article_remove', article.remove);
+app.post('/nor/conf/article_remove', article.remove);
 app.get('/article_load', article.load);
 app.post('/nor/conf/article_save', article.save);
 app.post('/nor/conf/article_update', article.update);
@@ -88,6 +89,7 @@ app.get('/article_list', article.listByPage);
 app.post('/article_getOne', article.getOne);
 app.post('/article_getByUser', article.getByUser);
 app.post('/article_countByUser', article.countByUser);
+app.post('/article_getAll', article.listAll);
 //图片墙
 app.get('/gallary', gallary.gallaryPage);
 app.get('/gallary_list', gallary.listByPage);

@@ -21,49 +21,51 @@
 .u-label-picker {
 	cursor: pointer;
 	margin: 5px;
-	font-size: 14px
+	font-size: 14px;
+	display: inline-block;
 }
 
 .u-label {
 	font-size: 15px;
+	height: 23px;
 	cursor: pointer;
 }
 
-.a-label-rotateX{
+.a-label{
 	margin: 5px;
 	display: inline-block;
 }
 
-.a-label-rotateX:hover{
-	-webkit-animation: labelrotatex 1s linear infinite;
-		 -moz-animation: labelrotatex 1s linear infinite;
-					animation: labelrotatex 1s linear infinite;
+.a-label:hover{
+	-webkit-animation: a_label 1s linear infinite;
+		 -moz-animation: a_label 1s linear infinite;
+					animation: a_label 1s linear infinite;
 }
 
-@-webkit-keyframes labelrotatex{
-	from {
-		-webkit-transform : rotateX(0deg);
+@-webkit-keyframes a_label{
+	0% 100% {
+		-webkit-transform: scale(1);
 	}
-	to {
-		-webkit-transform : rotateX(360deg);
-	}
-}
-
-@-moz-keyframes labelrotatex{
-	from {
-		-moz-transform : rotateX(0deg);
-	}
-	to {
-		-moz-transform : rotateX(360deg);
+	50% {
+		-webkit-transform: scale(1.2);
 	}
 }
 
-@keyframes labelrotatex{
-	from {
-		transform : rotateX(0deg);
+@-moz-keyframes a_label{
+	0% 100% {
+		-moz-transform: scale(1);
 	}
-	to {
-		transform : rotateX(360deg);
+	50% {
+		-moz-transform: scale(1.2);
+	}
+}
+
+@keyframes a_label{
+	0% 100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.2);
 	}
 }
 

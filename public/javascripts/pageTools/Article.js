@@ -27,6 +27,22 @@
 			return $article;
 		};
 	emitter.bind({
+		"article.getAll": function(event, curPage, perPage, fnCallback) {
+			$.ajax({
+				url: "/article_getAll",
+				data: {
+					curPage: curPage,
+					perPage: perPage
+				},
+				dataType: "json",
+				type: "post"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") fnCallback(null, data.articles);
+			}).fail(function(err) {
+				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
+			});
+		},
 		"article.getOne": function(event, articleId, fnCallback) {
 			$.ajax({
 				url: "/article_getOne",
@@ -53,7 +69,6 @@
 			}).done(function(data) {
 				if (typeof fnCallback === "function") fnCallback(null);
 			}).fail(function(err) {
-				console.log(err);
 				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},

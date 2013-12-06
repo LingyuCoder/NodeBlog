@@ -8,27 +8,27 @@ block style
   link(rel='stylesheet', href='/stylesheets/pageTools/user.css')
   link(rel='stylesheet', href='/stylesheets/pageTools/bookmark.css') 
   link(rel='stylesheet', href='/stylesheets/page/articleDetail.css')
+  //- script(src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js", type="text/javascript", charset="utf-8")
 block content
   div(class="container")
-    div(class="panel panel-default", style="margin-top: 20px")
-      div(class="panel-body") 
+    div(class="g-art", id="artBody")
+      div(class="u-panel g-art-body")
         div(class="u-flag")
-          div(class="u-avatar", uid="#{article.writer}")
           div(class="u-flag-left")
             h3
               !=article.title
         section
           !=article.content
         div(class="g-art-footer")
-          div(class="u-wriTime") #{article.writeTime}
           div(id="bookmark", aid="#{article.id}", cur=user?"#{user.username}":"")
+          div(style="float:right;padding:5px 10px")
+            //- wb:share-button(appkey="1yj5nG", addition="number", type="button", default_text="#{article.title} 来自 天镶的博客", ralateUid="1162383197")
           div(class="clearfix")
-        hr
-        div(id="tags", aid="#{article.id}")
         hr
         div(id="comments", aid="#{article.id}", cur="0", curUser=user?"#{user.username}":"")
           div(class="g-container")
           div(class="u-more") 点击获取更多
+
         div(id="replyComment", class="g-reply-form")
           form(action="/nor/comment_addComment", method="post")
             input(type="hidden", name="articleId", value="#{article.id}")
@@ -51,12 +51,26 @@ block content
                 button(class="btn btn-danger", type="button" ,id="clearComment", style="float:right") 清空
           else
             h3(style="text-align:center") 请登录后评论
+      div(class="g-art-info hidden-sm")
+        div(class="u-panel")
+          div(class="g-user")
+            div(class="u-avatar", uid="#{article.writer}")
+            div(class="u-nick")
+            div(class="clearfix")
+          div(class="u-time") #{"作于: " + article.writeTime}
+          if user&&user.owner
+            div(class="g-opt")
+              a(class="btn btn-primary", style="width:100%;margin-top:10px", href="/nor/conf/article_edit?articleId=#{article.id}") 修改
+              button(class="btn btn-danger", aid="#{article.id}",style="width:100%;margin-top:10px", id="deleteArticle") 删除
+        div(class="u-panel", style="margin-top: 20px") 文章标签：
+          div(class="u-tags", id="tags", aid="#{article.id}")
 
 block javascript
   script(type='text/javascript', src='/javascripts/tools/highlight.pack.js')
   script(type='text/javascript', src='/javascripts/pageTools/Tag.js')
   script(type='text/javascript', src='/javascripts/pageTools/Admire.js')
   script(type='text/javascript', src='/javascripts/pageTools/Comment.js')
+  script(type='text/javascript', src='/javascripts/pageTools/Article.js')
   script(type='text/javascript', src='/javascripts/pageTools/User.js')
   script(type='text/javascript', src='/javascripts/pageTools/Bookmark.js')
   script(type='text/javascript', src='/javascripts/page/articleDetail.js')

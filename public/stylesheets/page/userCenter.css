@@ -1,17 +1,3 @@
-.g-chose {
-	width: 200px;
-	float: left;
-
-}
-
-.panel-body:after {
-	display: none
-}
-
-.g-content {
-	margin-left : 200px;
-}
-
 .g-hide {
 	display: none
 }
@@ -130,3 +116,30 @@
 	}
 }
 
+.g-row {
+	width: 100%;
+}
+
+.g-row:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.g-row .g-left {
+	float: left;
+	width: 25%;
+}
+
+.g-row .g-right {
+	float: right;
+	width: 73%;
+}
+
+.list-group .list-group-item {
+	background: transparent;
+}
+
+.list-group .list-group-item.active {
+	background: rgb(66, 139, 202)
+}

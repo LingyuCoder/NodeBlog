@@ -4,7 +4,7 @@
 		$myTags = $("#myTags"),
 		__addToMyTags = function(event) {
 			var tag = event.data,
-				$div = $("<div class='a-label-rotateX'><span class='label u-label' style='background-color:" + tag.color + "' tid='" + tag.id + "'>" + tag.name + "</span></div>"),
+				$div = $("<div style='display:inline-block'><span class='label u-label a-label' style='background-color:" + tag.color + "' tid='" + tag.id + "'>" + tag.name + "</span></div>");
 				$existTag = $myTags.find("span[tid='" + tag.id + "']");
 			$div.click(__removeFromMyTags);
 			if ($existTag.length === 0) {

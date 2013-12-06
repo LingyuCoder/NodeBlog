@@ -1,15 +1,26 @@
 doctype 5
-html
+html(xmlns:wb="http://open.weibo.com/wb")
   head
+    meta(property="wb:webmaster", content="8984d0c69a7d9445")
     title 天镶的博客
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/pageTools/remind.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-      
     block style
 
   body
+    div(class="b-clouds")
+      div(class="clouds")
+        div(class="cloud cloud-lg", style="left: 10%;top: 20%")
+        div(class="cloud cloud-sm", style="top: 30%")
+        div(class="cloud cloud-md", style="left: 20%;top: 50%")
+        div(class="cloud cloud-lg", style="left: 60%;top: 20%")
+        div(class="cloud cloud-sm", style="left: 50%;top: 30%")
+        div(class="cloud cloud-md", style="left: 70%;top: 40%")
+      div(class="block")
+    div(class="scrollToTop", style="display:none", id="scrollToTop")
+      span(class="glyphicon glyphicon-arrow-up")
     div(class='navbar navbar-inverse navbar-fixed-top')
       div(class="container")
         div(class='navbar-header')
@@ -52,9 +63,8 @@ html
             else
               li
                 a(href='/user_loginPage') 登录
-
-    block content
-
+    div(class="g-main")
+      block content
     div(class="footer") 
       hr
       p LingyuCoder 2013

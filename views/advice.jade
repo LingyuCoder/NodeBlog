@@ -4,12 +4,23 @@ block style
 
 block content
 	div(class="container")
-		div(class="jumbotron", style="margin-top:50px")
+		div(class="jumbotron u-panel", style="margin-top:50px")
 			h1 感谢您提供宝贵的意见
 			p 如果您对这个博客有任何意见和建议，或者遇到了任何bug，均可在此进行提交
+			p 如果您喜欢这个博客，请分享给你的好友：
+				div(class="jiathis_style_32x32")
+					a(class="jiathis_button_qzone")
+					a(class="jiathis_button_tsina")
+					a(class="jiathis_button_tqq")
+					a(class="jiathis_button_renren")
+					a(class="jiathis_button_kaixin001")
+					a(href="http://www.jiathis.com/share", class="jiathis jiathis_txt jtico jtico_jiathis", target="_blank")
+					a(class="jiathis_counter_style")
+				div(class="clearfix")
 		div(class = "ds-thread")
 
 block javascript
+	script(type="text/javascript",src="http://v3.jiathis.com/code/jia.js",charset="utf-8")
 	script(type = 'text/javascript')
 		var duoshuoQuery = {
 			short_name: "skyinlayer"

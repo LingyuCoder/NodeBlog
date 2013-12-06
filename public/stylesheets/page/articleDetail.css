@@ -1,9 +1,16 @@
+@media (max-width: 992px) {
+	div.g-art .g-art-body {
+		width: 100%;
+	}
+}
+
 .u-flag {
 	position: relative;
-	left : -45px;
+	left : -50px;
 	height: 60px;
 	margin-bottom: 30px;
 }
+
 .u-flag .u-flag-left {
 	min-width: 300px;
 	max-width: 1000px;
@@ -13,10 +20,6 @@
 	background-color: #d9534f;
 	text-align: center;
 	color: white;
-}
-
-.u-flag .u-avatar{
-  float: right;
 }
 
 .u-flag .u-flag-left h3{
@@ -50,20 +53,8 @@
 	z-index: -1;
 }
 
-.g-art-footer .u-wriTime {
-	float:left;
-}
-
 .g-art-footer .u-bookmark {
 	float:right;
-}
-
-.g-art-footer .book:hover{
-	background-color: #f0f0f0;
-}
-
-.g-art-footer .booked {
-	background-color: #f0f0f0;
 }
 
 .u-more {
@@ -77,8 +68,8 @@
 }
 
 .u-more:hover {
-	background-color: #8f8f8f;
-	color: #f0f0f0;
+	background-color: rgb(66, 139, 202);
+	color: white;
 }
 
 .g-reply-form {
@@ -86,3 +77,51 @@
 	margin-left: 100px;
 	margin-top:30px;
 }
+
+.g-art {
+	width: 100%;
+	margin-top: 40px;
+}
+
+.g-art:after {
+	display: table;
+	clear: both;
+	content: "";
+}
+
+.g-art .g-art-body {
+	float: left;
+	width: 73%;
+}
+
+.g-art .g-art-info {
+	float: right;
+	width: 25%;
+}
+
+.g-art .g-art-info .g-user .u-avatar{
+	float: right;
+	width: 33%;
+}
+
+.g-art .g-art-info .g-user .u-nick{
+	float: left;
+	width: 66%;
+	margin-top: 20px;
+
+	text-align: center;
+	font-weight: bolder;
+	font-size: 150%;
+}
+
+.g-art .g-art-info .u-time {
+	margin-top: 20px;
+	text-align: center;
+	font-weight: bolder;
+	font-size: 120%;
+}
+
+.g-art .g-art-info .u-tags {
+	margin-top: 20px;
+}
+

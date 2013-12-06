@@ -3,6 +3,8 @@ var Admire = require("../Model/Admire.js"),
 	Remind = require("../Model/Remind.js"),
 	moment = require("moment");
 
+moment.lang("zh-cn");
+
 exports.add = function(req, res) {
 	var admire = new Admire({
 		username: req.session.user.username,
@@ -76,7 +78,7 @@ exports.getOne = function(req, res) {
 	Admire.get(req.body.admireId, function(err, admire) {
 		if (err) return res.json(500);
 		if (!admire) return res.status(404).send("not fount");
-		admire.time = moment(admire.time).format("HH:mm MM月DD日 YYYY年");
+		admire.time = moment(admire.time).fromNow();
 		res.json({
 			admire: admire
 		});
@@ -87,7 +89,7 @@ exports.getByUser = function(req, res) {
 	Admire.getByUser(req.body.username, Number(req.body.curPage), Number(req.body.perPage), function(err, admires) {
 		if (err) return res.json(500);
 		for (var i = admires.length; i--;) {
-			admires[i].time = moment(admires[i].time).format("HH:mm MM月DD日 YYYY年");
+			admires[i].time = moment(admires[i].time).fromNow();
 		}
 		res.json({
 			admires: admires

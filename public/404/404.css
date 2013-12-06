@@ -1,0 +1,155 @@
+.main {
+	position: absolute;
+	width: 800px;
+	height: 500px;
+	margin-top:100px;
+	left: 50%;
+	margin-left: -400px;
+	background-image: -webkit-linear-gradient(top, #5CC9FC, #FFFFFF);
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow : 5px 5px 6px #525252;
+
+}
+
+.clouds {
+	position: absolute;
+	-webkit-animation: cloud_move 20s linear infinite;
+}
+
+.clouds .cloud {
+	position: absolute;
+	background-image: url("cloud.png");
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.clouds .cloud-sm{
+	width: 223px;
+	height: 98px;
+	background-size: 223px 78px;
+}
+
+.clouds .cloud-md{
+	width: 335px;
+	height: 147px;
+	background-size: 335px 147px;
+}
+
+.clouds .cloud-lg{
+	width: 670px;
+	height: 294px;
+	background-size: 670px 294px;
+}
+
+.boat {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-animation: boat_shake 5s linear infinite;
+}
+
+.boat .boat-body{
+	position: absolute;
+	bottom: 20px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url(boat.png);
+	width: 384px;
+	height: 354px;
+	-webkit-transform: scaleX(-1);
+}
+
+.wave {
+	position: absolute;
+	width: 900px;
+	bottom: -20px;
+	left: -50px;
+}
+
+.wave-front {
+	height: 120px;
+	background-image: url(wave-front.png);
+	-webkit-animation: wave_shake 6s linear infinite;
+}
+
+.wave-back {
+	height: 125px;
+	background-image: url(wave-back.png);
+	-webkit-animation: wave_shake 6s linear 3s infinite;
+}
+
+.message {
+	position: absolute;
+	left: 450px;
+	top: 100px;
+	width: 300px;
+	height: 200px;
+	text-align: center;
+	font-family: "Microsoft YaHei";
+	font-weight: bolder;
+	color: rgb(109, 109, 109);
+	text-shadow : 2px 2px 2px #ACACAC;
+}
+
+.message .code {
+	font-size: 80px;
+}
+
+/* .message .code span:hover {
+	display: block;
+	-webkit-transform: rotate(90deg);
+	-webkit-transform-origin: 20% 47%;
+	-webkit-animation: error_code_down 2s ease-in-out 1;
+} */
+
+.message .content {
+	font-size: 40px;
+}
+@-webkit-keyframes error_code_down {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(90deg);
+	}
+}
+
+@-webkit-keyframes wave_shake {
+	0% {
+		-webkit-transform: translate(0px, 0px);
+	}
+	25% {
+		-webkit-transform: translate(5px, 5px);
+	}
+	75% {
+		-webkit-transform: translate(0px, 5px);
+	}
+	100% {
+		-webkit-transform: translate(0px, 0px);
+	}
+}
+
+@-webkit-keyframes cloud_move {
+	from {
+		left: -800px;
+	}
+	to {
+		left: 0px;
+	}
+}
+
+@-webkit-keyframes boat_shake {
+	0% {
+		-webkit-transform: translate(0px, 0px);
+	}
+	25% {
+		-webkit-transform: translate(-10px, -10px);
+	}
+	75% {
+		-webkit-transform: translate(0px, -10px);
+	}
+	100% {
+		-webkit-transform: translate(0px, 0px);
+	}
+}

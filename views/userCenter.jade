@@ -19,70 +19,74 @@ block content
         strong #{curUser.nickname}的用户中心
       div(class="u-avatar", style="float:right", id="user")
       div(class="clearfix")
-    hr
-    div(id="tags")
-    hr
-    div(class="list-group g-chose", id="chosePanel")
-        if user&&curUser.username === user.username
-          a(href="#", class="list-group-item", ref="getComments") 收到的评论
-            span(class="badge pull-right remind-count", type="comment")
-          a(href="#", class="list-group-item", ref="getAdmires") 收到的贊
-            span(class="badge pull-right remind-count", type="admire")
-          a(href="#", class="list-group-item", ref="getBookmarks") 收到的收藏
-            span(class="badge pull-right remind-count", type="bookmark")
-        if curUser.owner
-          a(href="#", class="list-group-item", ref="articles") 
-            if user&&curUser.username === user.username
-              != "我的文章"
-            else
-              != "ta的文章"
-            span(class="badge pull-right article-count")
-        a(href="#", class=curUser.owner?"list-group-item" : "list-group-item active", ref="bookmarks")
-          if user&&curUser.username === user.username
-            != "我的收藏"
-          else
-            != "ta的收藏"
-          span(class="badge pull-right bookmark-count")
-        a(href="#", class="list-group-item", ref="comments")
-          if user&&curUser.username === user.username
-            != "我的评论"
-          else
-            != "ta的评论"
-          span(class="badge pull-right comment-count")
-        a(href="#", class="list-group-item", ref="admires")
-          if user&&curUser.username === user.username
-            != "我赞过的评论"
-          else
-            != "ta赞过的评论"
-          span(class="badge pull-right admire-count")
     
-        
+    div(class="g-row")
+      div(class="g-left")
+        div(class="list-group u-panel", id="chosePanel", style="padding:0;border-radius:20px;overflow:hidden")
+          if user&&curUser.username === user.username
+            a(href="#", class="list-group-item", ref="getComments") 收到的评论
+              span(class="badge pull-right remind-count", type="comment")
+            a(href="#", class="list-group-item", ref="getAdmires") 收到的贊
+              span(class="badge pull-right remind-count", type="admire")
+            a(href="#", class="list-group-item", ref="getBookmarks") 收到的收藏
+              span(class="badge pull-right remind-count", type="bookmark")
+          if curUser.owner
+            a(href="#", class="list-group-item", ref="articles") 
+              if user&&curUser.username === user.username
+                != "我的文章"
+              else
+                != "ta的文章"
+              span(class="badge pull-right article-count")
+          a(href="#", class=curUser.owner?"list-group-item" : "list-group-item active", ref="bookmarks")
+            if user&&curUser.username === user.username
+              != "我的收藏"
+            else
+              != "ta的收藏"
+            span(class="badge pull-right bookmark-count")
+          a(href="#", class="list-group-item", ref="comments")
+            if user&&curUser.username === user.username
+              != "我的评论"
+            else
+              != "ta的评论"
+            span(class="badge pull-right comment-count")
+          a(href="#", class="list-group-item", ref="admires")
+            if user&&curUser.username === user.username
+              != "我赞过的评论"
+            else
+              != "ta赞过的评论"
+            span(class="badge pull-right admire-count")
+        div(class="u-panel", style="margin-top:20px")
+          if user&&curUser.username === user.username
+            != "我的标签："
+          else
+            != "ta的标签："
+          div(id="tags")
+      div(class="g-right")
+        div(class="u-panel")
+          if user&&curUser.username === user.username
+            div(class="panel-body g-hide", id="getComments", cur="0")
+              div(class="g-container")
+              div(class="u-more") 点击加载更多
+            div(class="panel-body g-hide", id="getAdmires", cur="0")
+              div(class="g-container")
+              div(class="u-more") 点击加载更多
+            div(class="panel-body g-hide", id="getBookmarks", cur="0")
+              div(class="g-container")
+              div(class="u-more") 点击加载更多
+          if curUser.owner
+            div(class="panel-body g-hide", id="articles", cur="0")
+              div(class="g-container")
+              div(class="u-more") 点击加载更多
 
-    div(class="panel panel-default g-content")
-      if user&&curUser.username === user.username
-        div(class="panel-body g-hide", id="getComments", cur="0")
-          div(class="g-container")
-          div(class="u-more") 点击加载更多
-        div(class="panel-body g-hide", id="getAdmires", cur="0")
-          div(class="g-container")
-          div(class="u-more") 点击加载更多
-        div(class="panel-body g-hide", id="getBookmarks", cur="0")
-          div(class="g-container")
-          div(class="u-more") 点击加载更多
-      if curUser.owner
-        div(class="panel-body g-hide", id="articles", cur="0")
-          div(class="g-container")
-          div(class="u-more") 点击加载更多
-
-      div(class="panel-body g-hide", id="comments", cur="0")
-        div(class="g-container")
-        div(class="u-more") 点击加载更多
-      div(class="panel-body g-hide", id="bookmarks", cur="0")
-        div(class="g-container")
-        div(class="u-more") 点击加载更多
-      div(class="panel-body g-hide", id="admires", cur="0")
-        div(class="g-container")
-        div(class="u-more") 点击加载更多
+          div(class="panel-body g-hide", id="comments", cur="0")
+            div(class="g-container")
+            div(class="u-more") 点击加载更多
+          div(class="panel-body g-hide", id="bookmarks", cur="0")
+            div(class="g-container")
+            div(class="u-more") 点击加载更多
+          div(class="panel-body g-hide", id="admires", cur="0")
+            div(class="g-container")
+            div(class="u-more") 点击加载更多
        
 block javascript
   script(type='text/javascript', src='/javascripts/pageTools/User.js')

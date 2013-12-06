@@ -3,6 +3,8 @@ var Comment = require("../Model/Comment.js"),
 	moment = require("moment"),
 	async = require("async");
 
+moment.lang("zh-cn");
+
 exports.save = function(req, res) {
 	var remind,
 		comment = new Comment({
@@ -89,7 +91,7 @@ exports.getByArticle = function(req, res) {
 			message: err.message
 		});
 		for (i = comments.length; i--;) {
-			comments[i].time = moment(comments[i].time).format("HH:mm MM月DD日 YYYY年");
+			comments[i].time = moment(comments[i].time).fromNow();
 		}
 		res.json({
 			comments: comments
@@ -125,7 +127,7 @@ exports.getByUser = function(req, res) {
 			message: err.message
 		});
 		for (var i = comments.length; i--;) {
-			comments[i].time = moment(comments[i].time).format("HH:mm MM月DD日 YYYY年");
+			comments[i].time = moment(comments[i].time).fromNow();
 		}
 		res.json({
 			comments: comments
@@ -138,7 +140,7 @@ exports.getOne = function(req, res) {
 	Comment.get(req.body.commentId, function(err, comment) {
 		if (err) return res.json(500);
 		if (!comment) return res.status(404).send("not fount");
-		comment.time = moment(comment.time).format("HH:mm MM月DD日 YYYY年");
+		comment.time = moment(comment.time).fromNow();
 		res.json({
 			comment: comment
 		});

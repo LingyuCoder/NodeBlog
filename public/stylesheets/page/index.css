@@ -11,6 +11,11 @@
 	color : gray;
 }
 
+.g-art-footer .m-tags {
+	float: left;
+	width: 60%;
+}
+
 .g-art-footer .u-item {
 	float:right;
 	padding : 5px 10px;
@@ -27,4 +32,61 @@
 
 .g-art-footer .u-booked {
 	background-color: #f0f0f0
+}
+
+.g-art-info {
+	height:200px;
+	float:left;
+	width: 20%;position:relative
+}
+
+.g-art-info .u-avatar {
+	position: absolute;
+	right: 20px;
+	top: 45px;
+}
+
+.g-art-info  .u-time {
+	position: absolute;
+	width: 100px;
+	right: 20px;
+	top: 120px;
+	font-weight: bolder;
+	text-align: right;
+}
+
+.g-art-body {
+	float:left;
+	width: 80%;
+	position:relative;
+	border-left: 3px solid #757575;
+}
+
+.g-art-body .u-panel {
+	margin-top: 20px;
+	min-height:200px;
+	margin-left: 20px;
+	cursor: pointer;
+}
+
+.g-art-body .u-panel:before {
+	content: "";
+	width: 20px;
+	height: 20px;
+	border-top: 20px solid transparent;
+	border-right: 20px solid rgba(255,255,255,0.8);
+	border-bottom: 20px solid transparent;
+	position: absolute;
+	left: 0px;
+	top: 55px;
+}
+
+.g-art-body .u-dot {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background-color: #757575;
+	left: -7px;
+	top: 70px;
 }
