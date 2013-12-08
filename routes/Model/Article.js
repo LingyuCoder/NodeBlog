@@ -93,7 +93,7 @@ Article.getByUser = function(username, curPage, perPage, callback) {
 			writer: username
 		},
 		sort: {
-			time: -1
+			writeTime: -1
 		},
 		page: {
 			curPage: curPage,
@@ -106,4 +106,37 @@ Article.countByUser = function(username, callback) {
 	commonDao.count(collectionName, {
 		writer: username
 	}, callback);
+};
+
+Article.getByTags = function(tags, curPage, perPage, callback) {
+	commonDao.find(collectionName, {
+		condition: {
+			tags: {
+				$all: tags
+			}
+		},
+		sort: {
+			writeTime: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
+		}
+	}, __resultToListFn(callback));
+};
+
+Article.getByTitle = function(title, curPage, perPage, callback) {
+	console.log(title);
+	commonDao.find(collectionName, {
+		condition: {
+			title: new RegExp(title, "i")
+		},
+		sort: {
+			writeTime: -1
+		},
+		page: {
+			curPage: curPage,
+			perPage: perPage
+		}
+	}, __resultToListFn(callback));
 };

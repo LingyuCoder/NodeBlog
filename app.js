@@ -1,4 +1,6 @@
 var express = require('express'),
+	moment = require('moment'),
+	uuid = require("node-uuid"),
 	routes = require('./routes'),
 	user = require('./routes/Actions/UserAction.js'),
 	article = require('./routes/Actions/ArticleAction.js'),
@@ -9,12 +11,67 @@ var express = require('express'),
 	gallary = require('./routes/Actions/GallaryAction.js'),
 	picture = require('./routes/Actions/PictureAction.js'),
 	remind = require('./routes/Actions/RemindAction.js'),
+	exp = require('./routes/Actions/ExpAction.js'),
 	http = require('http'),
 	path = require('path'),
 	setting = require('./routes/setting.js'),
-	fs = require('fs');
+	fs = require('fs'),
+	app = express();
 
-var app = express();
+moment.lang("zh-cn");
+
+var WebSocketServer = require('ws').Server,
+	wss = new WebSocketServer({
+		port: process.env.WSPORT || 3001
+	});
+
+wss.broadcast = function(data) {
+	for (var i in this.clients) this.clients[i].send(JSON.stringify(data));
+};
+
+wss.on('connection', function(ws) {
+	ws.on('message', function(data) {
+		data = JSON.parse(data);
+		if (data.type === "message") {
+			wss.broadcast({
+				nick: ws.nick,
+				uid: ws.uid,
+				time: moment(data.time).format("HH:mm:ss"),
+				message: data.message,
+				type: "message"
+			});
+		} else if (data.type === "nickname") {
+			wss.broadcast({
+				oldnick: ws.nick,
+				nick: data.nick,
+				uid: ws.uid,
+				type: "nickname"
+			});
+			ws.nick = data.nick;
+		}
+	});
+	ws.on('close', function() {
+		wss.broadcast({
+			nick: ws.nick,
+			uid: ws.uid,
+			type: "exit"
+		});
+	});
+	ws.uid = uuid.v4();
+	ws.nick = "游客";
+	for (var i in this.clients) {
+		ws.send(JSON.stringify({
+			nick: this.clients[i].nick,
+			uid: this.clients[i].uid,
+			type: "join"
+		}));
+	}
+	wss.broadcast({
+		nick: ws.nick,
+		uid: ws.uid,
+		type: "join"
+	});
+});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -69,6 +126,8 @@ app.get('/', routes.index);
 app.get('/index', routes.index);
 app.get('/advicePage', routes.advicePage);
 app.get('/userCenter', routes.userCenter);
+app.get('/search', routes.searchPage);
+app.get('/articleList', routes.articleListPage);
 //用户
 app.get('/user_loginPage', user.loginPage);
 app.get('/user_registPage', user.registPage);
@@ -85,11 +144,12 @@ app.post('/nor/conf/article_remove', article.remove);
 app.get('/article_load', article.load);
 app.post('/nor/conf/article_save', article.save);
 app.post('/nor/conf/article_update', article.update);
-app.get('/article_list', article.listByPage);
 app.post('/article_getOne', article.getOne);
 app.post('/article_getByUser', article.getByUser);
 app.post('/article_countByUser', article.countByUser);
 app.post('/article_getAll', article.listAll);
+app.post('/article_getByTags', article.getByTags);
+app.post('/article_getByTitle', article.getByTitle);
 //图片墙
 app.get('/gallary', gallary.gallaryPage);
 app.get('/gallary_list', gallary.listByPage);
@@ -136,6 +196,9 @@ app.post('/nor/remind_getAll', remind.getAll);
 app.post('/nor/remind_getByType', remind.getByType);
 app.post('/nor/remind_countAll', remind.countUnreadAll);
 app.post('/nor/remind_countByType', remind.countUnreadByType);
+
+//实验
+app.get('/broadchat', exp.broadchat);
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
 });

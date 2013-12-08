@@ -103,6 +103,39 @@
 				if (typeof fnCallback === "function") fnCallback(err);
 			});
 		},
+		"article.getByTags": function(event, tags, curPage, perPage, fnCallback) {
+			$.ajax({
+				url: "/article_getByTags",
+				data: {
+					tags: tags,
+					curPage: curPage,
+					perPage: perPage
+				},
+				dataType: "json",
+				type: "post"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") fnCallback(null, data.articles);
+			}).fail(function(err) {
+				console.log(err);
+				if (typeof fnCallback === "function") fnCallback(err);
+			});
+		},
+		"article.getByTitle": function(event, title, curPage, perPage, fnCallback) {
+			$.ajax({
+				url: "/article_getByTitle",
+				data: {
+					title: title,
+					curPage: curPage,
+					perPage: perPage
+				},
+				dataType: "json",
+				type: "post"
+			}).done(function(data) {
+				if (typeof fnCallback === "function") fnCallback(null, data.articles);
+			}).fail(function(err) {
+				if (typeof fnCallback === "function") fnCallback(err);
+			});
+		},
 		"article.drawSummary": function(event, art, container, opts, fnCallback) {
 			container.addClass("b-article-loading");
 			if (typeof art === "string") {

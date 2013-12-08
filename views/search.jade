@@ -1,0 +1,36 @@
+extends layout
+
+block style
+	link(rel='stylesheet', href='/stylesheets/pageTools/tag.css')
+	link(rel='stylesheet', href='/stylesheets/page/search.css')
+
+block content
+	div(class="container")
+		div(class="row", style="margin-top:40px")
+			div(class="col-sm-8")
+				div(class="g-arts u-panel")
+					div(id="articles", curPage=0)
+					div(class="u-more", id="more") 请根据条件进行搜索
+			div(class="col-sm-4")
+				div(class="g-tags u-panel")
+					h3 标签搜索：
+					hr
+					div(id="tags")
+					hr
+					p 已选择标签: 
+					div(id="chosenTags")
+					hr
+					button(class="btn btn-success", id="tagSearchBtn") 给我搜
+				div(class="g-tags u-panel")
+					h3 标题搜索：
+					hr
+					input(class="form-control", type="text", id="titleSearchInput", placeholder="请输入部分标题")	
+					hr
+					button(class="btn btn-success", id="titleSearchBtn") 给我搜
+
+block javascript
+	script(type='text/javascript', src="/javascripts/pageTools/Tag.js")
+	script(type='text/javascript', src="/javascripts/pageTools/Article.js")
+	script(type='text/javascript', src="/javascripts/pageTools/User.js")
+	script(type='text/javascript', src="/javascripts/page/search.js")
+

@@ -1,0 +1,70 @@
+.u-more {
+	width: 100%;
+	background-color: #428bca;
+	color:#fff;
+	text-align: center;
+	padding: 10px;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.u-more:hover {
+	background-color: #8f8f8f;
+	color: #f0f0f0;
+}
+
+.g-row {
+	margin: 10px 10px 20px 10px;
+	padding: 10px;
+	border: 2px dashed #333;
+	border-radius: 10px;
+	color: #333;
+	cursor: pointer;
+}
+
+.g-row:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.g-row:hover {
+	background: #f0f0f0
+}
+
+
+.g-row .u-avatar {
+	float: left;
+	width: 60px;
+	height: 60px;
+}
+
+.g-row .u-avatar img {
+	height: 100%;
+	width: 100%;
+	border-radius: 50%;
+	box-shadow: 2px 2px 2px #333
+}
+
+.g-row .u-time {
+	margin-left: 80px;
+	width: calc(100% - 80px);
+
+	text-align: right;
+	font-weight: bolder;
+	font-size: 120%;
+}
+
+.g-row .u-title {
+	margin-left: 80px;
+	margin-bottom: 24px;
+	width: calc(100% - 80px);
+
+	text-align: center;
+	font-weight: bolder;
+	font-size: 180%;
+}
+
+.u-panel {
+	margin-top: 20px;
+}

@@ -2,6 +2,8 @@ doctype 5
 html(xmlns:wb="http://open.weibo.com/wb")
   head
     meta(property="wb:webmaster", content="8984d0c69a7d9445")
+    meta(name="description", content="天镶的博客，使用nodejs+mongodb搭建")
+    meta(name="keywords", content="天镶,博客,skyinlayer,nodejs,mongodb,前端,html,css,javascript")
     title 天镶的博客
     link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
@@ -35,9 +37,17 @@ html(xmlns:wb="http://open.weibo.com/wb")
             li
               a(href='/index') 首页
             li
-              a(href='/article_list') 文章列表
+              a(href='/articleList') 文章列表
+            li
+              a(href='/search') 搜索
             li
               a(href='/gallary') 图片墙
+            li(class="dropdown")
+              a(href="#", class="dropdown-toggle", data-toggle="dropdown") 小玩意
+                b(class="caret")
+              ul(class="dropdown-menu")
+                li
+                  a(href="/broadchat") 版聊
             li
               a(href="/advicePage") 建议
             if user

@@ -1,0 +1,35 @@
+extends layout
+
+block style
+	style(type="text/stylesheet")
+		.g-row {
+			width: 100%;
+			margin-top:40px;
+		}
+		.g-row:after{
+			content:"";
+			display: table;
+			clear:both;
+		}
+block content
+	div(class="container")
+		h2
+			strong 版聊
+		div(class="g-row", style="font-size:120%;font-weight: bolder")
+			div(class="", style="width: 32%;float:right") 
+				div(class="u-panel", id="users") 版上的用户：
+					hr
+				div(class="u-panel", style="margin-top:20px", id="logs")
+			div(class="u-panel", style="width: 66%;float:left")
+				div(class="panel-body",nick=user?"#{user.nickname}":"游客", id="chat")
+				div(class="form-group", style="padding: 20px 0;")
+					input(type="text",class="form-control", style="width: 83%;float:left", id="message")
+					button(class="btn btn-success", style="width: 15%;float:right", id="send") 发送 
+				div(class="form-group", style="padding: 20px 0;")
+					input(type="text",class="form-control", style="width: 83%;float:left", id="nickname")
+					button(class="btn btn-success", style="width: 15%;float:right", id="changeNick") 修改昵称 
+
+
+block javascript
+	script(type='text/javascript', src="/javascripts/exp/broadchat.js")
+

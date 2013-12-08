@@ -8,7 +8,10 @@ exports.save = function(collectionName, obj, callback) {
 			if (err) return callback(err);
 			collection.insert(obj, {
 				safe: true
-			}, callback);
+			}, function(err, result) {
+				callback(err, result);
+				client.close();
+			});
 		});
 	});
 };
@@ -17,7 +20,10 @@ exports.findOne = function(collectionName, oArgs, callback) {
 	MongoClient.connect(setting.host, function(err, client) {
 		client.collection(collectionName, function(err, collection) {
 			if (err) return callback(err);
-			collection.findOne(oArgs, callback);
+			collection.findOne(oArgs, function(err, result) {
+				callback(err, result);
+				client.close();
+			});
 		});
 	});
 };
@@ -34,7 +40,10 @@ exports.update = function(collectionName, oArgs, newObj, callback) {
 					upsert: false,
 					multi: true
 				},
-				callback);
+				function(err, result) {
+					callback(err, result);
+					client.close();
+				});
 		});
 	});
 
@@ -45,7 +54,8 @@ exports.remove = function(collectionName, oArgs, callback) {
 		client.collection(collectionName, function(err, collection) {
 			if (err) return callback(err);
 			collection.remove(oArgs, function(err, result) {
-				callback(err);
+				callback(err, result);
+				client.close();
 			});
 		});
 	});
@@ -55,7 +65,10 @@ exports.count = function(collectionName, oArgs, callback) {
 	MongoClient.connect(setting.host, function(err, client) {
 		client.collection(collectionName, function(err, collection) {
 			if (err) return callback(err);
-			collection.count(oArgs, callback);
+			collection.count(oArgs, function(err, result) {
+				callback(err, result);
+				client.close();
+			});
 		});
 	});
 };
@@ -72,7 +85,10 @@ exports.find = function(collectionName, oArgs, callback) {
 				skip = oArgs.page.curPage * oArgs.page.perPage;
 				tmp.limit(oArgs.page.perPage).skip(skip);
 			}
-			tmp.toArray(callback);
+			tmp.toArray(function(err, result) {
+				callback(err, result);
+				client.close();
+			});
 		});
 	});
 };

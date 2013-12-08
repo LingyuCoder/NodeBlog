@@ -1,6 +1,8 @@
 (function($, window) {
 	var emitter = $(document),
 		__bookFn = function(event) {
+			event.stopPropagation();
+			event.preventDefault();
 			var that = $(this);
 			emitter.trigger("bookmark.add", [that.attr("aid"),
 				function(err) {
@@ -14,6 +16,8 @@
 			]);
 		},
 		__bookedFn = function(event) {
+			event.stopPropagation();
+			event.preventDefault();
 			var that = $(this);
 			emitter.trigger("bookmark.remove", [that.attr("aid"),
 				function(err) {

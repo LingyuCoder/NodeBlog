@@ -76,3 +76,11 @@ exports.userCenter = function(req, res) {
 exports.advicePage = function(req, res) {
 	res.render("advice");
 };
+
+exports.searchPage = function(req, res) {
+	res.render("search");
+};
+
+exports.articleListPage = function(req, res){
+	res.render("listArticle");
+};

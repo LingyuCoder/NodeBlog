@@ -13,7 +13,8 @@
     "markdown": "0.5.0",
     "async": "0.2.9",
     "moment": "2.4.0",
-    "gm": "1.13.3"
+    "gm": "1.13.3",
+    "ws": "0.4.31"
   },
   "subdomain": "skyinlayer",
   "engines": {
