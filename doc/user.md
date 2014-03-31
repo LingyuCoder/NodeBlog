@@ -92,13 +92,13 @@ user.update(function(err) {
 
 ### 实例
 ```js
-user.update(function(err) {
-	req.session.user = user;
-	res.render("userDetail", {
-		user: req.session.user,
-		success: true,
-		message: "修改成功..."
+user.remove(function(err) {
+    if(err){
+        return res.render("error", {
+             message: err.message
 	});
+    }
+    //do something after removing
 });
 ```
 # 方法
