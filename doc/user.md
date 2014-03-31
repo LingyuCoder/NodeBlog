@@ -96,7 +96,7 @@ user.remove(function(err) {
     if(err){
         return res.render("error", {
              message: err.message
-	});
+        });
     }
     //do something after removing
 });
